@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>角色管理</title>
+	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/icon.css">
+	<script type="text/javascript" src="/js/jquery-easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="/js/loan.js"></script>
+</head>
+<body><input type="hidden" id="productId" name="productId"/>
+	<table id="productList" class="easyui-datagrid" title="角色管理" style="width:100%;height:700px"
+			data-options="rownumbers:true,singleSelect:true,pageSize:30,pagination:true,loadMsg:'数据加载中……',
+									pageList:[30,50],toolbar:toolbar" toolbar="#tb">
+		<thead>
+			<tr>
+				<th data-options="field:'id',width:60">序号</th>
+				<th data-options="field:'role',width:150">角色名称</th>
+				<th data-options="field:'description',width:3000">描述</th>
+			</tr>
+		</thead>
+	</table>
+	<div id="tb" style="padding:3px">
+		<form id="searchForm">
+			<span>角色名称:</span>
+			<input id="nameOrCode" name="nameOrCode" style="line-height:26px;border:1px solid #ccc">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="Search()">查询</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="add()">新增</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editProduct()">编辑</a>
+		</form>
+    </div>
+	<div id="dlg" class="easyui-dialog" style="width:500px;height:400px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	    <form id="fm" action="" style="margin-top: 10px;" method="post"><input type="hidden" id="id" name="id">
+			<table style="width: 100%" cellpadding="5">
+				<tr>
+					<td>角色名称:</td>
+					<td><input class="easyui-textbox" type="text" name="role" data-options="required:true"></input></td>
+				</tr>
+				<tr>
+					<td>描述:</td>
+					<td><input class="easyui-textbox" type="text" name="description" data-options="required:true"></input></td>
+				</tr>
+				<tr>
+					<td>角色权限:</td>
+					<td>
+						<ul id="resourceIds" class="easyui-tree"
+								checkbox="true">
+						</ul>
+					</td>
+				</tr>
+			</table>
+	    </form>
+	</div>
+	<div id="dlg-buttons">
+	    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveProduct()">保存</a>
+	    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
+	</div>
+	<script type="text/javascript">
+		function add(){
+			$('#dlg').dialog('open').dialog('setTitle','添加角色');
+			$("#fm").form('clear');
+			$('#resourceIds').tree({
+				url: allRoleIdsUrl,
+				loadFilter: function (rows) {
+					var fileds = "id,pId";
+					return ConvertToTreeGridJson(eval(rows.data),"id", "pId", fileds);
+				}
+			});
+		}
+
+		$(function() {
+		    Search();
+		});
+		function pagerFilter(data){
+			if(data.data!=undefined) {
+                data = {
+					total: data.data.totalCount,
+					rows: data.data.result
+                }
+            }
+			var dg = $('#productList');
+			var opts = dg.datagrid('options');
+			var pager = $('#productList').datagrid('getPager');
+			$(pager).pagination({
+				onSelectPage:function(pageNum, pageSize){
+					opts.pageNumber = pageNum;
+					opts.pageSize = pageSize;
+					pager.pagination('refresh',{
+					pageNumber:pageNum,
+					pageSize:pageSize
+				});
+				Search();
+			},
+			beforePageText : '第', //页数文本框前显示的汉字
+			afterPageText : '页    共 {pages} 页',
+			displayMsg : '当前显示 {from} - {to} 条记录   共 {total} 条记录'
+			});
+
+			return data;
+		}
+
+
+		function Search() {
+			var parameter = $("#searchForm").serializeArray();
+			var values={};
+			for (var item in parameter) {
+				if(values[parameter[item].name]!=null||values[parameter[item].name]!=undefined) {
+					values[parameter[item].name] = values[parameter[item].name]+","+parameter[item].value.trim();
+				}else{
+					values[parameter[item].name] = parameter[item].value.trim();
+				}
+			}
+			//pageNumber为datagrid的当前页码
+			var page_Number = $('#productList').datagrid('options').pageNumber;
+			//pageSize为datagrid的每页记录条数
+			var page_Size = $('#productList').datagrid('options').pageSize;
+			values["pageNo"]=page_Number;
+			values["pageSize"]=page_Size;
+
+			$.ajax({
+				url : roleAllListUrl,
+				type : "POST",
+				contentType:"application/json",
+				data :JSON.stringify(values),
+				dataType : "json",
+				beforeSend: function () {
+										$.messager.progress({
+										   title: '提示',
+										   msg: '数据加载中，请稍候……',
+										   text: ''
+										});
+							    	},
+							       complete: function () {
+							         $.messager.progress('close');
+							    	},
+				success : function(datas) {
+					if(datas.success){
+						$('#productList').datagrid({loadFilter:pagerFilter}).datagrid('loadData',datas);
+					}else{
+						if(datas.code==999999){
+							top.location.href="/login.html";
+						}else{
+							$.messager.alert('Info', datas.message, 'info');
+						}
+					}
+				}
+			});
+		}
+		function saveProduct() {
+			if($("#fm").form('validate')) {
+                var parameter = $("#fm").serializeArray();
+                var values = {};
+                for (var item in parameter) {
+                    if (values[parameter[item].name] != null || values[parameter[item].name] != undefined) {
+                        values[parameter[item].name] = values[parameter[item].name] + "," + parameter[item].value.trim();
+                    } else {
+                        values[parameter[item].name] = parameter[item].value.trim();
+                    }
+                }
+                values["resources"] = getChecked();
+                $.ajax({
+                    url: saveRoleUrl,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(values),
+                    dataType: "json",
+                    success: function (datas) {
+                        $.messager.alert('Info', datas.message, 'info');
+                        if (datas.code == 999999) {
+                            top.location.href = "/login.html";
+                        }
+                        $('#dlg').dialog('close');
+                        Search();
+                    }
+                });
+            }else{
+			    return;
+			}
+        }
+		function editProduct(){
+			var row = $("#productList").datagrid("getSelected");
+			console.log(row);
+			if (row) {
+				$('#dlg').dialog('open').dialog('setTitle','用户信息修改');
+				$("#fm").form("load", row);
+				$('#resourceIds').tree({
+					url: allRoleIdsUrl+"?id="+row.id,
+					loadFilter: function (rows) {
+						var fileds = "id,pId";
+						return ConvertToTreeGridJson(eval(rows.data),"id", "pId", fileds);
+					}
+				});
+			}else{
+				$.messager.alert('温馨提示', "请选择需要操作的角色", 'info');
+			}
+		}
+		function ConvertToTreeGridJson(rows, idFieldName, pidFieldName, fileds) {
+		            function exists(rows, ParentId) {
+		                for (var i = 0; i < rows.length; i++) {
+		                    if (rows[i][idFieldName] == ParentId)
+		                        return true;
+		                }
+		                return false;
+		            }
+		            var nodes = [];
+		            // get the top level nodes
+		            for (var i = 0; i < rows.length; i++) {
+		                var row = rows[i];
+		                if (!exists(rows, row[pidFieldName])) {
+		                    var data = {
+		                        id: row[idFieldName],
+								text:row["name"],
+								checked:row["checked"]
+		                    }
+		                    var arrFiled = fileds.split(",");
+		                    for (var j = 0; j < arrFiled.length; j++)
+		                    {
+		                        if (arrFiled[j] != idFieldName)
+		                            data[arrFiled[j]] = row[arrFiled[j]];
+		                    }
+		                    nodes.push(data);
+		                }
+		            }
+		            console.info("根目录nodes："+JSON.stringify(nodes));
+
+
+		            var toDo = [];
+		            for (var i = 0; i < nodes.length; i++) {
+		                toDo.push(nodes[i]);
+		            }
+
+		            while (toDo.length) {
+		                var node = toDo.shift(); // the parent node
+		                // get the children nodes
+		                for (var i = 0; i < rows.length; i++) {
+		                    var row = rows[i];
+		                    if (row[pidFieldName] == node.id) {
+		                        var child = {
+		                            id: row[idFieldName],
+									text:row["name"],
+									checked:row["checked"]
+		                        };
+		                        var arrFiled = fileds.split(",");
+		                        for (var j = 0; j < arrFiled.length; j++) {
+		                            if (arrFiled[j] != idFieldName) {
+		                                child[arrFiled[j]] = row[arrFiled[j]];
+		                            }
+		                        }
+		                        if (node.children) {
+		                            node.children.push(child);
+		                        } else {
+		                            node.children = [child];
+		                        }
+		                        toDo.push(child);
+		                    }
+		                }
+		            }
+		            return nodes;
+		        };
+		function getChecked(){
+			var nodes = $('#resourceIds').tree('getChecked',['checked','indeterminate']);
+			var s = '';
+			for(var i=0; i<nodes.length; i++){
+				if (s != '') s += ',';
+				s += nodes[i].id;
+			}
+			return s;
+		}
+	</script>
+</body>
+</html>

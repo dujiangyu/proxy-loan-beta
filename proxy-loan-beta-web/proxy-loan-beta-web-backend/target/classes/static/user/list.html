@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>用户管理</title>
+	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/icon.css">
+	<script type="text/javascript" src="/js/jquery-easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="/js/loan.js"></script>
+</head>
+<body><input type="hidden" id="productId" name="productId"/>
+	<table id="productList" class="easyui-datagrid" title="渠道管理" style="width:100%;height:700px"
+			data-options="rownumbers:true,singleSelect:true,pageSize:30,pagination:true,loadMsg:'数据加载中……',
+									pageList:[30,50],toolbar:toolbar" toolbar="#tb">
+		<thead>
+			<tr>
+				<th data-options="field:'displayName',width:100">用户名</th>
+				<th data-options="field:'username',width:80">登录账号</th>
+				<th data-options="field:'phone',width:80,align:'right'">手机号码</th>
+				<th data-options="field:'registerDate',width:100">注册时间</th>
+				<th data-options="field:'locked',width:100,formatter:isLock">是否锁定</th>
+			</tr>
+		</thead>
+	</table>
+	<div id="tb" style="padding:3px">
+		<form id="searchForm">
+			<span>用户名称:</span>
+			<input name="displayName" style="line-height:26px;border:1px solid #ccc">
+			<span>手机号码:</span>
+			<input id="phone" name="phone" style="line-height:26px;border:1px solid #ccc">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="Search()">查询</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="add()">新增</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editProduct()">编辑</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-clear" plain="true" onclick="deleteLink()">删除</a>
+		</form>
+    </div>
+	<div id="dlg" class="easyui-dialog" style="width:500px;height:400px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	    <form id="fm" action="" style="margin-top: 10px;" method="post"><input type="hidden" id="id" name="id">
+			<table style="width: 100%" cellpadding="5">
+				<tr>
+					<td>用户名称:</td>
+					<td><input class="easyui-textbox" id="displayName" type="text" name="displayName" data-options="required:true"></input></td>
+				</tr>
+				<tr>
+					<td>登录账号:</td>
+					<td><input class="easyui-textbox" type="text" name="username" data-options="required:true"></input></td>
+				</tr>
+				<tr>
+					<td>密码:</td>
+					<td>
+						<input class="easyui-textbox" type="text" name="password"></input>
+					</td>
+				</tr>
+				<tr>
+					<td>手机号码:</td>
+					<td>
+						<input class="easyui-textbox" type="text" name="phone"></input>
+					</td>
+				</tr>
+				<tr>
+					<td>归属渠道:</td>
+					<td>
+						<input class="easyui-combobox" type="text" name="channel" id="channel"></input>
+					</td>
+				</tr>
+				<tr>
+					<td>角色:</td>
+					<td>
+						<input id="roleIds" class="easyui-combobox" name="roleStr" />
+					</td>
+				</tr>
+			</table>
+	    </form>
+	</div>
+	<div id="dlg-buttons">
+	    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveProduct()">保存</a>
+	    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
+	</div>
+	<script type="text/javascript">
+		function add(){
+			$('#dlg').dialog('open').dialog('setTitle','用户注册');
+			$("#fm").form('clear');
+		}
+		function deleteLink(){
+			var row = $("#productList").datagrid("getSelected");
+			if(row) {
+				$.messager.confirm('温馨提示', '是否锁定该用户?', function (r) {
+					if (r) {
+						$.ajax({
+							url: lockUserUrl,
+							type: "POST",
+							contentType: "application/json",
+							data: JSON.stringify({"id": row.id}),
+							dataType: "json",
+							success: function (datas) {
+								Search();
+							}
+						});
+					}
+				});
+			}else{
+				$.messager.alert('温馨提示', "请选择需要操作的数据行", 'info');
+			}
+		}
+
+		$(function() {
+		    Search();
+		});
+		function pagerFilter(data){
+			if(data.data!=undefined) {
+                data = {
+					total: data.data.totalCount,
+					rows: data.data.result
+                }
+            }
+			var dg = $('#productList');
+			var opts = dg.datagrid('options');
+			var pager = $('#productList').datagrid('getPager');
+			$(pager).pagination({
+				onSelectPage:function(pageNum, pageSize){
+					opts.pageNumber = pageNum;
+					opts.pageSize = pageSize;
+					pager.pagination('refresh',{
+					pageNumber:pageNum,
+					pageSize:pageSize
+				});
+				Search();
+			},
+			beforePageText : '第', //页数文本框前显示的汉字
+			afterPageText : '页    共 {pages} 页',
+			displayMsg : '当前显示 {from} - {to} 条记录   共 {total} 条记录'
+			});
+
+			return data;
+		}
+
+
+		function Search() {
+			var parameter = $("#searchForm").serializeArray();
+			var values={};
+			for (var item in parameter) {
+				if(values[parameter[item].name]!=null||values[parameter[item].name]!=undefined) {
+					values[parameter[item].name] = values[parameter[item].name]+","+parameter[item].value.trim();
+				}else{
+					values[parameter[item].name] = parameter[item].value.trim();
+				}
+			}
+			//pageNumber为datagrid的当前页码
+			var page_Number = $('#productList').datagrid('options').pageNumber;
+			//pageSize为datagrid的每页记录条数
+			var page_Size = $('#productList').datagrid('options').pageSize;
+			values["pageNo"]=page_Number;
+			values["pageSize"]=page_Size;
+
+			$.ajax({
+				url : userListUrl,
+				type : "POST",
+				contentType:"application/json",
+				data :JSON.stringify(values),
+				dataType : "json",
+				beforeSend: function () {
+										$.messager.progress({
+										   title: '提示',
+										   msg: '数据加载中，请稍候……',
+										   text: ''
+										});
+							    	},
+							       complete: function () {
+							         $.messager.progress('close');
+							    	},
+				success : function(datas) {
+				    if(datas.success){
+						$('#productList').datagrid({loadFilter:pagerFilter}).datagrid('loadData',datas);
+					}else{
+				        if(datas.code==999999){
+				            top.location.href="/login.html";
+						}else{
+							$.messager.alert('Info', datas.message, 'info');
+						}
+					}
+				}
+			});
+		}
+		function saveProduct() {
+			if($("#fm").form('validate')) {
+                var parameter = $("#fm").serializeArray();
+                var values = {};
+                for (var item in parameter) {
+                    if (values[parameter[item].name] != null || values[parameter[item].name] != undefined) {
+                        values[parameter[item].name] = values[parameter[item].name] + "," + parameter[item].value.trim();
+                    } else {
+                        values[parameter[item].name] = parameter[item].value.trim();
+                    }
+                }
+                $.ajax({
+                    url: saveUserUrl,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(values),
+                    dataType: "json",
+                    success: function (datas) {
+                        $.messager.alert('Info', datas.message, 'info');
+                        if (datas.code == 999999) {
+                            top.location.href = "/login.html";
+                        }
+                        $('#dlg').dialog('close');
+                        $("#fm").form('clear');
+                        Search();
+                    }
+                });
+            }else{
+			    return;
+			}
+        }
+		function editProduct(){
+			$("#roleIds").combobox("clear");
+			var row = $("#productList").datagrid("getSelected");
+			if (row) {
+			    var checkedAry = row.roleIds;
+				var val = $("#roleIds").combobox("getData");
+				for(var item in val){
+				    for(var roleId in checkedAry)
+				    if(checkedAry[roleId] == val[item].id){
+						$("#roleIds").combobox("select", val[item].id);
+					}
+				}
+				//设置渠道
+				var channelAry = row.channel;
+				var channelVal = $("#channel").combobox("getData");
+				for(var channelId in channelVal)
+					if(channelVal[channelId].firstChannelName == channelAry){
+					$("#channel").combobox("select", channelAry);
+				}
+
+				$('#dlg').dialog('open').dialog('setTitle','用户信息修改');
+				$("#fm").form("load", row);
+			}else{
+				$.messager.alert('温馨提示', "请选择需要操作的产品", 'info');
+			}
+		}
+		function isLock(value, row, index){
+			if(value){
+				return "是";
+			}else{
+				return "否";
+			}
+		}
+
+		$('#roleIds').combobox({
+			url: roleListUrl,//对应的ashx页面的数据源
+			method: 'GET',
+			contentType:'application/json',
+			valueField: 'id',//绑定字段ID
+			textField: 'role',//绑定字段Name
+			panelHeight: 'auto',//自适应
+			multiple: true,
+			formatter: function (row) {
+				var opts = $(this).combobox('options');
+				return '<input type="checkbox" class="combobox-checkbox" id="' + row[opts.valueField] + '">' + row[opts.textField]
+			},
+
+			onShowPanel: function () {
+				var opts = $(this).combobox('options');
+				var target = this;
+				var values = $(target).combobox('getValues');
+				$.map(values, function (value) {
+					var el = opts.finder.getEl(target, value);
+					el.find('input.combobox-checkbox')._propAttr('checked', true);
+				})
+			},
+			onLoadSuccess: function () {
+				var opts = $(this).combobox('options');
+				var target = this;
+				var values = $(target).combobox('getValues');
+				$.map(values, function (value) {
+					var el = opts.finder.getEl(target, value);
+					el.find('input.combobox-checkbox')._propAttr('checked', true);
+				})
+			},
+			onSelect: function (row) {
+				var opts = $(this).combobox('options');
+				var el = opts.finder.getEl(this, row[opts.valueField]);
+				el.find('input.combobox-checkbox')._propAttr('checked', true);
+			},
+			onUnselect: function (row) {
+				var opts = $(this).combobox('options');
+				var el = opts.finder.getEl(this, row[opts.valueField]);
+				el.find('input.combobox-checkbox')._propAttr('checked', false);
+			}
+		});
+
+		$('#channel').combobox({
+			  method:"GET",
+			  url:firstChannelUrl,
+			  editable:false, //不可编辑状态
+			  cache: false,
+			  panelHeight: '150',
+			  valueField:'firstChannelName',
+			  textField:'firstChannelName'
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>信用信息</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <script src="/assets/js/jquery-1.11.3.min.js"></script>
+    <script src="/assets/js/zepto.min.js"></script>
+    <script src="/assets/js/dialog.js"></script>
+    <script src="/assets/js/iradio.js"></script>
+    <script src="/assets/js/market.js"></script>
+</head>
+<style>
+.main{margin: 0rem 0 5rem;}
+    /*隐藏radio按钮 diy样式*/
+ input[type="radio"] { opacity: 0; } .myradio { display: inline-block; vertical-align:middle; margin: 0; padding: 0; width: 60px; height: 30px; border-radius: 20px; position: relative; overflow: hidden; background-color: #67e66c; } .myradio .open, .myradio .close { width: 30px; height: 30px; font-size: 12px; border-radius: 50%;background: white; color: white; position: absolute; top: 0; left: 0; } /*yuchuang 2017.5.12*/.myradio .open {} .myradio .close { background: #e8e8e8 } .hidden { display: none } .disabled { pointer-events: none; cursor: default; } .myradio .close { left: auto; right: 0;color: #e8e8e8;  } .myradio .open:after { content: '有'; position: absolute; top: 0; left: 35px; width: 30px; height: 30px; line-height: 30px; } .myradio .close:before { content: '无'; position: absolute; top: 0; left: -20px; width: 30px; height: 30px; line-height: 30px; }
+    </style>
+<body class="bg-gray">
+<div class="container">
+    <form id="userForm"><input type="hidden" name="showPageContent" value="credit">
+    <div class="main">
+    	<div class="pro-infoimg"><img src="/assets/images/info02.jpg"></div>
+        <div class="pro-detail-list">
+        	<ul>
+                <li class="clearfix">
+                    <span class="text">是否有微粒贷</span>
+                    <em><p class="myradio">
+                        <label class="open hidden">
+                            <input type="radio" name="isWechatAmount" value="false" />
+                        </label>
+                        <label class="close">
+                            <input type="radio" name="isWechatAmount" value="true" />
+                        </label>
+                    </p></em>
+                </li>
+                </li>
+                <li class="clearfix">
+                        <span class="text">微粒贷额度</span>
+                        <em><input type="text" name="wechatAmount" style="text-align: right" id="wechatAmount"/></em>
+                </li>
+                <li class="clearfix">
+                   
+                        <span class="text">名下房产</span>
+                        <em><p class="myradio">
+                            <label class="open hidden">
+                                <input type="radio" name="isHouseLoan" value="false" />
+                            </label>
+                            <label class="close">
+                                <input type="radio" name="isHouseLoan" value="true" />
+                            </label>
+                        </p></em>
+                </li>
+                <li class="clearfix">
+                   
+                        <span class="text">名下车产</span>
+                        <em><p class="myradio">
+                                <label class="open hidden">
+                                    <input type="radio" name="isCarLoan" value="false" />
+                                </label>
+                                <label class="close">
+                                    <input type="radio" name="isCarLoan" value="true" />
+                                </label>
+                            </p></em>
+                 
+                </li>
+                <li class="clearfix">
+                        <span class="text">是否有借呗</span>
+                        <em><p class="myradio">
+                                <label class="open hidden">
+                                    <input type="radio" name="isBorrow" value="false" />
+                                </label>
+                                <label class="close">
+                                    <input type="radio" name="isBorrow" value="true" />
+                                </label>
+                            </p></em>
+                </li>
+                <li class="clearfix">
+                        <span class="text">信用卡额度</span>
+                        <em><input type="text" name="creditCardAmount" style="text-align: right" id="creditCardAmount"/> </em>
+                </li>
+            </ul>
+        </div>
+        <div class="pro-info-btn"><a class="btn-apply ap-fz16" onclick="saveUserInfo()" href="javascript:void(0);">下一步</a> </div>
+    </div>
+    </form>
+</div>
+<script>
+    iradio();findById();
+</script>
+</body>
+</html>

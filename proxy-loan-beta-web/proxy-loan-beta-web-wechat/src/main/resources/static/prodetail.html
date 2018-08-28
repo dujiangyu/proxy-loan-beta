@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>贷款详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <script src="/assets/js/jquery-1.11.3.min.js"></script>
+    <script src="/assets/js/zepto.min.js"></script>
+    <script src="/assets/js/dialog.js"></script>
+    <script src="/assets/js/market.js"></script>
+</head>
+<style>
+.main{margin: 0rem 0 0rem;}
+</style>
+<body class="bg-gray">
+<div class="container">
+    <div class="main">
+    	<div class="pro-detail-topbg">
+        <div class="pro-detail-top">
+        	<header class="bor-bottom">
+        <a href="javascript:history.go(-1);" class="prev"></a>
+        <em onclick="copyWechatId()">直接下款通道</em><input type="hidden" id="id"><input type="hidden" id="url">
+    		</header>
+            <span class="name"><img id="img" src="assets/images/nologo.png"><span id="name">叮当贷-日手续费3元</span></span>
+            <span class="tip"><em>最高可贷额度（元）</em><span id="endAmount">20,000</span></span>
+            <span class="detail">
+            <div class="clearfix">
+            	<p class="left"><span class="th">期限</span><span class="td">最高<span id="endPeriod"></span>个月</span></p>
+                <p><span class="th">到账时间</span><span class="td">最快3分钟</span></p>
+                <p><span class="th">千元日利率</span><span class="td">最低仅0.3元</span></p>
+                </div>
+                <span class="pro-detail-btn"><a class="btn-apply ap-fz16" href="javascript:void(0);" onclick="applyLoan()">立即借款</a> </span>
+            </span>
+        </div>
+        </div>
+        <div class="pro-detail-down">
+            <dl>
+            	<dt><span></span>申请条件</dt>
+                <dd id="applyCondition">22岁中国公民申请条件</dd>
+            </dl>
+            <dl>
+            	<dt><span></span>认证资料</dt>
+                <dd><em>身份认证</em><span>认证您的身份信息，确保本人借款</span></dd>
+                <dd><em>基本信息</em><span>认证您的基本信息，提供更好服务</span></dd>
+                <dd><em>填写联系人</em><span>认证真实联系人，可以提高借款额度</span></dd>
+                <dd><em>手机认证</em><span>认证您的运营商信息，加快放款速度</span></dd>
+                <dd><em>芝麻信用</em><span>认证您的芝麻分，提高贷款成功率</span></dd>
+            </dl>
+        </div>
+    </div>
+    
+    <!--选择弹窗 start-->
+    <div class="popFrom" style="display:none">
+    <div class="tit">请选择<a href="javascript:void(0);"><i class="iconfont icon-close"></i></a></div>
+        <ul>
+        	<li class="clearfix"><a href="javascript:void(0);">1000元</span></a></li>
+            <li class="clearfix"><a href="javascript:void(0);">2000元</span></a></li>
+            <li class="clearfix"><a href="javascript:void(0);">3000元</span></a></li>
+            <li class="clearfix"><a href="javascript:void(0);">4000元</span></a></li>
+            <li class="clearfix"><a href="javascript:void(0);">5000元</span></a></li>
+        </ul>
+	</div>
+    <div class="backbg" style="display:none"></div>
+    <!--选择弹窗 end-->
+</div>
+<script>
+    var hrefUrl = window.location.href;
+    var id = getArgsFromHref(hrefUrl,"id");
+    findProductById(id);
+</script>
+</body>
+</html>
