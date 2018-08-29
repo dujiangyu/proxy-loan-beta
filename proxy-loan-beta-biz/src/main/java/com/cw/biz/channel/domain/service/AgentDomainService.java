@@ -1,7 +1,9 @@
 package com.cw.biz.channel.domain.service;
 
+import com.cw.biz.CPContext;
 import com.cw.biz.CwException;
 import com.cw.biz.channel.app.dto.AgentDto;
+import com.cw.biz.channel.app.dto.RechargeLogDto;
 import com.cw.biz.channel.domain.entity.Agent;
 import com.cw.biz.channel.domain.repository.AgentRepository;
 import com.cw.biz.user.domain.entity.SeUser;
@@ -18,6 +20,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -32,6 +35,11 @@ public class AgentDomainService {
 
     @Autowired
     private AgentRepository repository;
+
+
+    @Autowired
+    private RechargeLogDomainService rechargeLogDomainService;
+
     /**
      * 新增代理商
      * @param agentDto
@@ -72,15 +80,40 @@ public class AgentDomainService {
                 }
                 seUserService.updateUser(seUser, Boolean.TRUE);
             }
-            agentDto.setBalance(agent.getBalance().add(agentDto.getBalance()));
             agent.from(agentDto);
             agent = repository.save(agent);
-            //TODO 记录充值明细
 
         }
         return agent;
     }
 
+    /**
+     *&lt;功能简述&gt;代理商充值
+     *&lt;功能详细描述&gt;
+     * ${tags} [参数说明]
+     *
+     * @return ${return_type} [返回类型说明]
+     * @exception throws [异常类型] [异常说明]
+     * @see [类、类#方法、类#成员]
+     */
+    public Agent recharge(AgentDto agentDto){
+        Agent agent = repository.findOne(agentDto.getId());
+        if(agent==null){
+            CwException.throwIt("代理商不存在");
+        }
+        BigDecimal currBalance = agent.getBalance();
+        agent.setBalance(agent.getBalance().add(agentDto.getBalance()));
+
+        //记录充值日志
+        RechargeLogDto rechargeLogDto = new RechargeLogDto();
+        rechargeLogDto.setRechargeObjectId(agentDto.getId());
+        rechargeLogDto.setRechargeOperateId(CPContext.getContext().getSeUserInfo().getId());
+        rechargeLogDto.setRechargeFee(agentDto.getBalance());
+        rechargeLogDto.setRechargeBalance(agentDto.getBalance().add(currBalance));
+        rechargeLogDomainService.create(rechargeLogDto);
+
+        return agent;
+    }
 
     /**
      * 渠道停用

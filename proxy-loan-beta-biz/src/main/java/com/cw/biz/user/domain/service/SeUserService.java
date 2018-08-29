@@ -41,8 +41,6 @@ public class SeUserService {
         passwordHelper.encryptPassword(user);
         if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())){
             user.setMerchantId(CPContext.getContext().getSeUserInfo().getId());
-        }else {
-            user.setMerchantId(0L);
         }
         return seUserDao.createUser(user);
     }
@@ -85,6 +83,9 @@ public class SeUserService {
     public SeUser updateUser(SeUser user, Boolean isReEncryptPassword) {
         Assert.notNull(user.getId());
         SeUser saved = seUserDao.findOne(user.getId());
+        if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())){
+            user.setMerchantId(CPContext.getContext().getSeUserInfo().getId());
+        }
         Assert.notNull(saved);
         if (user.getPassword() != null && isReEncryptPassword) {
             passwordHelper.encryptPassword(user);
@@ -224,7 +225,7 @@ public class SeUserService {
         if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())){
            dto.setMerchantId(CPContext.getContext().getSeUserInfo().getId());
         }else{
-           dto.setMerchantId(0L);
+           dto.setMerchantId(1L);
         }
         JdbcPage<SeUser> seUserJdbcPage = seUserDao.findByPage(dto);
         for (SeUser seUser : seUserJdbcPage.getResult()) {

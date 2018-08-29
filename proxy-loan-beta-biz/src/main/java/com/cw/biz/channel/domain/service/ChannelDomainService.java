@@ -1,11 +1,14 @@
 package com.cw.biz.channel.domain.service;
 
+import com.cw.biz.CPContext;
 import com.cw.biz.CwException;
 import com.cw.biz.channel.app.dto.ChannelDto;
-import com.cw.biz.channel.domain.dao.ChannelSettleDao;
 import com.cw.biz.channel.domain.entity.Channel;
 import com.cw.biz.channel.domain.repository.ChannelRepository;
+import com.cw.biz.user.domain.entity.SeUser;
+import com.cw.biz.user.domain.service.SeUserService;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -17,14 +20,16 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
-import java.util.Objects;
 
 /**
- * 代理商服务
+ * 渠道服务
  * Created by dujy on 2017-05-20.
  */
 @Service
 public class ChannelDomainService {
+
+    @Autowired
+    private SeUserService seUserService;
 
     @Autowired
     private ChannelRepository repository;
@@ -36,6 +41,9 @@ public class ChannelDomainService {
     public Channel create(ChannelDto channelDto){
         Channel channel = new Channel();
         channel.from(channelDto);
+        channel.setBackLoginUrl("http://www.youxinjk.com/bgLogin.html");
+        channel.setUserId(CPContext.getContext().getSeUserInfo().getId());
+        channel.setAccountNo(channelDto.getName());
         channel.prepareSave();
         return repository.save(channel);
     }
@@ -47,13 +55,31 @@ public class ChannelDomainService {
      */
     public Channel update(ChannelDto channelDto){
         Channel channel=null;
-        if(channelDto.getId()==null)
-        {
+        if(channelDto.getId()==null){
             channel = create(channelDto);
+            //保存登录用户信息
+            SeUser seUser = new SeUser();
+            seUser.setType("user");
+            seUser.setUsername(channelDto.getName());
+            seUser.setDisplayName(channelDto.getName());
+            seUser.setPassword(channelDto.getPassword());
+            seUser.setrId(1L);
+            SeUser seUser1 = seUserService.createUser(seUser);
+            channel.setTgUrl("http://www.youxinjk.com/wechat/register.html?channelNo="+seUser1.getId());
         }else {
-            channel = repository.findOne(channelDto.getId());
+           channel = repository.findOne(channelDto.getId());
+            //修改渠道密码
+           SeUser seUser =  seUserService.findByUserNameAndMerchantId(channelDto.getName(),0L);
+           if(channelDto.getPassword()!=null && !"".equals(channelDto.getPassword())) {
+               seUser.setPassword(channelDto.getPassword());
+           }
+           seUser.setUsername(channelDto.getName());
+           seUserService.updateUser(seUser,Boolean.TRUE);
+
+
             channel.from(channelDto);
             channel = repository.save(channel);
+
         }
         return channel;
     }
@@ -84,8 +110,7 @@ public class ChannelDomainService {
      * @param id
      * @return
      */
-    public Channel findById(Long id)
-    {
+    public Channel findById(Long id){
         return repository.findOne(id);
     }
 
@@ -102,6 +127,12 @@ public class ChannelDomainService {
             List<Predicate> predicates = Lists.newArrayListWithCapacity(20);
 
             predicates.add(cb.equal(root.get("isValid"),Boolean.TRUE));
+            if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())) {
+                predicates.add(cb.equal(root.get("userId"), CPContext.getContext().getSeUserInfo().getId()));
+            }
+            if(!StringUtils.isEmpty(channelDto.getName())) {
+                predicates.add(cb.like(root.get("name"), "%"+channelDto.getName()+"%"));
+            }
             query.where(cb.and(predicates.toArray(new Predicate[0])));
             return query.getRestriction();
         };

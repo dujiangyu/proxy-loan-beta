@@ -34,6 +34,7 @@ public class SeUser implements Serializable {
     public String getRoleStr() {
         if(roleStr==null){
             roleStr="";
+            if(roleIds!=null)
             for(Long roleId:roleIds){
                 roleStr+=roleId+",";
             }

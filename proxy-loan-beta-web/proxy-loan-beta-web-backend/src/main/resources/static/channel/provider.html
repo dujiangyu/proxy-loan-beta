@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>代理商管理</title>
+	<title>服务商管理</title>
 	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/icon.css">
 	<script type="text/javascript" src="/js/jquery-easyui/jquery.min.js"></script>
@@ -11,29 +11,29 @@
 	<script type="text/javascript" src="/js/loan.js"></script>
 </head>
 <body><input type="hidden" id="productId" name="productId"/>
-	<table id="productList" class="easyui-datagrid" title="代理商管理" style="width:100%;height:700px"
+	<table id="productList" class="easyui-datagrid" title="服务商管理" style="width:100%;height:700px"
 			data-options="rownumbers:true,singleSelect:true,pageSize:30,pagination:true,loadMsg:'数据加载中……',
 									pageList:[30,50],toolbar:toolbar" toolbar="#tb">
 		<thead>
 			<tr>
-				<th data-options="field:'code',width:100">代理商编码</th>
-				<th data-options="field:'name',width:100">代理商名称</th>
-				<th data-options="field:'linkPerson',width:60,align:'center'">联系人</th>
-				<th data-options="field:'linkPhone',width:60,align:'center'">联系电话</th>
-				<th data-options="field:'balance',width:60,align:'center'">充值余额</th>
+				<th data-options="field:'name',width:150">服务商名称</th>
+				<th data-options="field:'linkPerson',width:100,align:'center'">联系人</th>
+				<th data-options="field:'linkPhone',width:100,align:'center'">联系电话</th>
+				<th data-options="field:'tgUrl',width:100,align:'center'">推广链接</th>
+				<th data-options="field:'backLoginUrl',width:100,align:'center'">后台链接</th>
+				<th data-options="field:'code',width:100">后台账号</th>
+				<th data-options="field:'password',width:100,align:'center'">后台密码</th>
 			</tr>
 		</thead>
 	</table>
 	<div id="tb" style="padding:3px">
 		<form id="searchForm">
-			<span>一级渠道名称:</span>
-			<input id="firstChannelName" name="firstChannelName" style="line-height:26px;border:1px solid #ccc">
-			<span>一级公司名称:</span>
-			<input id="firstCompanyName" name="firstCompanyName" style="line-height:26px;border:1px solid #ccc">
+			<span>渠道名称:</span>
+			<input id="name" name="name" style="line-height:26px;border:1px solid #ccc">
 			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="Search()">查询</a>
 			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="add()">新增</a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editProduct()">编辑</a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-clear" plain="true" onclick="deleteLink()">删除</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editChannel()">编辑</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-clear" plain="true" onclick="enableChannel()">删除</a>
 		</form>
     </div>
 	<div id="dlg" class="easyui-dialog" style="width:550px;height:500px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
@@ -41,7 +41,7 @@
 			<table style="width: 100%" cellpadding="5">
 				<tr>
 					<input type="hidden" name="id"/>
-					<td width="20%">代理商名称:</td>
+					<td width="20%">服务商名称:</td>
 					<td width="30%"><input class="easyui-textbox" type="text" name="name"></input></td>
 				</tr>
 				<tr>
@@ -51,10 +51,14 @@
 				<tr>
 					<td>联系电话:</td>
 					<td><input class="easyui-textbox" id="linkPhone" type="text" name="linkPhone"></input></td>
-									</tr>
+				</tr>
 				<tr>
-					<td>充值金额:</td>
-					<td><input class="easyui-textbox" id="balance" type="text" name="balance"></input></td>
+					<td>账号:</td>
+					<td><input class="easyui-textbox" id="account" type="text" name="account"></input></td>
+				</tr>
+				<tr>
+					<td>密码:</td>
+					<td><input class="easyui-textbox" id="password" type="text" name="password"></input></td>
 				</tr>
 
 			</table>
@@ -66,19 +70,16 @@
 	</div>
 	<script type="text/javascript">
 		function add(){
-			$('#dlg').dialog('open').dialog('setTitle','新增代理商');
+			$('#dlg').dialog('open').dialog('setTitle','新增渠道');
 			$("#fm").form('clear');
 		}
-		function back() {
-			window.location.href="/channel/list.html";
-		}
-		function deleteLink(){
+		function enableChannel(){
 			var row = $("#productList").datagrid("getSelected");
 			if(row) {
-				$.messager.confirm('温馨提示', '是否停用该渠道?', function (r) {
+				$.messager.confirm('温馨提示', '是否停用该服务商?', function (r) {
 					if (r) {
 						$.ajax({
-							url: enableChannelUrl,
+							url: enableProviderUrl,
 							type: "POST",
 							contentType: "application/json",
 							data: JSON.stringify({"id": row.id}),
@@ -122,7 +123,7 @@
 			values["pageSize"]=pageSize;
 
 			$.ajax({
-				url : channelListUrl,
+				url : providerListUrl,
 				type : "POST",
 				contentType:"application/json",
 				data :JSON.stringify(values),
@@ -155,7 +156,7 @@
                 }
                 values["productId"] = $("#productId").val();
                 $.ajax({
-                    url: saveChannelUrl,
+                    url: saveProviderUrl,
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(values),
@@ -173,6 +174,15 @@
 			    return;
 			}
         }
+		function editChannel(){
+			var row = $("#productList").datagrid("getSelected");
+			if (row) {
+				$('#dlg').dialog('open').dialog('setTitle','服务商商信息修改');
+				$("#fm").form("load", row);
+			}else{
+				$.messager.alert('温馨提示', "请选择需要操作的服务商", 'info');
+			}
+		}
 		function formatterStatus(value, row, index){
 			if(row.status==0){
 				return "启用";

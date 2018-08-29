@@ -24,9 +24,6 @@ public class ChannelAppService {
 
     @Autowired
     private ChannelDomainService channelDomainService;
-
-    @Autowired
-    private ChannelSettleDao settleDao;
     /**
      * 新增渠道
      * @param channelDto
@@ -65,24 +62,6 @@ public class ChannelAppService {
     public ChannelDto findById(Long id)
     {
         return channelDomainService.findById(id).to(ChannelDto.class);
-    }
-
-    /**
-     *&lt;功能简述&gt;
-     *&lt;功能详细描述&gt;
-     * ${tags} 查询渠道信息
-     *
-     * @return ${return_type} [返回类型说明]
-     * @exception throws [异常类型] [异常说明]
-     * @see [类、类#方法、类#成员]
-     */
-    public List<ChannelDto> findAll(String firstChannelName)
-    {
-
-        List<ChannelDto> channelDtoList = new ArrayList<ChannelDto>();
-
-
-        return  channelDtoList;
     }
 
     /**

@@ -19,9 +19,6 @@ import java.math.BigDecimal;
 @Setter
 public class ThirdOperate extends AggEntity {
 
-    @Column(name="code",columnDefinition="varchar(100) not null comment '代理编码'")
-    private String code;
-
     @Column(name="name",columnDefinition="varchar(100) not null comment '代理商名称'")
     private String name;
 
@@ -42,6 +39,9 @@ public class ThirdOperate extends AggEntity {
 
     @Column(name="password",columnDefinition="varchar(100) comment '密码'")
     private String password;
+
+    @Column(name="user_id",columnDefinition="int(11) comment '服务商id'")
+    private Long userId;
 
     @Column(name="balance",columnDefinition="decimal(10,2) comment '余额'")
     private BigDecimal balance;

@@ -19,9 +19,6 @@ import java.math.BigDecimal;
 @Setter
 public class Channel extends AggEntity {
 
-    @Column(name="code",columnDefinition="varchar(100) not null comment '渠道编码'")
-    private String code;
-
     @Column(name="name",columnDefinition="varchar(100) not null comment '渠道名称'")
     private String name;
 

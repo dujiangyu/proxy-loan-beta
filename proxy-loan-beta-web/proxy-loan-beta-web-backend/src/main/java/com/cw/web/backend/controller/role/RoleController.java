@@ -148,7 +148,7 @@ public class RoleController extends AbstractBackendController {
                if(seRole!=null && seRole.getResourceIds()!=null) {
                    int idx=0;
                    for (Long resourceId : seRole.getResourceIds()) {
-                       if (resourceId == seResource.getId()) {
+                       if (resourceId == seResource.getId()&&seResource.getParentId()!=0) {
                            stringBuffer.append("{id:" + seResource.getId() + ", pId:" + seResource.getParentId() + ", name:\"" + seResource.getName() + "\",checked:true,open:true}");
                            idx++;
                            break;

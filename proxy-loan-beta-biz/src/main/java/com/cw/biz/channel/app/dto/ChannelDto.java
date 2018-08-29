@@ -14,18 +14,26 @@ import java.math.BigDecimal;
 @Getter
 public class ChannelDto extends PageDto {
 
-   private Long id;
+    private Long id;
 
-   private String code;
+    private String name;
 
-   private String name;
+    private String linkPerson;
 
-   private String linkPerson;
+    private String linkPhone;
 
-   private String linkPhone;
+    private String tgUrl;
 
-   private BigDecimal balance;
+    private String backLoginUrl;
 
-   private Boolean isValid=Boolean.TRUE;
+    private String accountNo;
+
+    private String password;
+
+    private BigDecimal balance;
+
+    private Long userId;
+
+    private Boolean isValid=Boolean.TRUE;
 
 }

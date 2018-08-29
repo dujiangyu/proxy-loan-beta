@@ -183,7 +183,7 @@
 			var row = $("#productList").datagrid("getSelected");
 			console.log(row);
 			if (row) {
-				$('#dlg').dialog('open').dialog('setTitle','用户信息修改');
+				$('#dlg').dialog('open').dialog('setTitle','角色信息修改');
 				$("#fm").form("load", row);
 				$('#resourceIds').tree({
 					url: allRoleIdsUrl+"?id="+row.id,

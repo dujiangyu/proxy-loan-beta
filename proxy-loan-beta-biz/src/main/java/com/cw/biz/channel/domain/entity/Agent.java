@@ -19,9 +19,6 @@ import java.math.BigDecimal;
 @Setter
 public class Agent extends AggEntity {
 
-    @Column(name="code",columnDefinition="varchar(100) not null comment '代理编码'")
-    private String code;
-
     @Column(name="name",columnDefinition="varchar(100) not null comment '代理商名称'")
     private String name;
 

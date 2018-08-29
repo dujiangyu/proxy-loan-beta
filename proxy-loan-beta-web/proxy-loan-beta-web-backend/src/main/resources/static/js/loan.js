@@ -3,20 +3,25 @@ var http="http://127.0.0.1:9527/";
 var allProductAllUrl = http + "/backend/product/findAllProduct.json";
 var channelAllUrl=http+"/backend/channel/findAllChannel.json";
 var uploadUrl = http + "/common/upload.json";
-var firstChannelUrl=http+"/backend/channel/findAll.json";
-var deleteLinkUrl=http+"/backend/product/deleteProductUrl.json";
-var channelLinkListUrl=http+"/backend/url/findByCondition.json";
+var agentListUrl=http+"/backend/agent/findByCondition.json";
+var saveAgentUrl=http+"/backend/agent/update.json";
+var saveAgentRechargeUrl=http+"/backend/agent/recharge.json";
+var enableAgentUrl=http+"/backend/agent/enable.json";
+//渠道
 var channelListUrl=http+"/backend/channel/findByCondition.json";
 var saveChannelUrl=http+"/backend/channel/update.json";
 var enableChannelUrl=http+"/backend/channel/enable.json";
+
+var providerListUrl=http+"/backend/provider/findByCondition.json";
+var saveProviderUrl=http+"/backend/provider/update.json";
+var enableProviderUrl=http+"/backend/provider/enable.json";
+
 var updatePwdUrl=http+"/backend/user/updatePassword.json";
 var perimissonUrl=http+"/backend/user/getUserPermission.json";
 var userListUrl=http+"/backend/user/findByCondition.json";
 var saveUserUrl=http+"/backend/user/update.json";
 var lockUserUrl=http+"/backend/user/lock.json";
 var roleListUrl =http+ "/backend/role/findAllRole.json";
-var reRunSettleUrl = http+ "/backend/merchantSettle/reRunData.json";
-var syncSettleUrl = http + "/backend/merchantSettle/syncData.json";
 var roleAllListUrl=http+"/backend/role/findByCondition.json";
 var saveRoleUrl=http+"/backend/role/update.json";
 var allRoleIdsUrl=http+"/backend/role/findAllResource.json";
