@@ -5,7 +5,7 @@ $(function () {
                     if (value==null) {
                         return '';
                     }else {
-                        return value;//.substr(0,3)+"****"+value.substr(7,4);
+                        return value.substr(0,3)+"****"+value.substr(7,4);
                     }
                 }},
             {field: "applyDate", title: "申请时间", width: 3, align: "center"},

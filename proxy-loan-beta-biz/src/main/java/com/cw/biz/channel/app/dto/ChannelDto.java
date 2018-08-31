@@ -16,6 +16,8 @@ public class ChannelDto extends PageDto {
 
     private Long id;
 
+    private String code;
+
     private String name;
 
     private String linkPerson;
@@ -33,6 +35,8 @@ public class ChannelDto extends PageDto {
     private BigDecimal balance;
 
     private Long userId;
+
+    private Long channelUserId;
 
     private Boolean isValid=Boolean.TRUE;
 

@@ -23,6 +23,7 @@
 				<th data-options="field:'backLoginUrl',width:100,align:'center'">后台链接</th>
 				<th data-options="field:'accountNo',width:100">后台账号</th>
 				<th data-options="field:'password',width:100,align:'center'">后台密码</th>
+				<th data-options="field:'xxxx',width:100,align:'center',formatter:copyInfo">操作</th>
 			</tr>
 		</thead>
 	</table>
@@ -109,6 +110,25 @@
 			});
 		});
 
+		function copyInfo(value, rowData, index) {
+
+			return "<a href='javascript:void(0)' onclick='copyData(\""+rowData.tgUrl+"\",\""+rowData.backLoginUrl
+				+"\",\""+rowData.accountNo+"\",\""+rowData.password+"\")'>复制链接</a>"
+		}
+		function copyData(h5Url,backgroundUrl,loginAccount,loginPassword) {
+			var strText="推广链接："+h5Url+"\t\r\n";
+				strText+="后台链接："+backgroundUrl+"\t\r\n";
+				strText+="账号："+loginAccount+"\t\r\n";
+				strText+="密码："+loginPassword;
+			var oInput = document.createElement('textarea');
+			oInput.type="hidden";
+			oInput.value = strText;
+			document.body.appendChild(oInput);
+			oInput.select();//选择对象
+			document.execCommand('copy');//执行浏览器复制命令
+			$.messager.alert('温馨提示', "链接复制成功\n"+strText, 'info');
+
+		}
 		function Search(pageNumber,pageSize) {
 			var parameter = $("#searchForm").serializeArray();
 			var values={};

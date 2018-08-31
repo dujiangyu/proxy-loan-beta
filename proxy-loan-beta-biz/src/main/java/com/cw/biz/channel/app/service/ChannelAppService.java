@@ -59,9 +59,13 @@ public class ChannelAppService {
      * @param id
      * @return
      */
-    public ChannelDto findById(Long id)
-    {
+    public ChannelDto findById(Long id){
         return channelDomainService.findById(id).to(ChannelDto.class);
+    }
+
+    //根据登录用户查询所属渠道
+    public ChannelDto findByChannelUserId(Long id){
+        return channelDomainService.findByChannelUserId(id).to(ChannelDto.class);
     }
 
     /**

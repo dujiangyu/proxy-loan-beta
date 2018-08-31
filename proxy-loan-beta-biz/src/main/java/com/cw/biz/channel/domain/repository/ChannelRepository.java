@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface ChannelRepository extends JpaRepository<Channel,Long>,JpaSpecificationExecutor<Channel> {
 
+    Channel findByChannelUserId(Long id);
 }

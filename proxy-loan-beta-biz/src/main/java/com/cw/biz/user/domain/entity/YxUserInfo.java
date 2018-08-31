@@ -22,7 +22,7 @@ import java.util.Date;
 @Setter
 public class YxUserInfo extends AggEntity{
 
-    @Column(name="user_id",columnDefinition="varchar(100) not null comment '用户ID'")
+    @Column(name="user_id",columnDefinition="varchar(100) not null comment '渠道归属服务商ID'")
     private Long userId;
 
     @Column(name="name",columnDefinition="varchar(100)  comment '姓名'")
@@ -43,4 +43,12 @@ public class YxUserInfo extends AggEntity{
     @Column(name="sesame_score",columnDefinition="int(11)  comment '芝麻分'")
     private Integer sesameScore;
 
+    @Column(name="channel_user_id",columnDefinition="int(11)  comment '渠道登录账号ID'")
+    private Integer channelUserId;
+
+    @Column(name="source_channel",columnDefinition="varchar(32)  comment '来源渠道编码'")
+    private String sourceChannel;
+
+    @Column(name="register_date",columnDefinition="datetime comment '注册时间'")
+    private Date registerDate;
 }

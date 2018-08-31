@@ -1,10 +1,23 @@
 package com.cw.biz.user.domain.service;
 
+import com.cw.biz.CPContext;
 import com.cw.biz.user.app.dto.YxUserInfoDto;
 import com.cw.biz.user.domain.entity.YxUserInfo;
 import com.cw.biz.user.domain.repository.SeUserInfoRepository;
+import com.cw.core.common.util.Utils;
+import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 /**
  * 用户信息服务
@@ -51,5 +64,61 @@ public class YxUserInfoDomainService {
     public YxUserInfo findById(Long id){
         return repository.findByUserId(id);
     }
+
+    /**
+    * 按条件查询渠道列表
+    * @param yxUserInfoDto
+    * @return
+    */
+   public Page<YxUserInfo> findByCondition(YxUserInfoDto yxUserInfoDto){
+       String[] fields = {"rawAddTime"};
+       yxUserInfoDto.setSortFields(fields);
+       yxUserInfoDto.setSortDirection(Sort.Direction.DESC);
+       Specification<YxUserInfo> supplierSpecification = (Root<YxUserInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
+           List<Predicate> predicates = Lists.newArrayListWithCapacity(20);
+
+           if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())) {
+               predicates.add(cb.equal(root.get("userId"), CPContext.getContext().getSeUserInfo().getId()));
+           }
+
+           if(!StringUtils.isEmpty(yxUserInfoDto.getName())) {
+               predicates.add(cb.like(root.get("name"), "%"+yxUserInfoDto.getName()+"%"));
+           }
+           if(!StringUtils.isEmpty(yxUserInfoDto.getPhone())) {
+                  predicates.add(cb.like(root.get("phone"), "%"+yxUserInfoDto.getPhone()+"%"));
+              }
+           query.where(cb.and(predicates.toArray(new Predicate[0])));
+           return query.getRestriction();
+       };
+       return repository.findAll(supplierSpecification, yxUserInfoDto.toPage());
+   }
+
+
+    /**
+    * 按条件查询渠道列表
+    * @param yxUserInfoDto
+    * @return
+    */
+   public Page<YxUserInfo> findChannelByCondition(YxUserInfoDto yxUserInfoDto){
+       String[] fields = {"rawAddTime"};
+       yxUserInfoDto.setSortFields(fields);
+       yxUserInfoDto.setSortDirection(Sort.Direction.DESC);
+       Specification<YxUserInfo> supplierSpecification = (Root<YxUserInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
+           List<Predicate> predicates = Lists.newArrayListWithCapacity(20);
+
+           predicates.add(cb.equal(root.get("sourceChannel"), yxUserInfoDto.getSourceChannel()));
+
+           if(!StringUtils.isEmpty(yxUserInfoDto.getStartDate())){
+               predicates.add(cb.greaterThanOrEqualTo(root.get("registerDate").as(String.class), yxUserInfoDto.getStartDate()));
+           }
+           if(!StringUtils.isEmpty(yxUserInfoDto.getEndDate())){
+              predicates.add(cb.lessThanOrEqualTo(root.get("registerDate").as(String.class), yxUserInfoDto.getEndDate()));
+           }
+
+           query.where(cb.and(predicates.toArray(new Predicate[0])));
+           return query.getRestriction();
+       };
+       return repository.findAll(supplierSpecification, yxUserInfoDto.toPage());
+   }
 
 }

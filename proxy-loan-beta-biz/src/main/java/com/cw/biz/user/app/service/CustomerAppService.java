@@ -1,9 +1,12 @@
 package com.cw.biz.user.app.service;
 
+import com.cw.biz.common.dto.Pages;
+import com.cw.biz.user.app.dto.CustomerDto;
 import com.cw.biz.user.app.dto.YxUserInfoDto;
 import com.cw.biz.user.domain.entity.YxUserInfo;
 import com.cw.biz.user.domain.service.YxUserInfoDomainService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,7 +16,7 @@ import javax.transaction.Transactional;
  */
 @Transactional
 @Service
-public class YxUserInfoAppService {
+public class CustomerAppService {
 
     @Autowired
     private YxUserInfoDomainService yxUserInfoDomainService;
@@ -40,5 +43,25 @@ public class YxUserInfoAppService {
         }
         return cwUserInfoDto;
     }
+    /**
+    * 按条件查询渠道
+    * @param dto
+    * @return
+    */
+   public Page<YxUserInfoDto> findByCondition(YxUserInfoDto dto){
+       return Pages.map(yxUserInfoDomainService.findByCondition(dto),YxUserInfoDto.class);
+   }
 
+    /** 渠道用户登录后台查看发展客户
+     *&lt;功能简述&gt;
+     *&lt;功能详细描述&gt;
+     * ${tags} [参数说明]
+     *
+     * @return ${return_type} [返回类型说明]
+     * @exception throws [异常类型] [异常说明]
+     * @see [类、类#方法、类#成员]
+     */
+   public Page<CustomerDto> findChannelByCondition(YxUserInfoDto dto){
+       return Pages.map(yxUserInfoDomainService.findChannelByCondition(dto),CustomerDto.class);
+   }
 }

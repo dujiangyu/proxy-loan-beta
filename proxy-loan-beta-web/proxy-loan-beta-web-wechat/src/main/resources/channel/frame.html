@@ -19,7 +19,7 @@
     <meta itemprop="name">
     <meta itemprop="description" content="">
     <meta itemprop="image" content="/Favicons/favicon-96x96.png">
-    <title>数据管理系统</title>
+    <title>渠道管理系统</title>
     <link rel="stylesheet" type="text/css" href="/channel/style/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/channel/style/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/channel/style/css/perfect-scrollbar.css">
@@ -97,7 +97,7 @@
         <div class="slide-tools">
             <div class="col-xs-24 text-left no-padding">
                 <a href="javascript:void(0);" class="btn btn-sm">
-                    Copyright©2018 © 数据管理系统
+                    Copyright©2018 © 渠道管理系统
                 </a>
             </div>
         </div>
@@ -133,7 +133,7 @@
                 <div class="body-container">
                     <div class="panel panel-white">
                         <div class="panel-body">
-                            <form doAction="/wechat/channel/queryNewUserByCondition.json" class="form-horizontal form-search"
+                            <form doAction="/wechat/customer/findChannelByCondition.json" class="form-horizontal form-search"
                                   id="frmList" method="post" novalidate="novalidate">
                                 <div class="col-sm-5">
                                     <div class="input-group">
@@ -154,17 +154,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
-                                    <div class="input-group">
-                                        <label class="input-group-addon control-label">状态</label>
-                                        <select data-search="False" data-toggle="dropdownlist" id="status" name="status" placeholder="全部" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
-                                            <option selected="selected" value="-1">全部</option>
-                                            <option value="0">待审核</option>
-                                            <option value="1">审核通过</option>
-                                            <option value="2">审核拒绝</option>
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="col-sm-5 datalist-action">
                                     <button class="btn btn-primary">
                                         <i class="fa fa-search"></i>
@@ -179,10 +168,9 @@
                                            style="min-width: 1200px;">
                                         <thead>
                                         <tr id="dategrid_title">
-                                            <th data-index="0" class="text-center" style="width: 18.75%;">渠道名</th>
-                                            <th data-index="1" class="text-center" style="width: 37.5%;">申请人手机号</th>
+                                            <th data-index="0" class="text-center" style="width: 18.75%;">客户名称</th>
+                                            <th data-index="1" class="text-center" style="width: 37.5%;">手机号</th>
                                             <th data-index="2" class="text-center" style="width: 18.75%;">申请时间</th>
-                                            <th data-index="3" class="text-center" style="width: 25%;">状态</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -272,7 +260,7 @@
 <script type="text/javascript" src="/channel/style/js/bootstrap-modal.js"></script>
 <script type="text/javascript" src="/channel/style/js/bootstrap-modalmanager.js"></script>
 <script type="text/javascript" src="/channel/style/js/moment.min.js"></script>
-<script language="javascript" type="text/javascript" src="/static/script/WdatePicker.js"></script>
+<script language="javascript" type="text/javascript" src="/channel/style/js/WdatePicker.js"></script>
 <script type="text/javascript" src="/channel/style/js/jquery.velocity.min.js"></script>
 <script type="text/javascript" src="/channel/style/js/select2.full.min.js"></script>
 <script type="text/javascript" src="/channel/style/js/zh-CN.js"></script>
@@ -289,7 +277,7 @@
 <div class="daterangepicker dropdown-menu ltr show-calendar opensright">
     <div class="calendar left">
         <div class="daterangepicker_input">
-            <input class="input-mini form-control" type="text" name="daterangepicker_start" value="">
+            <input class="input-mini form-control" type="text" name="startDate" value="">
             <i class="fa fa-calendar glyphicon glyphicon-calendar"></i>
             <div class="calendar-time" style="display: none;">
                 <div>
@@ -299,7 +287,7 @@
         <div class="calendar-table"></div>
     </div>
     <div class="calendar right">
-        <div class="daterangepicker_input"><input class="input-mini form-control" type="text" name="daterangepicker_end"
+        <div class="daterangepicker_input"><input class="input-mini form-control" type="text" name="endDate"
                                                   value="">
             <i class="fa fa-calendar glyphicon glyphicon-calendar"></i>
             <div class="calendar-time" style="display: none;">

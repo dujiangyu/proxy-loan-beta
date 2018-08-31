@@ -1,16 +1,18 @@
 package com.cw.biz.user.app.dto;
 
-import com.cw.biz.common.dto.BaseDto;
+import com.cw.biz.common.dto.PageDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 /**
- * 用户信息完善类
+ * 客服信息
  * Created by dujy on 2017/7/31.
  */
 @Getter
 @Setter
-public class YxUserInfoDto extends BaseDto{
+public class YxUserInfoDto extends PageDto{
 
     private Long id;
 
@@ -27,5 +29,15 @@ public class YxUserInfoDto extends BaseDto{
     private String address;
 
     private Integer sesameScore;
+
+    private String sourceChannel;
+
+    private Integer channelUserId;
+
+    private Date registerDate;
+
+    private String startDate;
+
+    private String endDate;
 
 }

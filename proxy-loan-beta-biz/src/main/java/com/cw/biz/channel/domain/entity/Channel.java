@@ -19,6 +19,9 @@ import java.math.BigDecimal;
 @Setter
 public class Channel extends AggEntity {
 
+    @Column(name="code",columnDefinition="varchar(100) not null comment '渠道编码'")
+    private String code;
+
     @Column(name="name",columnDefinition="varchar(100) not null comment '渠道名称'")
     private String name;
 
@@ -43,8 +46,11 @@ public class Channel extends AggEntity {
     @Column(name="balance",columnDefinition="decimal(10,2) comment '余额'")
     private BigDecimal balance;
 
-    @Column(name="user_id",columnDefinition="int(11) comment '所属用户'")
+    @Column(name="user_id",columnDefinition="int(11) comment '所属机构ID'")
     private Long userId;
+
+    @Column(name="channel_user_id",columnDefinition="int(11)  comment '渠道登录账号ID'")
+    private Long channelUserId;
 
     @Column(name="is_valid",columnDefinition="tinyint(1) comment '是否有效'")
     private Boolean isValid=Boolean.TRUE;

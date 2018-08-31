@@ -7,6 +7,7 @@ import com.cw.biz.channel.domain.entity.Channel;
 import com.cw.biz.channel.domain.repository.ChannelRepository;
 import com.cw.biz.user.domain.entity.SeUser;
 import com.cw.biz.user.domain.service.SeUserService;
+import com.cw.core.common.util.Utils;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,10 @@ public class ChannelDomainService {
         channel.from(channelDto);
         channel.setBackLoginUrl("http://www.youxinjk.com/bgLogin.html");
         channel.setUserId(CPContext.getContext().getSeUserInfo().getId());
+        String token=Utils.genarateUuid();
+        channel.setCode(token);
         channel.setAccountNo(channelDto.getName());
+        channel.setTgUrl("http://www.youxinjk.com/wechat/register.html?channelNo="+token);
         channel.prepareSave();
         return repository.save(channel);
     }
@@ -65,7 +69,7 @@ public class ChannelDomainService {
             seUser.setPassword(channelDto.getPassword());
             seUser.setrId(1L);
             SeUser seUser1 = seUserService.createUser(seUser);
-            channel.setTgUrl("http://www.youxinjk.com/wechat/register.html?channelNo="+seUser1.getId());
+            channel.setChannelUserId(seUser1.getId());
         }else {
            channel = repository.findOne(channelDto.getId());
             //修改渠道密码
@@ -112,6 +116,10 @@ public class ChannelDomainService {
      */
     public Channel findById(Long id){
         return repository.findOne(id);
+    }
+
+    public Channel findByChannelUserId(Long id){
+       return repository.findByChannelUserId(id);
     }
 
     /**
