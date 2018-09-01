@@ -1,12 +1,15 @@
 package com.cw.web.common.dto;
 
 import com.alibaba.fastjson.JSON;
+import com.zds.common.lang.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 
 /**
  * Created by dujy on 2017-05-21.
  */
+@Slf4j
 public class CPViewResultInfo implements Serializable{
 
     private Boolean success =Boolean.TRUE;
@@ -72,4 +75,23 @@ public class CPViewResultInfo implements Serializable{
         message.setMessage("成功");
         return JSON.toJSONString(message);
     }
+    public void newSuccess(Object data){
+        this.data=data;
+        this.success=true;
+        this.message="成功";
+    }
+
+    public void newFalse(Exception e,String falseCode){
+        this.success=false;
+        this.code=falseCode;
+        this.message=e.getMessage();
+        log.error(e.getMessage(),e);
+    }
+    public void newFalse(Exception e){
+        if(e.getClass().getName().equalsIgnoreCase(BusinessException.class.getName()))this.code=((BusinessException) e).getCode();
+        this.success=false;
+        this.message=e.getMessage();
+        log.error(e.getMessage(),e);
+    }
+
 }

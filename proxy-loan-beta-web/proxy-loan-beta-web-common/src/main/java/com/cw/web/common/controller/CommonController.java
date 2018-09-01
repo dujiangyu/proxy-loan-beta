@@ -1,14 +1,12 @@
 package com.cw.web.common.controller;
 
+import com.cw.biz.sms.app.service.SmsComponent;
 import com.cw.web.common.component.LoginComponent;
 import com.cw.web.common.component.UploadFileComponent;
 import com.cw.web.common.dto.CPViewResultInfo;
 import com.cw.web.common.model.LoginModel;
 import org.apache.shiro.SecurityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,16 +17,23 @@ import java.util.regex.Pattern;
 /**
  *通用请求
  */
-@Controller
+@RestController
 @RequestMapping("/common")
 public class CommonController extends AbstractController {
-    private static final Logger logger = LoggerFactory.getLogger(CommonController.class);
+
+    private final LoginComponent loginComponent;
+
+    private final UploadFileComponent uploadFileComponent;
+
+    private final SmsComponent smsComponent;
 
     @Autowired
-    private LoginComponent loginComponent;
+    public CommonController(LoginComponent loginComponent, UploadFileComponent uploadFileComponent,SmsComponent smsComponent) {
+        this.loginComponent = loginComponent;
+        this.uploadFileComponent = uploadFileComponent;
+        this.smsComponent=smsComponent;
+    }
 
-    @Autowired
-    private UploadFileComponent uploadFileComponent;
     /**
      * 用户登录
      * @param httpServletRequest
@@ -36,7 +41,6 @@ public class CommonController extends AbstractController {
      * @return
      */
     @PostMapping("passwordLogin.json")
-    @ResponseBody
     public CPViewResultInfo passwordLogin(HttpServletRequest httpServletRequest, @RequestBody LoginModel loginModel) {
         CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
         String openid = (String) httpServletRequest.getSession().getAttribute("openid");
@@ -53,7 +57,6 @@ public class CommonController extends AbstractController {
      * @return
      */
     @PostMapping("upload.json")
-    @ResponseBody
     public CPViewResultInfo upload(MultipartFile file) {
         CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
         String filePath = uploadFileComponent.upload(file);
@@ -68,7 +71,6 @@ public class CommonController extends AbstractController {
      * @return
      */
     @GetMapping("logout.json")
-    @ResponseBody
     public CPViewResultInfo logout() {
         CPViewResultInfo resultInfo = new CPViewResultInfo();
         SecurityUtils.getSubject().logout();
@@ -86,6 +88,12 @@ public class CommonController extends AbstractController {
         Pattern p = Pattern.compile(PHONE_PATTERN);
         Matcher m = p.matcher(phone);
         return m.find();
+    }
+
+    @PostMapping("/sendValidateCode.json")
+    public CPViewResultInfo sendValidateCode(CPViewResultInfo info,@RequestBody LoginModel loginModel){
+        info.newSuccess(this.smsComponent.sendValidateCode("basic",loginModel.getPhoneNum(),loginModel.getVerifyCode()));
+        return info;
     }
 
 }
