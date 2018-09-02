@@ -16,6 +16,10 @@ var providerListUrl=http+"/backend/provider/findByCondition.json";
 var saveProviderUrl=http+"/backend/provider/update.json";
 var enableProviderUrl=http+"/backend/provider/enable.json";
 
+var noticeListUrl=http+"/backend/notice/findByCondition.json";
+var saveNoticeUrl=http+"/backend/notice/update.json";
+var enableNoticeUrl=http+"/backend/notice/enable.json";
+
 var customerListUrl = http+"/backend/customer/findByCondition.json";
 var updatePwdUrl=http+"/backend/user/updatePassword.json";
 var perimissonUrl=http+"/backend/user/getUserPermission.json";

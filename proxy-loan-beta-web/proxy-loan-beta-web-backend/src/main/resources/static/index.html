@@ -75,6 +75,25 @@
         $(function() {
 
             openPwd();
+            var values={};
+            values["type"]="notice";
+            $.ajax({
+                    url : noticeListUrl,
+                    type : "POST",
+                    contentType:"application/json",
+                    data :JSON.stringify(values),
+                    dataType : "json",
+                    success : function(datas) {
+                        for(var idx=0;idx<datas.data.content.length;idx++){
+                            $.messager.show({
+                                title:datas.data.content[idx].title,
+                                msg:datas.data.content[idx].content,
+                                timeout:10000,
+                                showType:'slide'
+                             });
+                        }
+                    }
+                });
 
             $('#editpass').click(function() {
                 $('#w').window('open');

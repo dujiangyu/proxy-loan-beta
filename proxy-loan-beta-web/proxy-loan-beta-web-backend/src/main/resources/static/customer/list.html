@@ -125,6 +125,7 @@
 			var page_Size = $('#productList').datagrid('options').pageSize;
 			values["pageNo"]=page_Number;
 			values["pageSize"]=page_Size;
+			values["customerType"]="query";
 
 			$.ajax({
 				url : customerListUrl,

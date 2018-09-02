@@ -4,7 +4,6 @@ import com.cw.biz.CPContext;
 import com.cw.biz.user.app.dto.YxUserInfoDto;
 import com.cw.biz.user.domain.entity.YxUserInfo;
 import com.cw.biz.user.domain.repository.SeUserInfoRepository;
-import com.cw.core.common.util.Utils;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +78,14 @@ public class YxUserInfoDomainService {
 
            if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())) {
                predicates.add(cb.equal(root.get("userId"), CPContext.getContext().getSeUserInfo().getId()));
+           }
+           if("audit".equals(yxUserInfoDto.getCustomerType())){
+               predicates.add(root.get("name").isNotNull());
+               predicates.add(root.get("certNo").isNotNull());
+           }
+           if("query".equals(yxUserInfoDto.getCustomerType())){
+              predicates.add(root.get("name").isNull());
+              predicates.add(root.get("certNo").isNull());
            }
 
            if(!StringUtils.isEmpty(yxUserInfoDto.getName())) {

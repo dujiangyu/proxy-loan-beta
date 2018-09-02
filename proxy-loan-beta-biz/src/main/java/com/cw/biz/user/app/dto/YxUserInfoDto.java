@@ -40,4 +40,6 @@ public class YxUserInfoDto extends PageDto{
 
     private String endDate;
 
+    private String customerType;
+
 }

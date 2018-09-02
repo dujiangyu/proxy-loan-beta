@@ -125,6 +125,9 @@
 			var page_Size = $('#productList').datagrid('options').pageSize;
 			values["pageNo"]=page_Number;
 			values["pageSize"]=page_Size;
+			values["pageSize"]=page_Size;
+			values["customerType"]="audit";
+
 
 			$.ajax({
 				url : customerListUrl,
@@ -156,11 +159,8 @@
 			});
 		}
 		function isLock(value, row, index){
-			if(value){
-				return "<a>逾期黑名单</a><a>多头借贷</a>";
-			}else{
-				return "<a>天贝API</a>";
-			}
+			return "<a href='detail.html?id='+value>详情</a>";
+
 		}
 	</script>
 </body>
