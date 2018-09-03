@@ -61,6 +61,7 @@ public class ThirdOperateDomainService {
             seUser.setUsername(thirdOperateDto.getName());
             seUser.setrId(1L);
             seUser.setType("manager");
+            seUser.setRoleIdsStr(",20");
             seUser.setPassword(thirdOperateDto.getPassword());
             seUser.setDisplayName(thirdOperateDto.getName());
             seUserService.createUser(seUser);

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>天贝报告</title>
+	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/icon.css">
+	<script type="text/javascript" src="/js/jquery-easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="/js/loan.js"></script>
+	<style type="text/css">
+		<!--
+		ul{ list-style:none; padding:0px; margin:0px; width:100%;
+		height:30px; line-height:30px; border:1px solid #E0ECFF;
+		border-top:0px; font-size:12px;}
+		ul li{ display:block; width:20%; float:left;text-indent:2em}
+		.th{ background:#F1FADE; font-weight:bold; border-top:1px }
+		-->
+	</style>
+</head>
+<body>
+		<div id="productList" style="margin-top: 10px">
+				<ul class="th">
+					<li>查询结果码</li>
+					<li>1命中 </li>
+				</ul>
+				<ul>
+					<li>姓名:XXXXX</li>
+					<li>身份证号:XXXXX</li>
+					<li>全景雷达报告详情:XXXX</li>
+					<li>申请雷达报告详情:XXXX</li>
+				</ul>
+				<ul class="th">
+					<li>多头申请</li>
+				</ul>
+				<ul>
+					<li>查询机构数:999</li>
+					<li>查询消费金融类机构数:999</li>
+					<li>查询网络贷款类机构数:0</li>
+					<li>总查询次数:10</li>
+					<li>最近查询时间:yyyy-MM-dd</li>
+				</ul>
+				<ul class="th">
+					<li>申请历史</li>
+				</ul>
+				<ul>
+					<li>近1个月总查询笔数</li>
+					<li>近3个月总查询笔数</li>
+					<li>近6个月总查询笔数</li>
+				</ul>
+				<ul class="th">
+					<li>履约行为</li>
+				</ul>
+				<ul>
+					<li>贷款放款总订单数</li>
+					<li>贷款已结清订单数</li>
+					<li>贷款逾期订单数</li>
+				</ul>
+
+				<ul class="th">
+					<li>多头贷款</li>
+				</ul>
+				<ul>
+					<li>贷款机构数</li>
+					<li>消费金融类机构数</li>
+					<li>网络贷款类机构数</li>
+				</ul>
+				<ul class="th">
+					<li>贷款历史</li>
+				</ul>
+				<ul>
+					<li>近1个月贷款笔数</li>
+					<li>近3个月贷款笔数</li>
+					<li>近6个月贷款笔数</li>
+					<li>信用贷款时长</li>
+				</ul>
+				<ul class="th">
+					<li>履约意愿</li>
+				</ul>
+				<ul>
+					<li>历史贷款机构成功扣款笔数</li>
+					<li>历史贷款机构失败扣款笔数</li>
+					<li>近1个月贷款机构成功扣款笔数</li>
+					<li>近1个月贷款机构失败扣款笔数</li>
+				</ul>
+				<ul>
+					<li>信用贷款时长</li>
+					<li>最近一次贷款时间</li>
+					<li>信用现状报告详情</li>
+				</ul>
+				<ul class="th">
+					<li>网贷额度</li>
+				</ul>
+				<ul>
+					<li>网贷建议授信额度</li>
+					<li>网络贷款类机构数</li>
+					<li>网络贷款类产品数</li>
+					<li>网络贷款机构最大授信额度</li>
+					<li>网络贷款机构平均授信额度</li>
+				</ul>
+			<ul class="th">
+				<li>消金额度</li>
+			</ul>
+				<ul>
+					<li>消金建议授信额度</li>
+					<li>消费金融类机构数</li>
+					<li>消费金融类产品数</li>
+					<li>消费金融类机构最大授</li>
+					<li>消费金融类机构平均授</li>
+				</ul>
+		</div>
+	<script type="text/javascript">
+		$(function() {
+		    Search();
+		});
+		function Search() {
+			var parameter = parent.$("#searchForm").serializeArray();
+			debugger;
+			var values={};
+			for (var item in parameter) {
+				if(values[parameter[item].name]!=null||values[parameter[item].name]!=undefined) {
+					values[parameter[item].name] = values[parameter[item].name]+","+parameter[item].value.trim();
+				}else{
+					values[parameter[item].name] = parameter[item].value.trim();
+				}
+			}
+			$.ajax({
+				url : queryReiDaUrl,
+				type : "POST",
+				contentType:"application/json",
+				data :JSON.stringify(values),
+				dataType : "json",
+				beforeSend: function () {
+					$.messager.progress({
+					   title: '提示',
+					   msg: '数据加载中，请稍候……',
+					   text: ''
+					});
+				},
+			   complete: function () {
+				 $.messager.progress('close');
+				},
+				success : function(datas) {
+				    if(datas.success){
+						alert(datas.data);
+				    }else{
+				       $.messager.alert('Info', datas.message, 'info');
+
+					}
+				}
+			});
+		}
+	</script>
+</body>
+</html>

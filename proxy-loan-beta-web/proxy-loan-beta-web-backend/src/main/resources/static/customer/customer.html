@@ -21,7 +21,7 @@
 				<th data-options="field:'certNo',width:160,align:'right'">身份证号码</th>
 				<th data-options="field:'bankAccountNo',width:160">银行卡账号</th>
 				<th data-options="field:'registerDate',width:160">注册时间</th>
-				<th data-options="field:'xxxx',width:100,formatter:isLock">操作</th>
+				<th data-options="field:'xxxx',width:100,formatter:detail">操作</th>
 			</tr>
 		</thead>
 	</table>
@@ -158,8 +158,8 @@
 				}
 			});
 		}
-		function isLock(value, row, index){
-			return "<a href='detail.html?id='+value>详情</a>";
+		function detail(value, row, index){
+			return "<a href='audit.html'>详情</a>";
 
 		}
 	</script>

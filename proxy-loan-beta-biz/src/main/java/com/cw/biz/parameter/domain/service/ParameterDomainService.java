@@ -38,30 +38,43 @@ public class ParameterDomainService {
      */
     public Parameter update(IndexParameterDto indexParameterDto){
         //借款起始金额
-        Parameter parameter = repository.findByParameterCode(ParameterEnum.profitPlat.getKey());
+        Parameter parameter = repository.findByParameterCode(ParameterEnum.LEIDAI.getKey());
         if(parameter == null)
         {
             ParameterDto parameterDto = new ParameterDto();
-            parameterDto.setParameterCode(ParameterEnum.profitPlat.getKey());
-            parameterDto.setParameterName(ParameterEnum.profitPlat.getValue());
-            parameterDto.setParameterName(ParameterEnum.profitPlat.getValue());
-            parameterDto.setParameterValue(indexParameterDto.getProfitPlat());
+            parameterDto.setParameterCode(ParameterEnum.LEIDAI.getKey());
+            parameterDto.setParameterName(ParameterEnum.LEIDAI.getValue());
+            parameterDto.setParameterName(ParameterEnum.LEIDAI.getValue());
+            parameterDto.setParameterValue(indexParameterDto.getLeida());
             create(parameterDto);
         }else{
-            parameter.setParameterValue(indexParameterDto.getProfitPlat());
+            parameter.setParameterValue(indexParameterDto.getLeida());
         }
         //借款截止金额
-        Parameter parameter1 = repository.findByParameterCode(ParameterEnum.profitChannel.getKey());
+        Parameter parameter1 = repository.findByParameterCode(ParameterEnum.YUNYINGSHANG.getKey());
         if(parameter1 == null)
         {
             ParameterDto parameterDto = new ParameterDto();
-            parameterDto.setParameterCode(ParameterEnum.profitChannel.getKey());
-            parameterDto.setParameterName(ParameterEnum.profitChannel.getValue());
-            parameterDto.setParameterName(ParameterEnum.profitChannel.getValue());
-            parameterDto.setParameterValue(indexParameterDto.getProfitChannel());
+            parameterDto.setParameterCode(ParameterEnum.YUNYINGSHANG.getKey());
+            parameterDto.setParameterName(ParameterEnum.YUNYINGSHANG.getValue());
+            parameterDto.setParameterName(ParameterEnum.YUNYINGSHANG.getValue());
+            parameterDto.setParameterValue(indexParameterDto.getYunyingshang());
             create(parameterDto);
         }else{
-            parameter1.setParameterValue(indexParameterDto.getProfitChannel());
+            parameter1.setParameterValue(indexParameterDto.getYunyingshang());
+        }
+
+        //借款截止金额
+        Parameter parameter2 = repository.findByParameterCode(ParameterEnum.REPORT.getKey());
+        if(parameter2 == null){
+            ParameterDto parameterDto = new ParameterDto();
+            parameterDto.setParameterCode(ParameterEnum.REPORT.getKey());
+            parameterDto.setParameterName(ParameterEnum.REPORT.getValue());
+            parameterDto.setParameterName(ParameterEnum.REPORT.getValue());
+            parameterDto.setParameterValue(indexParameterDto.getReport());
+            create(parameterDto);
+        }else{
+            parameter2.setParameterValue(indexParameterDto.getReport());
         }
 
         return parameter;

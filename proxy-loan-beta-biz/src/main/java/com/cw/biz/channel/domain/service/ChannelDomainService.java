@@ -44,7 +44,7 @@ public class ChannelDomainService {
         channel.from(channelDto);
         channel.setBackLoginUrl("http://www.youxinjk.com/bgLogin.html");
         channel.setUserId(CPContext.getContext().getSeUserInfo().getId());
-        String token=Utils.genarateUuid();
+        String token= Utils.genarateUuid();
         channel.setCode(token);
         channel.setAccountNo(channelDto.getName());
         channel.setTgUrl("http://www.youxinjk.com/wechat/register.html?channelNo="+token);

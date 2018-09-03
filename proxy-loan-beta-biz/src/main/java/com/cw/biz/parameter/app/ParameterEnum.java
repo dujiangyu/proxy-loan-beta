@@ -6,8 +6,9 @@ package com.cw.biz.parameter.app;
  */
 public enum ParameterEnum {
 
-    profitPlat("profitPlat","平台分成"),
-    profitChannel("profitChannel","渠道分成百分比");
+    LEIDAI("tianbeileidai","天贝全景雷达"),
+    YUNYINGSHANG("yingyunshang","天贝运营商"),
+    REPORT("tianbeireport","天贝报告");
 
     private String key;
     private String value;

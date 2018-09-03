@@ -11,7 +11,7 @@
 
     <artifactId>proxy-loan-beta-web</artifactId>
     <packaging>pom</packaging>
-    <name>proxy-loan-web</name>
+    <name>proxy-loan-beta-web</name>
     <modules>
         <module>proxy-loan-beta-web-common</module>
         <module>proxy-loan-beta-web-backend</module>

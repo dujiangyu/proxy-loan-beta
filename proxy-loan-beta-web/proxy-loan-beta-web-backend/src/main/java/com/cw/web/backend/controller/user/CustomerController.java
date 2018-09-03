@@ -5,6 +5,9 @@ package com.cw.web.backend.controller.user;/*
  * &lt;修改描述:&gt;
  */
 
+import com.cw.biz.CwException;
+import com.cw.biz.tianbei.TianBeiClient;
+import com.cw.biz.user.app.dto.CustomerAuditDto;
 import com.cw.biz.user.app.dto.YxUserInfoDto;
 import com.cw.biz.user.app.service.CustomerAppService;
 import com.cw.web.backend.controller.AbstractBackendController;
@@ -22,6 +25,9 @@ public class CustomerController  extends AbstractBackendController {
     @Autowired
     private CustomerAppService yxUserInfoAppService;
 
+    @Autowired
+    private TianBeiClient tianBeiClient;
+
     /**
      * 客户查询
      * @param yxUserInfoDto
@@ -37,5 +43,28 @@ public class CustomerController  extends AbstractBackendController {
         cpViewResultInfo.setMessage("查询成功");
         return cpViewResultInfo;
     }
+
+
+    /**
+    * 天贝全景雷达接口
+    * @param customerAuditDto
+    * @return
+    */
+   @PostMapping("/customer/queryTianbeiLeida.json")
+   @ResponseBody
+   public CPViewResultInfo queryTianbeiLeida(@RequestBody CustomerAuditDto customerAuditDto) {
+       CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
+       try {
+           String result = tianBeiClient.getRadar(customerAuditDto.getName(), customerAuditDto.getPhone(), customerAuditDto.getIdCard());
+           cpViewResultInfo.setData(result);
+           cpViewResultInfo.setSuccess(true);
+           cpViewResultInfo.setMessage("查询成功");
+       }catch (Exception e){
+           cpViewResultInfo.setSuccess(false);
+           throw new CwException(e.getMessage());
+
+       }
+       return cpViewResultInfo;
+   }
 
 }

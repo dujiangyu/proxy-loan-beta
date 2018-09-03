@@ -49,11 +49,14 @@ public class ParameterAppService {
         IndexParameterDto indexParameterDto = new IndexParameterDto();
         List<Parameter> productList = parameterDomainService.findAll();
         for(Parameter parameter : productList){
-            if(ParameterEnum.profitChannel.getKey().equals(parameter.getParameterCode())) {
-                indexParameterDto.setProfitChannel(parameter.getParameterValue());
+            if(ParameterEnum.LEIDAI.getKey().equals(parameter.getParameterCode())) {
+                indexParameterDto.setLeida(parameter.getParameterValue());
             }
-            if(ParameterEnum.profitPlat.getKey().equals(parameter.getParameterCode())) {
-                indexParameterDto.setProfitPlat(parameter.getParameterValue());
+            if(ParameterEnum.YUNYINGSHANG.getKey().equals(parameter.getParameterCode())) {
+                indexParameterDto.setYunyingshang(parameter.getParameterValue());
+            }
+            if(ParameterEnum.REPORT.getKey().equals(parameter.getParameterCode())) {
+                indexParameterDto.setReport(parameter.getParameterValue());
             }
 
         }

@@ -65,7 +65,9 @@ public class AgentDomainService {
             SeUser seUser = new SeUser();
             seUser.setUsername(agentDto.getName());
             seUser.setPassword(agentDto.getPassword());
+            seUser.setMerchantId(1L);
             seUser.setrId(1L);
+            seUser.setRoleIdsStr(",18");
             seUser.setType("manager");
             seUser.setDisplayName(agentDto.getName());
             seUserService.createUser(seUser);

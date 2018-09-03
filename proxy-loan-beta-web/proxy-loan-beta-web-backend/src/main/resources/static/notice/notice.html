@@ -171,7 +171,7 @@
 		function editProduct(){
 			var row = $("#productList").datagrid("getSelected");
 			if (row) {
-				$('#dlg').dialog('open').dialog('setTitle','代理商信息修改');
+				$('#dlg').dialog('open').dialog('setTitle','公告信息修改');
 				$("#fm").form("load", row);
 			}else{
 				$.messager.alert('温馨提示', "请选择需要操作的代理商", 'info');

@@ -1,5 +1,5 @@
 var http="http://127.0.0.1:9527/";
-// var http = "http://120.79.255.186:8080/";
+// var http = "http://120.79.254.15/";
 var allProductAllUrl = http + "/backend/product/findAllProduct.json";
 var channelAllUrl=http+"/backend/channel/findAllChannel.json";
 var uploadUrl = http + "/common/upload.json";
@@ -19,6 +19,9 @@ var enableProviderUrl=http+"/backend/provider/enable.json";
 var noticeListUrl=http+"/backend/notice/findByCondition.json";
 var saveNoticeUrl=http+"/backend/notice/update.json";
 var enableNoticeUrl=http+"/backend/notice/enable.json";
+//参数
+var findParameterUrl = http + "/backend/parameter/findParameter.json";
+var saveParameterUrl = http + "/backend/parameter/update.json";
 
 var customerListUrl = http+"/backend/customer/findByCondition.json";
 var updatePwdUrl=http+"/backend/user/updatePassword.json";
@@ -30,6 +33,10 @@ var roleListUrl =http+ "/backend/role/findAllRole.json";
 var roleAllListUrl=http+"/backend/role/findByCondition.json";
 var saveRoleUrl=http+"/backend/role/update.json";
 var allRoleIdsUrl=http+"/backend/role/findAllResource.json";
+
+//三方接口
+var queryReiDaUrl=http+"/backend/customer/queryTianbeiLeida.json";
+
 function getQueryString(key){
     var reg = new RegExp("(^|&)"+key+"=([^&]*)(&|$)");
     var result = window.location.search.substr(1).match(reg);
@@ -109,32 +116,58 @@ if(row) {
     $.messager.alert('温馨提示', "请选择需要操作的数据行", 'info');
 }
 }
-function enableLinkSettle(){
-    var row = $("#productList").datagrid("getSelected");
-    if(row) {
-        var message="";
-        if(row.isValid){
-            message="是否停用该链接？";
-        }else{
-            message="是否启用该链接？";
+function post(url,data) {
+    var returnData;
+    data["type"]="manager";
+    var json = JSON.stringify(data);
+    json = json.replace(/\r\n/g,"\n");
+    $.ajax({
+        url: url,
+        contentType: "application/json;charset=utf-8",
+        data: json,
+        method:"post",
+        dataType: "json",
+        async: false,
+        beforeSend:function () {
+        },
+        success: function (data) {
+            returnData = data;
+        },
+        complete:function () {
+        },
+        error: function () {
+            //showTipMessage("数据请求错误!",true);
         }
-        $.messager.confirm('温馨提示', message, function (r) {
-            if (r) {
-                $.ajax({
-                    url: deleteLinkUrl,
-                    type: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify({"id": row.linkId}),
-                    dataType: "json",
-                    success: function (datas) {
-                        Search(1,30);
-                    }
-                });
-            }
-        });
-    }else{
-        $.messager.alert('温馨提示', "请选择需要操作的数据行", 'info');
-    }
+
+    });
+    return returnData;
+}
+
+function httpGet(url,data) {
+    var returnData;
+    data = data;
+    $.ajax({
+        url: url,
+        contentType: "application/json;charset=utf-8",
+        data: data,
+        method:"get",
+        dataType: "json",
+        async: false,
+        beforeSend:function () {
+        },
+        success: function (data) {
+            returnData = data;
+        },
+        complete:function () {
+        },
+        error: function () {
+            //showTipMessage("数据请求错误!",true);
+        }
+    });
+    return returnData;
+}
+function showTipMessage(message) {
+    $.messager.alert("提示",message,"");
 }
 function getCookie(name)
 {

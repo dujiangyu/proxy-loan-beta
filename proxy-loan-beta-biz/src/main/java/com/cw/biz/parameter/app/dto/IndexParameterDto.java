@@ -15,8 +15,9 @@ import java.math.BigDecimal;
 public class IndexParameterDto extends BaseDto{
 
     //开始金额
-    private BigDecimal profitChannel;
+    private BigDecimal leida;
     //结束金额
-    private BigDecimal profitPlat;
+    private BigDecimal yunyingshang;
 
+    private BigDecimal report;
 }
