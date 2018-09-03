@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.cw.biz.tianbei.app.dto.TianBeiResultDto;
 import com.cw.biz.tianbei.app.service.TianBeiResultAppService;
 import com.cw.biz.tianbei.enums.ENUM_TIANBEI_TYPE;
+import com.cw.core.common.util.HttpClientUtil;
 import com.cw.core.common.util.ObjectHelper;
-import com.zds.common.net.HttpUtil;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class TianBeiClient {
     /**
      * 密钥
      */
-    private static final String SECRET="";
+    private static final String SECRET="rmgwyl0rncatnnrq2jeucn1fkfy71euj";
 
 
     private static final Logger logger = Logger.getLogger(TianBeiClient.class);
@@ -175,10 +176,10 @@ public class TianBeiClient {
     }
     
 
-    private static String doCommonPost(String url, Map<String, String> dataMap, Map<String, String> headerMap){
+    private static String doCommonPost(String url, Map<String, Object> dataMap, Map<String, Object> headerMap) throws UnsupportedEncodingException {
         if(headerMap==null)headerMap=new HashMap<>();
         if(!headerMap.containsKey("X-Mall-Token"))headerMap.put("X-Mall-Token",SECRET);
-        return HttpUtil.getInstance().get(url,dataMap,headerMap,URL_PARAM_DECODECHARSET_UTF8).getBody();
+        return HttpClientUtil.httpPostRequest(url,headerMap,dataMap);
     }
 
     /**
@@ -221,14 +222,14 @@ public class TianBeiClient {
      * @Date: 2018/9/2 3:32
      * @Version: 1
      */
-    public String getTelecomOperatorsReportInit(String name,String phone,String idNo,String servicePwd){
+    public String getTelecomOperatorsReportInit(String name,String phone,String idNo,String servicePwd) throws Exception {
         TianBeiResultDto tianBeiResultDto=this.tianBeiResultAppService.findByIdcardAndQueryType(idNo, ENUM_TIANBEI_TYPE.TELECOM_OPERATORS_REPORT_RESULT.code);
         if(ObjectHelper.isNotEmpty(tianBeiResultDto)){
             return tianBeiResultDto.getQueryResult();
         }
         //初始化
         String initUrl=TELECOM_OPERATORS_REPORT+"init";
-        Map<String,String> initPara=new HashMap<>();
+        Map<String,Object> initPara=new HashMap<>();
         initPara.put("name",name);
         initPara.put("phone",phone);
         initPara.put("idNo",idNo);
@@ -258,14 +259,14 @@ public class TianBeiClient {
      * @Date: 2018/9/2 3:31
      * @Version: 1
      */
-    public String submitValidateCode(String idCard,String openId,String captcha){
+    public String submitValidateCode(String idCard,String openId,String captcha) throws Exception {
         TianBeiResultDto tianBeiResultDto=this.tianBeiResultAppService.findByIdcardAndQueryType(idCard, ENUM_TIANBEI_TYPE.TELECOM_OPERATORS_REPORT_RESULT.code);
         if(ObjectHelper.isNotEmpty(tianBeiResultDto)){
             return tianBeiResultDto.getQueryResult();
         }
         //提交验证码
         String validateCodeUrl=TELECOM_OPERATORS_REPORT+"captcha/commit";
-        Map<String,String> param=new HashMap<>();
+        Map<String,Object> param=new HashMap<>();
         param.put("openId",openId);
         param.put("captcha",captcha);
         String resultStr=doCommonPost(validateCodeUrl,param,null);
@@ -290,9 +291,9 @@ public class TianBeiClient {
      * @Date: 2018/9/2 3:35
      * @Version: 1
      */
-    public String resendVlidateCode(String openId){
+    public String resendVlidateCode(String openId) throws Exception {
         String url=TELECOM_OPERATORS_REPORT+"captcha/resend";
-        Map<String,String> param=new HashMap<>();
+        Map<String,Object> param=new HashMap<>();
         param.put("openId",openId);
         return doCommonPost(url,param,null);
     }
@@ -327,10 +328,10 @@ public class TianBeiClient {
 
     }
 
-    private String getTelecomOperatorsReport(String idCard,String openId){
+    private String getTelecomOperatorsReport(String idCard,String openId) throws Exception {
         //获得报告
         String getReportUrl=TELECOM_OPERATORS_REPORT+"report";
-        Map<String,String> param=new HashMap<>();
+        Map<String,Object> param=new HashMap<>();
         param.put("openId",openId);
         String resultStr=doCommonPost(getReportUrl,param,null);
         JSONObject resultJson=JSON.parseObject(resultStr);

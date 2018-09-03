@@ -9,6 +9,7 @@ import com.cw.biz.sms.enums.ENUM_SMS_PARAMS;
 import com.cw.biz.sms.enums.ENUM_SMS_RESPOND;
 import com.cw.core.common.enums.ENUM_SMS_TYPE;
 import com.cw.core.common.util.ObjectHelper;
+import com.cw.core.common.util.VerifyCodeUtil;
 import com.zds.common.lang.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +113,8 @@ public class SmsComponent {
      * @Date: 2018/9/1 22:00
      * @Version: 1
      */
-    public boolean sendValidateCode(String mouldCode,String phoneNum,String validateCode){
+    public boolean sendValidateCode(String mouldCode,String phoneNum){
+        String validateCode= VerifyCodeUtil.generateVerifyCode(5);
         LinkedHashMap<String,String> smsPara=new LinkedHashMap<>();
         smsPara.put(ENUM_SMS_PARAMS.phone.toString(),phoneNum);
         smsPara.put(ENUM_SMS_PARAMS.userName.toString(),phoneNum);

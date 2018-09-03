@@ -1,6 +1,7 @@
-var httpUrl = "http://120.79.255.186";
+// var httpUrl = "http://120.79.255.186";
+var httpUrl = "http://192.168.2.105:9527";
 // var httpUrl = "http://192.168.1.105:9999";
-var sendSmsUrl = httpUrl + "/common/sendSmsVerify.json";
+var sendSmsUrl = httpUrl + "/common/sendValidateCode.json";
 var loginUrl = httpUrl + "/common/passwordLogin.json";
 var findByIdUrl = httpUrl +"/front/userInfo/findById.json";
 var findParameterUrl = httpUrl +"/front/parameter/findParameter.json";
@@ -423,10 +424,10 @@ function showRegisterPro(proHtml) {
     layer.full(index);
 }
 function validateData() {
-    if(!isMobile($("#userName"))){
+    if(!isMobile($("#phoneNum"))){
         showMessage("手机号码格式不正确");
-        $("#userName").select();
-        $("#userName").focus();
+        $("#phoneNum").select();
+        $("#phoneNum").focus();
         return false;
     }
     if($("#name").val()==""){

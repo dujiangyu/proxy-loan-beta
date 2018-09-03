@@ -23,4 +23,16 @@ public interface SmsSendResultRepository extends JpaRepository<SmsSendResult,Lon
      */
     SmsSendResult findTop1ByPhoneNumAndEventTypeAndSmsTypeOrderByRawAddTimeDesc(String phoneNum,String eventType,String smsType);
 
+    /**
+     * @Author: Away
+     * @Title: findTop1ByPhoneNumAndSmsTypeOrderByRawAddTimeDesc
+     * @Description: 以创建时间为倒序并按照手机号和短信类型查找最新一条数据
+     * @Param phoneNum
+     * @Param smsType
+     * @Return: com.cw.biz.sms.domain.entity.SmsSendResult
+     * @Date: 2018/9/1 16:11
+     * @Version: 1
+     */
+    SmsSendResult findTop1ByPhoneNumAndSmsTypeOrderByRawAddTimeDesc(String phoneNum,String smsType);
+
 }

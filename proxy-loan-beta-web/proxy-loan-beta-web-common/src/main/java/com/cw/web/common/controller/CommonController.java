@@ -92,7 +92,7 @@ public class CommonController extends AbstractController {
 
     @PostMapping("/sendValidateCode.json")
     public CPViewResultInfo sendValidateCode(CPViewResultInfo info,@RequestBody LoginModel loginModel){
-        info.newSuccess(this.smsComponent.sendValidateCode("basic",loginModel.getPhoneNum(),loginModel.getVerifyCode()));
+        info.newSuccess(this.smsComponent.sendValidateCode("basic",loginModel.getPhoneNum()));
         return info;
     }
 

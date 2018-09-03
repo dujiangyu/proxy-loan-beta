@@ -46,6 +46,21 @@ public class SmsSendResultDomainService {
 
     /**
      * @Author: Away
+     * @Title: findTop1ByPhoneNumAndSmsTypeOrderByRawAddTimeDesc
+     * @Description: 以创建时间为倒序并按照手机号和短信类型查找最新一条数据
+     * @Param phoneNum
+     * @Param smsType
+     * @Return: com.cw.biz.sms.domain.entity.SmsSendResult
+     * @Date: 2018/9/1 16:11
+     * @Version: 1
+     */
+    public SmsSendResultDto findTop1ByPhoneNumAndSmsTypeOrderByRawAddTimeDesc(String phoneNum,String smsType){
+        SmsSendResult sourceData=this.smsSendResultRepository.findTop1ByPhoneNumAndSmsTypeOrderByRawAddTimeDesc(phoneNum,smsType);
+        return ObjectHelper.isNotEmpty(sourceData)?sourceData.to(SmsSendResultDto.class):null;
+    }
+
+    /**
+     * @Author: Away
      * @Title: saveResult
      * @Description: 保存短信发送结果
      * @Param eventType 事件类型
