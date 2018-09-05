@@ -14,6 +14,7 @@ import com.cw.biz.user.app.service.CustomerAppService;
 import com.cw.biz.user.domain.dao.SeUserDao;
 import com.cw.biz.user.domain.entity.SeUser;
 import com.cw.biz.user.domain.service.PasswordHelper;
+import com.cw.biz.user.domain.service.SeUserService;
 import com.cw.biz.user.domain.service.YxUserInfoDomainService;
 import com.cw.core.common.enums.ENUM_SMS_TYPE;
 import com.cw.core.common.util.ObjectHelper;
@@ -58,8 +59,9 @@ public class SmsComponent {
 
     @Autowired
     private SeUserDao seUserDao;
+
     @Autowired
-    private PasswordHelper passwordHelper;
+    private SeUserService seUserService;
 
     private final SmsMouldAppService smsMouldAppService;
 
@@ -165,15 +167,15 @@ public class SmsComponent {
            newUser.setType("user");
            newUser.setrId(1L);
            newUser.setPassword(registerDto.getVerifyCode());
-           SeUser seUser= createUser(newUser);
+           SeUser seUser= seUserService.createUser(newUser);
            //保存用户信息
            registerUserInfo(seUser,registerDto);
        }else{
-           if(!"user".equals(seUser1.getType()))
-           {
+           if(!"user".equals(seUser1.getType())){
                CwException.throwIt("用户类型不匹配");
            }
-
+           seUser1.setPassword(registerDto.getVerifyCode());
+           seUserService.updateUser(seUser1, Boolean.TRUE);
            //保存用户信息
            registerUserInfo(seUser1,registerDto);
        }
@@ -189,14 +191,4 @@ public class SmsComponent {
         customerAppService.update(dto);
     }
 
-    /**
-        * 创建用户
-        *
-        * @param user
-        */
-       public SeUser createUser(SeUser user) {
-           //加密密码
-           passwordHelper.encryptPassword(user);
-           return seUserDao.createUser(user);
-       }
 }

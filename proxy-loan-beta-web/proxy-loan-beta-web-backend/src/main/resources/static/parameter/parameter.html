@@ -36,11 +36,15 @@
 		function findByData() {
 		    var param = "1=1";
 		    var result = httpGet(findParameterUrl,param);
-		    if(result.success)
-		    {
+		    if(result.success){
 		        $("#tianbeireport").val(result.data.report);
 		        $("#tianbeileidai").val(result.data.leida);
 		        $("#yunyingshang").val(result.data.yunyingshang);
+				$("#blackList").val(result.data.blackList);
+				$("#overdue").val(result.data.overdue);
+				$("#infoAuth").val(result.data.infoAuth);
+				$("#overdueFile").val(result.data.overdueFile);
+				$("#zmf").val(result.data.zmf);
 		    }else{
 		        showTipMessage(result.message,true);
 		    }

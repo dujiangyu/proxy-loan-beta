@@ -146,27 +146,10 @@
                         <div class="icon"><img src="assets/images/phone.png" alt=""/></i></div>
 
                         <div class="input">
-                            <input type="tel" id="phoneNum" name="phoneNum" maxlength="11" data-val="true"
+                            <input type="tel" id="userName" name="userName" maxlength="11" data-val="true"
                                    data-val-required="请输入手机号" placeholder="请输入手机号">
                         </div>
                     </li>
-
-                    <li class="clearfix">
-                        <div class="icon"><img src="assets/images/name.png" alt=""/></i></div>
-
-                        <div class="input">
-                            <input type="text" id="name" name="name" placeholder="请输入姓名">
-                        </div>
-                    </li>
-
-                    <li class="clearfix">
-                        <div class="icon"><img src="assets/images/fen.png" alt=""/></i></div>
-
-                        <div class="input">
-                            <input type="tel" id="sesame" name="sesame" maxlength="3" placeholder="输入芝麻分">
-                        </div>
-                    </li>
-
                     <li class="clearfix" id="sendSmsContent">
                         <div class="icon"><img src="/assets/images/name.png" alt=""/></i></div>
                         <div class="input clearfix">
@@ -230,7 +213,7 @@
                 var json = serializeToJson($("#registerForm"));
                 var result = loginPost(loginUrl, json);
                 if (result.success) {
-                    window.location = result.data;
+                    window.location = "user-basic.html";
                 } else {
                     showMessage(result.message);
                 }

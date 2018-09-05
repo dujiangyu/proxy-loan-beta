@@ -1,6 +1,8 @@
 package com.cw.biz.user.domain.service;
 
 import com.cw.biz.CPContext;
+import com.cw.biz.channel.app.dto.ChannelDto;
+import com.cw.biz.channel.app.service.ChannelAppService;
 import com.cw.biz.user.app.dto.YxUserInfoDto;
 import com.cw.biz.user.domain.entity.YxUserInfo;
 import com.cw.biz.user.domain.repository.SeUserInfoRepository;
@@ -27,6 +29,9 @@ public class YxUserInfoDomainService {
 
     @Autowired
     private SeUserInfoRepository repository;
+
+    @Autowired
+    private ChannelAppService appService;
     /**
      * 新增客户信息
      * @param cwUserInfoDto
@@ -34,6 +39,11 @@ public class YxUserInfoDomainService {
      */
     private YxUserInfo create(YxUserInfoDto cwUserInfoDto){
         YxUserInfo cwUserInfo = new YxUserInfo();
+        if(cwUserInfoDto.getSourceChannel()!=null) {
+            ChannelDto dto = appService.findByCode(cwUserInfoDto.getSourceChannel());
+            cwUserInfoDto.setChannelUserId(dto.getChannelUserId().intValue());
+            cwUserInfoDto.setUserId(dto.getUserId());
+        }
         cwUserInfo.from(cwUserInfoDto);
         return repository.save(cwUserInfo);
     }
@@ -45,7 +55,7 @@ public class YxUserInfoDomainService {
      */
     public YxUserInfo update(YxUserInfoDto cwUserInfoDto){
         //借款起始金额
-        YxUserInfo cwUserInfo = repository.findByUserId(cwUserInfoDto.getUserId());
+        YxUserInfo cwUserInfo = repository.findByPhone(CPContext.getContext().getSeUserInfo().getPhone());
         if(cwUserInfo == null)
         {
             cwUserInfo = create(cwUserInfoDto);
@@ -63,6 +73,11 @@ public class YxUserInfoDomainService {
     public YxUserInfo findById(Long id){
         return repository.findOne(id);
     }
+
+    public YxUserInfo findByPhone(String phone){
+          return repository.findByPhone(phone);
+      }
+
 
     /**
     * 按条件查询渠道列表

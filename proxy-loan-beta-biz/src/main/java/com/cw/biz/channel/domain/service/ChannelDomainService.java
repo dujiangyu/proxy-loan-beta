@@ -47,7 +47,7 @@ public class ChannelDomainService {
         String token= Utils.genarateUuid();
         channel.setCode(token);
         channel.setAccountNo(channelDto.getName());
-        channel.setTgUrl("http://www.youxinjk.com/wechat/register.html?channelNo="+token);
+        channel.setTgUrl("http://www.youxinjk.com/register.html?channelNo="+token);
         channel.prepareSave();
         return repository.save(channel);
     }
@@ -120,6 +120,10 @@ public class ChannelDomainService {
 
     public Channel findByChannelUserId(Long id){
        return repository.findByChannelUserId(id);
+    }
+
+    public Channel findByCode(String code){
+       return repository.findByCode(code);
     }
 
     /**

@@ -1,14 +1,9 @@
-// var httpUrl = "http://120.79.255.186";
-var httpUrl = "http://192.168.2.105:9527";
-// var httpUrl = "http://192.168.1.105:9999";
+var httpUrl = "http://127.0.0.1:9527";
+// var httpUrl = "http://www.youxinjk.com/";
 var sendSmsUrl = httpUrl + "/common/sendValidateCode.json";
 var loginUrl = httpUrl + "/common/passwordLogin.json";
-var findByIdUrl = httpUrl +"/front/userInfo/findById.json";
-var findParameterUrl = httpUrl +"/front/parameter/findParameter.json";
-var updateUrl = httpUrl +"/front/userInfo/update.json";
-var productListUrl = httpUrl + "/front/product/findByCondition.json";
-var findProductByIdUrl = httpUrl +"/front/product/findById.json";
-var applyLoanUrl = httpUrl +"/front/product/applyLoan.json";
+var findByIdUrl = httpUrl +"/wechat/customer/findById.json";
+var updateUrl = httpUrl +"/wechat/customer/updateUserInfo.json";
 /**
  * 是否是手机号码
  * @param phone
@@ -424,32 +419,32 @@ function showRegisterPro(proHtml) {
     layer.full(index);
 }
 function validateData() {
-    if(!isMobile($("#phoneNum"))){
+    if(!isMobile($("#userName"))){
         showMessage("手机号码格式不正确");
         $("#phoneNum").select();
         $("#phoneNum").focus();
         return false;
     }
-    if($("#name").val()==""){
-        showMessage("请填写姓名");
-        $("#name").select();
-        $("#name").focus();
-        return false;
-    }
-    if($("#sesame").val()==""){
-        showMessage("请填写芝麻分");
-        $("#sesame").select();
-        $("#sesame").focus();
-        return false;
-    }
-    //验证芝麻分是否在合理范围之内
-    if($("#sesame").val()!=""&&$("#sesame").val()!=undefined){
-        if($("#sesame").val()>1000||$("#sesame").val()<500){
-            showMessage("芝麻分填写范围是1000之内");
-            $("#sesame").select();
-            $("#sesame").focus();
-            return false;
-        }
-    }
+    // if($("#name").val()==""){
+    //     showMessage("请填写姓名");
+    //     $("#name").select();
+    //     $("#name").focus();
+    //     return false;
+    // }
+    // if($("#sesame").val()==""){
+    //     showMessage("请填写芝麻分");
+    //     $("#sesame").select();
+    //     $("#sesame").focus();
+    //     return false;
+    // }
+    // //验证芝麻分是否在合理范围之内
+    // if($("#sesame").val()!=""&&$("#sesame").val()!=undefined){
+    //     if($("#sesame").val()>1000||$("#sesame").val()<500){
+    //         showMessage("芝麻分填写范围是1000之内");
+    //         $("#sesame").select();
+    //         $("#sesame").focus();
+    //         return false;
+    //     }
+    // }
     return true;
 }

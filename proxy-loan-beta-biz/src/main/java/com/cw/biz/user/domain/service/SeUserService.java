@@ -39,8 +39,10 @@ public class SeUserService {
     public SeUser createUser(SeUser user) {
         //加密密码
         passwordHelper.encryptPassword(user);
-        if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())){
-            user.setMerchantId(CPContext.getContext().getSeUserInfo().getId());
+        if(CPContext.getContext().getSeUserInfo()!=null) {
+            if (!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())) {
+                user.setMerchantId(CPContext.getContext().getSeUserInfo().getId());
+            }
         }
         return seUserDao.createUser(user);
     }

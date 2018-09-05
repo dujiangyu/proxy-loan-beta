@@ -68,26 +68,24 @@ public class CustomerController  extends AbstractBackendController {
         cpViewResultInfo.setMessage("查询成功");
         return cpViewResultInfo;
     }
-    /** 查询用户信息
-     *&lt;功能简述&gt;
-     *&lt;功能详细描述&gt;
-     * ${tags} [参数说明]
-     *
-     * @return ${return_type} [返回类型说明]
-     * @exception throws [异常类型] [异常说明]
-     * @see [类、类#方法、类#成员]
-     */
-    @GetMapping("/customer/findById.json")
-    @ResponseBody
-    public CPViewResultInfo findById(Long id) {
-       CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
-       YxUserInfoDto yxUserInfoDto = yxUserInfoAppService.findById(id);
-       cpViewResultInfo.setData(yxUserInfoDto);
-       cpViewResultInfo.setSuccess(true);
-       cpViewResultInfo.setMessage("查询成功");
-       return cpViewResultInfo;
-    }
-
+    /** 修改用户信息
+         *&lt;功能简述&gt;
+         *&lt;功能详细描述&gt;
+         * ${tags} [参数说明]
+         *
+         * @return ${return_type} [返回类型说明]
+         * @exception throws [异常类型] [异常说明]
+         * @see [类、类#方法、类#成员]
+         */
+        @PostMapping("/customer/update.json")
+        @ResponseBody
+        public CPViewResultInfo update(@RequestBody YxUserInfoDto yxUserInfoDto) {
+           CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
+           yxUserInfoAppService.update(yxUserInfoDto);
+           cpViewResultInfo.setSuccess(true);
+           cpViewResultInfo.setMessage("查询成功");
+           return cpViewResultInfo;
+        }
     /**
     * 天贝全景雷达接口
     * @param customerAuditDto

@@ -10,4 +10,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  */
 public interface SeUserInfoRepository extends JpaRepository<YxUserInfo,Long>,JpaSpecificationExecutor<YxUserInfo> {
     YxUserInfo findByUserId(Long userId);
+
+    YxUserInfo findByPhone(String phone);
+
 }

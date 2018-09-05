@@ -1,5 +1,5 @@
 var http="http://127.0.0.1:9527/";
-// var http = "http://120.79.254.15/";
+// var http = "http://www.youxinjk.com/";
 var allProductAllUrl = http + "/backend/product/findAllProduct.json";
 var channelAllUrl=http+"/backend/channel/findAllChannel.json";
 var uploadUrl = http + "/common/upload.json";
@@ -15,6 +15,7 @@ var enableChannelUrl=http+"/backend/channel/enable.json";
 var providerListUrl=http+"/backend/provider/findByCondition.json";
 var saveProviderUrl=http+"/backend/provider/update.json";
 var enableProviderUrl=http+"/backend/provider/enable.json";
+var saveProviderRechargeUrl=http+"/backend/provider/recharge.json";
 
 var noticeListUrl=http+"/backend/notice/findByCondition.json";
 var saveNoticeUrl=http+"/backend/notice/update.json";
@@ -22,8 +23,10 @@ var enableNoticeUrl=http+"/backend/notice/enable.json";
 //参数
 var findParameterUrl = http + "/backend/parameter/findParameter.json";
 var saveParameterUrl = http + "/backend/parameter/update.json";
+var findByCodeUrl = http + "/backend/parameter/findByCode.json";
 
 var customerListUrl = http+"/backend/customer/findByCondition.json";
+var findByIdUrl = http+"/backend/customer/findById.json";
 var updatePwdUrl=http+"/backend/user/updatePassword.json";
 var perimissonUrl=http+"/backend/user/getUserPermission.json";
 var userListUrl=http+"/backend/user/findByCondition.json";
@@ -36,6 +39,13 @@ var allRoleIdsUrl=http+"/backend/role/findAllResource.json";
 
 //三方接口
 var queryReiDaUrl=http+"/backend/customer/queryTianbeiLeida.json";
+var queryTianbeiUrl=http+"/backend/customer/queryTianbeiReport.json";
+var queryYysUrl=http+"/backend/customer/queryTianbeiYys.json";
+var blacklistCheckUrl = http+"/backend/customer/queryTianbeiBlackList.json";
+var jtOverdueCheckUrl = http+"/backend/customer/queryTianbeiOverdue.json";
+var xyInfoCheckUrl=http+"/backend/customer/queryXyInfoCheck.json";
+var xyZmfUrl=http+"/backend/customer/queryXyZmf.json";
+var xyOverdueFileUrl=http+"/backend/customer/queryXyOverdueFile.json";
 
 function getQueryString(key){
     var reg = new RegExp("(^|&)"+key+"=([^&]*)(&|$)");
@@ -166,6 +176,24 @@ function httpGet(url,data) {
     });
     return returnData;
 }
+function getArgsFromHref(sHref, sArgName)
+{   var args    = sHref.split("?");
+    var retval = 0;
+    if(args[0] == sHref) /*参数为空*/
+    {
+        return retval; /*无需做任何处理*/
+    }
+    var str = args[1];
+    args = str.split("&");
+    for(var i = 0; i < args.length; i ++)
+    {
+        str = args[i];
+        var arg = str.split("=");
+        if(arg.length <= 1) continue;
+        if(arg[0] == sArgName) retval = arg[1];
+    }
+    return retval;
+}
 function showTipMessage(message) {
     $.messager.alert("提示",message,"");
 }
@@ -178,4 +206,61 @@ function getCookie(name)
   return (arr[2]);
  else
   return null;
+}
+function datetimeFormat_1(longTypeDate){
+    var datetimeType = "";
+    var date = new Date();
+    date.setTime(longTypeDate);
+    datetimeType+= date.getFullYear();   //年
+    datetimeType+= "-" + getMonth(date); //月
+    datetimeType += "-" + getDay(date);   //日
+    datetimeType+= "&nbsp;&nbsp;" + getHours(date);   //时
+    datetimeType+= ":" + getMinutes(date);      //分
+    datetimeType+= ":" + getSeconds(date);      //分
+    return datetimeType;
+}
+//返回 01-12 的月份值
+function getMonth(date){
+    var month = "";
+    month = date.getMonth() + 1; //getMonth()得到的月份是0-11
+    if(month<10){
+        month = "0" + month;
+    }
+    return month;
+}
+//返回01-30的日期
+function getDay(date){
+    var day = "";
+    day = date.getDate();
+    if(day<10){
+        day = "0" + day;
+    }
+    return day;
+}
+//返回小时
+function getHours(date){
+    var hours = "";
+    hours = date.getHours();
+    if(hours<10){
+        hours = "0" + hours;
+    }
+    return hours;
+}
+//返回分
+function getMinutes(date){
+    var minute = "";
+    minute = date.getMinutes();
+    if(minute<10){
+        minute = "0" + minute;
+    }
+    return minute;
+}
+//返回秒
+function getSeconds(date){
+    var second = "";
+    second = date.getSeconds();
+    if(second<10){
+        second = "0" + second;
+    }
+    return second;
 }

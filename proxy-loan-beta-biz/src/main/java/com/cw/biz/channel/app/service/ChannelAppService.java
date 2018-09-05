@@ -67,6 +67,10 @@ public class ChannelAppService {
     public ChannelDto findByChannelUserId(Long id){
         return channelDomainService.findByChannelUserId(id).to(ChannelDto.class);
     }
+    //通过推荐码查询渠道用户
+    public ChannelDto findByCode(String code){
+        return channelDomainService.findByCode(code).to(ChannelDto.class);
+    }
 
     /**
      * 按条件查询渠道

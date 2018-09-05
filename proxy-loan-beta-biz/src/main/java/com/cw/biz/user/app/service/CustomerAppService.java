@@ -43,6 +43,15 @@ public class CustomerAppService {
         }
         return cwUserInfoDto;
     }
+
+    public YxUserInfoDto findByPhone(String phone){
+       YxUserInfoDto cwUserInfoDto = new YxUserInfoDto();
+       YxUserInfo cwUserInfo = yxUserInfoDomainService.findByPhone(phone);
+       if(cwUserInfo != null){
+           cwUserInfoDto = cwUserInfo.to(YxUserInfoDto.class);
+       }
+       return cwUserInfoDto;
+   }
     /**
     * 按条件查询渠道
     * @param dto
