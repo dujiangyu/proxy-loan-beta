@@ -204,7 +204,7 @@ public class TianBeiClient {
         paramMap.put("idNo", idNo);
         String resultStr=doCommonGet(null,paramMap,TIANBEI_REPORT);
         JSONObject resultJson=JSON.parseObject(resultStr);
-        if(resultJson.getIntValue("code")==0){
+        if(resultJson.getString("code").equalsIgnoreCase("0")){
             this.tianBeiResultAppService.saveOrUpdate(idNo,ENUM_TIANBEI_TYPE.REPORT.code,resultStr);
         }
         return resultStr;
@@ -236,9 +236,9 @@ public class TianBeiClient {
         initPara.put("servicePwd",servicePwd);
         String initResultStr=doCommonPost(initUrl,initPara,null);
         JSONObject initJson= JSON.parseObject(initResultStr);
-        if(initJson.getIntValue("code")==0){
-            int state=initJson.getIntValue("state");
-            if(state==0){
+        if(initJson.getString("code").equalsIgnoreCase("0")){
+            String state=initJson.getString("state");
+            if(state.equalsIgnoreCase("0")){
                 return getTelecomOperatorsReport(idNo,initJson.getString("openId"));
             }else{
                 return initResultStr;
@@ -271,8 +271,8 @@ public class TianBeiClient {
         param.put("captcha",captcha);
         String resultStr=doCommonPost(validateCodeUrl,param,null);
         JSONObject resultJson=JSON.parseObject(resultStr);
-        if(resultJson.getIntValue("code")==0){
-            if(resultJson.getIntValue("state")==0){
+        if(resultJson.getString("code").equalsIgnoreCase("0")){
+            if(resultJson.getString("state").equalsIgnoreCase("0")){
                 return getTelecomOperatorsReport(idCard, openId);
             }else{
                 return resultStr;
@@ -321,7 +321,7 @@ public class TianBeiClient {
         paramMap.put("idcard", idcard);
         String resultStr=doCommonGet(null,paramMap,url);
         JSONObject resultJson=JSON.parseObject(resultStr);
-        if(resultJson.getIntValue("code")==0){
+        if(resultJson.getString("code").equalsIgnoreCase("0")){
             this.tianBeiResultAppService.saveOrUpdate(idcard,ENUM_TIANBEI_TYPE.RADAR.code,resultStr);
         }
         return resultStr;
@@ -335,8 +335,66 @@ public class TianBeiClient {
         param.put("openId",openId);
         String resultStr=doCommonPost(getReportUrl,param,null);
         JSONObject resultJson=JSON.parseObject(resultStr);
-        if(resultJson.getIntValue("code")==0){
+        if(resultJson.getString("code").equalsIgnoreCase("0")){
             this.tianBeiResultAppService.saveOrUpdate(idCard,ENUM_TIANBEI_TYPE.TELECOM_OPERATORS_REPORT_RESULT.code,resultStr);
+        }
+        return resultStr;
+    }
+
+    /**
+     * @Author: Away
+     * @Title: getBlackList
+     * @Description: 黑名单
+     * @Param phone
+     * @Param name
+     * @Param idcard
+     * @Return: java.lang.String
+     * @Date: 2018/9/4 23:43
+     * @Version: 1
+     */
+    public String getBlackList(String phone,String name,String idcard) throws Exception{
+        TianBeiResultDto tianBeiResultDto=this.tianBeiResultAppService.findByIdcardAndQueryType(idcard, ENUM_TIANBEI_TYPE.BLACKLIST.code);
+        if(ObjectHelper.isNotEmpty(tianBeiResultDto)){
+            return tianBeiResultDto.getQueryResult();
+        }
+        String url="http://credit.beikeyuntiao.com/platform-framework/api/blacklist/report/black";
+        Map<String,String> params=new HashMap<>();
+        params.put("phone",phone);
+        params.put("name",name);
+        params.put("idcard",idcard);
+        String resultStr=doCommonGet(null,params,url);
+        JSONObject resultJson=JSON.parseObject(resultStr);
+        if(resultJson.getString("code").equalsIgnoreCase("0")){
+            this.tianBeiResultAppService.saveOrUpdate(idcard,ENUM_TIANBEI_TYPE.BLACKLIST.code,resultStr);
+        }
+        return resultStr;
+    }
+
+    /**
+     * @Author: Away
+     * @Title: getNoteOverdue
+     * @Description: 借条逾期
+     * @Param phone
+     * @Param name
+     * @Param idcard
+     * @Return: java.lang.String
+     * @Date: 2018/9/4 23:50
+     * @Version: 1
+     */
+    public String getNoteOverdue(String phone,String name,String idcard) throws Exception {
+        TianBeiResultDto tianBeiResultDto=this.tianBeiResultAppService.findByIdcardAndQueryType(idcard, ENUM_TIANBEI_TYPE.NOTEOVERDUE.code);
+        if(ObjectHelper.isNotEmpty(tianBeiResultDto)){
+            return tianBeiResultDto.getQueryResult();
+        }
+        String url="http://credit.beikeyuntiao.com/platform-framework/api/blacklist/report/receipt";
+        Map<String,String> params=new HashMap<>();
+        params.put("phone",phone);
+        params.put("name",name);
+        params.put("idcard",idcard);
+        String resultStr=doCommonGet(null,params,url);
+        JSONObject resultJson=JSON.parseObject(resultStr);
+        if(resultJson.getString("code").equalsIgnoreCase("0")){
+            this.tianBeiResultAppService.saveOrUpdate(idcard,ENUM_TIANBEI_TYPE.NOTEOVERDUE.code,resultStr);
         }
         return resultStr;
     }

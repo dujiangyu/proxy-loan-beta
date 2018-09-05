@@ -29,6 +29,16 @@ public enum ENUM_TIANBEI_TYPE {
     RADAR("radar"),
 
     /**
+     * 黑名单
+     */
+    BLACKLIST("blackList"),
+
+    /**
+     * 借条逾期
+     */
+    NOTEOVERDUE("noteOverdue"),
+
+    /**
      * 运营商报告结果
      */
     TELECOM_OPERATORS_REPORT_RESULT("telecomReportResult");
