@@ -61,7 +61,7 @@ public class YxUserInfoDomainService {
      * @return
      */
     public YxUserInfo findById(Long id){
-        return repository.findByUserId(id);
+        return repository.findOne(id);
     }
 
     /**
@@ -87,7 +87,9 @@ public class YxUserInfoDomainService {
               predicates.add(root.get("name").isNull());
               predicates.add(root.get("certNo").isNull());
            }
-
+           if(yxUserInfoDto.getStatus()!=9){
+               predicates.add(cb.equal(root.get("status"), yxUserInfoDto.getStatus()));
+           }
            if(!StringUtils.isEmpty(yxUserInfoDto.getName())) {
                predicates.add(cb.like(root.get("name"), "%"+yxUserInfoDto.getName()+"%"));
            }

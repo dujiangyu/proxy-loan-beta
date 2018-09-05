@@ -23,6 +23,8 @@
 				<th data-options="field:'backLoginUrl',width:100,align:'center'">后台链接</th>
 				<th data-options="field:'code',width:100">后台账号</th>
 				<th data-options="field:'password',width:100,align:'center'">后台密码</th>
+				<th data-options="field:'balance',width:100,align:'center'">充值余额</th>
+				<th data-options="field:'xxxxx',width:80,align:'center',formatter:recharge">操作</th>
 			</tr>
 		</thead>
 	</table>
@@ -68,11 +70,33 @@
 	    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveProduct()">保存</a>
 	    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
 	</div>
+
+	<div id="dlgFee" class="easyui-dialog" style="width:300px;height:200px;padding:10px 20px" closed="true" buttons="#dlgFee-buttons">
+	    <form id="fmFee" action="" style="margin-top: 10px;" method="post">
+			<table style="width: 100%" cellpadding="5">
+				<tr><input type="hidden" id="id" name="id"/>
+					<td>充值金额:</td>
+					<td><input class="easyui-textbox" id="balance" type="text" name="balance" data-options="required:true"></input></td>
+				</tr>
+			</table>
+	    </form>
+	</div>
+	<div id="dlgFee-buttons">
+	    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveFee()">保存</a>
+	    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlgFee').dialog('close')">取消</a>
+	</div>
 	<script type="text/javascript">
 		function add(){
 			$('#dlg').dialog('open').dialog('setTitle','新增渠道');
 			$("#fm").form('clear');
 		}
+
+		function addRecharge(id){
+			$('#dlgFee').dialog('open').dialog('setTitle','代理商充值');
+			$("#fmdlgFee").form('clear');
+			$("#id").val(id);
+		}
+
 		function enableChannel(){
 			var row = $("#productList").datagrid("getSelected");
 			if(row) {
@@ -174,6 +198,36 @@
 			    return;
 			}
         }
+		function saveFee() {
+			if($("#fmFee").form('validate')) {
+				var parameter = $("#fmFee").serializeArray();
+				var values = {};
+				for (var item in parameter) {
+					if (values[parameter[item].name] != null || values[parameter[item].name] != undefined) {
+						values[parameter[item].name] = values[parameter[item].name] + "," + parameter[item].value.trim();
+					} else {
+						values[parameter[item].name] = parameter[item].value.trim();
+					}
+				}
+				$.ajax({
+					url: saveProviderRechargeUrl,
+					type: "POST",
+					contentType: "application/json",
+					data: JSON.stringify(values),
+					dataType: "json",
+					success: function (datas) {
+						$.messager.alert('Info', datas.message, 'info');
+						if (datas.code == 999999) {
+							top.location.href = "/login.html";
+						}
+						$('#dlgFee').dialog('close');
+						Search(1,30);
+					}
+				});
+			}else{
+				return;
+			}
+		}
 		function editChannel(){
 			var row = $("#productList").datagrid("getSelected");
 			if (row) {
@@ -189,6 +243,9 @@
 			}else{
 				return "停用";
 			}
+		}
+		function recharge(value, rowData, index) {
+			return "<a href='javascript:void(0)' onclick='addRecharge(\""+rowData.id+"\")'>充值</a>"
 		}
 	</script>
 </body>

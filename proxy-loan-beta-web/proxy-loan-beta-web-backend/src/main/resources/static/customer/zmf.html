@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>黑名单</title>
+	<title>新颜芝麻分</title>
 	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/icon.css">
 	<script type="text/javascript" src="/js/jquery-easyui/jquery.min.js"></script>
@@ -23,13 +23,15 @@
 	<div class="easyui-panel" title="审核详情" style="width:98%">
 		<div id="productList" style="margin-top: 10px">
 				<ul class="th">
-					<li>查黑名单检查结果:<span id="hit"></span></li>
+					<li>芝麻分:&nbsp;&nbsp;<span id="zm_score"></span></li>
 				</ul>
 		</div>
 	</div>
 	<script type="text/javascript">
+		$(function() {
+		    Search();
+		});
 		function Search() {
-		    debugger;
 			var parameter = parent.$("#searchForm").serializeArray();
 			var values={};
 			for (var item in parameter) {
@@ -40,7 +42,7 @@
 				}
 			}
 			$.ajax({
-				url : blacklistCheckUrl,
+				url : xyZmfUrl,
 				type : "POST",
 				contentType:"application/json",
 				data :JSON.stringify(values),
@@ -59,18 +61,10 @@
 				    if(datas.success){
 						console.log(datas.data);
 						var dataObj = eval('(' + datas.data + ')');
-						if(dataObj.code==0) {
-                            var showStatus = "";
-                            if (dataObj.NET_LOAN_BLACK_LIST.hit == 0) {
-                                showStatus = "未命中网贷黑名单";
-                            } else if (dataObj.NET_LOAN_BLACK_LIST.hit == 1) {
-                                showStatus = "命中网贷黑名单";
-                            } else {
-                                showStatus = "三方接口异常";
-                            }
-                            $("#hit").html(showStatus);
-                        }else{
-							$.messager.alert('Info', dataObj.msg, 'info');
+						if(dataObj.success){
+							$("#zm_score").html(dataObj.data.zm_score);
+						}else{
+							$.messager.alert('Info', dataObj.errorMsg, 'info');
 						}
 					}else{
 				        $.messager.alert('Info', datas.message, 'info');
@@ -78,9 +72,6 @@
 				}
 			});
 		}
-		$(function() {
-			Search();
-		});
 	</script>
 </body>
 </html>

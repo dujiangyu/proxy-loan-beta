@@ -40,11 +40,14 @@ public class ThirdOperate extends AggEntity {
     @Column(name="password",columnDefinition="varchar(100) comment '密码'")
     private String password;
 
-    @Column(name="user_id",columnDefinition="int(11) comment '服务商id'")
+    @Column(name="user_id",columnDefinition="int(11) comment '登录用户ID'")
     private Long userId;
 
+    @Column(name="agentId",columnDefinition="int(11) comment '服务商id'")
+    private Long agentId;
+
     @Column(name="balance",columnDefinition="decimal(10,2) comment '余额'")
-    private BigDecimal balance;
+    private BigDecimal balance=BigDecimal.ZERO;
 
     @Column(name="is_valid",columnDefinition="tinyint(1) comment '是否有效'")
     private Boolean isValid=Boolean.TRUE;

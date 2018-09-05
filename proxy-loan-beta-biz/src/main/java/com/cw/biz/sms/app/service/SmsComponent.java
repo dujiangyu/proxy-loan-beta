@@ -4,11 +4,20 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.chuanglan.sms.request.SmsVariableRequest;
 import com.chuanglan.sms.util.ChuangLanSmsUtil;
+import com.cw.biz.CwException;
 import com.cw.biz.sms.app.dto.SmsMouldDto;
 import com.cw.biz.sms.enums.ENUM_SMS_PARAMS;
 import com.cw.biz.sms.enums.ENUM_SMS_RESPOND;
+import com.cw.biz.user.app.dto.RegisterDto;
+import com.cw.biz.user.app.dto.YxUserInfoDto;
+import com.cw.biz.user.app.service.CustomerAppService;
+import com.cw.biz.user.domain.dao.SeUserDao;
+import com.cw.biz.user.domain.entity.SeUser;
+import com.cw.biz.user.domain.service.PasswordHelper;
+import com.cw.biz.user.domain.service.YxUserInfoDomainService;
 import com.cw.core.common.enums.ENUM_SMS_TYPE;
 import com.cw.core.common.util.ObjectHelper;
+import com.cw.core.common.util.Utils;
 import com.cw.core.common.util.VerifyCodeUtil;
 import com.zds.common.lang.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
@@ -47,9 +56,17 @@ public class SmsComponent {
     @Value("${application.sms.sendSmsUrl}")
     private String sendSmsUrl;
 
+    @Autowired
+    private SeUserDao seUserDao;
+    @Autowired
+    private PasswordHelper passwordHelper;
+
     private final SmsMouldAppService smsMouldAppService;
 
     private final SmsSendResultAppService smsSendResultAppService;
+
+    @Autowired
+    private CustomerAppService customerAppService;
 
     @Autowired
     public SmsComponent(SmsMouldAppService smsMouldAppService, SmsSendResultAppService smsSendResultAppService) {
@@ -113,7 +130,7 @@ public class SmsComponent {
      * @Date: 2018/9/1 22:00
      * @Version: 1
      */
-    public boolean sendValidateCode(String mouldCode,String phoneNum){
+    public boolean sendValidateCode(String mouldCode,String phoneNum,String channelNo){
         String validateCode= VerifyCodeUtil.generateVerifyCode(5);
         LinkedHashMap<String,String> smsPara=new LinkedHashMap<>();
         smsPara.put(ENUM_SMS_PARAMS.phone.toString(),phoneNum);
@@ -121,7 +138,65 @@ public class SmsComponent {
         smsPara.put(ENUM_SMS_PARAMS.validateCode.toString(),validateCode);
         //短信有效期5分钟
         smsPara.put(ENUM_SMS_PARAMS.expiryTime.toString(), "5");
-        return this.sendSms(mouldCode, null, ENUM_SMS_TYPE.VALIDATE.toString(),smsPara);
+        //保存客户为新增客户信息
+        Boolean sendFlag = this.sendSms(mouldCode, null, ENUM_SMS_TYPE.VALIDATE.toString(),smsPara);
+        if(sendFlag) {
+            RegisterDto registerDto = new RegisterDto();
+            registerDto.setPhone(phoneNum);
+            registerDto.setChannelNo(channelNo);
+            registerDto.setVerifyCode(validateCode);
+            userRegister(registerDto);
+        }
+        return sendFlag;
     }
 
+    /**
+    * 注册用户信息
+    * @param registerDto
+    */
+   public void userRegister(RegisterDto registerDto){
+       SeUser seUser1 = seUserDao.findByUsernameAndMerchantId(registerDto.getPhone(),1L);
+       if(seUser1==null){
+           SeUser newUser = new SeUser();
+           newUser.setDisplayName(registerDto.getPhone());
+           newUser.setUsername(registerDto.getPhone());
+           newUser.setPhone(registerDto.getPhone());
+           newUser.setMerchantId(1L);
+           newUser.setType("user");
+           newUser.setrId(1L);
+           newUser.setPassword(registerDto.getVerifyCode());
+           SeUser seUser= createUser(newUser);
+           //保存用户信息
+           registerUserInfo(seUser,registerDto);
+       }else{
+           if(!"user".equals(seUser1.getType()))
+           {
+               CwException.throwIt("用户类型不匹配");
+           }
+
+           //保存用户信息
+           registerUserInfo(seUser1,registerDto);
+       }
+   }
+
+    //保存注册用户信息
+    public void registerUserInfo(SeUser seUser,RegisterDto registerDto){
+        //记录贷超用户申请信息
+        YxUserInfoDto dto=new YxUserInfoDto();
+        dto.setPhone(registerDto.getPhone());
+        dto.setUserId(seUser.getId());
+        dto.setSourceChannel(registerDto.getChannelNo());
+        customerAppService.update(dto);
+    }
+
+    /**
+        * 创建用户
+        *
+        * @param user
+        */
+       public SeUser createUser(SeUser user) {
+           //加密密码
+           passwordHelper.encryptPassword(user);
+           return seUserDao.createUser(user);
+       }
 }

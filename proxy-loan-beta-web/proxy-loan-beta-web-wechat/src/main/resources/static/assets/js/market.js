@@ -36,7 +36,7 @@ function leftTimer() {
 }
 function getArgsFromHref(sHref, sArgName)
 {   var args    = sHref.split("?");
-    var retval = "CEFMGL3DP";
+    var retval = "";
     if(args[0] == sHref) /*参数为空*/
     {
         return retval; /*无需做任何处理*/

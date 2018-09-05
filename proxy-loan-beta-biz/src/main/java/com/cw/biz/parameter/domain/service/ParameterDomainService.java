@@ -37,7 +37,7 @@ public class ParameterDomainService {
      * @return
      */
     public Parameter update(IndexParameterDto indexParameterDto){
-        //借款起始金额
+        //全景雷达
         Parameter parameter = repository.findByParameterCode(ParameterEnum.LEIDAI.getKey());
         if(parameter == null)
         {
@@ -50,7 +50,7 @@ public class ParameterDomainService {
         }else{
             parameter.setParameterValue(indexParameterDto.getLeida());
         }
-        //借款截止金额
+        //运营商报告
         Parameter parameter1 = repository.findByParameterCode(ParameterEnum.YUNYINGSHANG.getKey());
         if(parameter1 == null)
         {
@@ -64,7 +64,7 @@ public class ParameterDomainService {
             parameter1.setParameterValue(indexParameterDto.getYunyingshang());
         }
 
-        //借款截止金额
+        //天贝报告
         Parameter parameter2 = repository.findByParameterCode(ParameterEnum.REPORT.getKey());
         if(parameter2 == null){
             ParameterDto parameterDto = new ParameterDto();
@@ -77,6 +77,72 @@ public class ParameterDomainService {
             parameter2.setParameterValue(indexParameterDto.getReport());
         }
 
+        //天贝借条逾期
+       Parameter parameter3 = repository.findByParameterCode(ParameterEnum.OVERDUEFILE.getKey());
+       if(parameter3 == null){
+           ParameterDto parameterDto = new ParameterDto();
+           parameterDto.setParameterCode(ParameterEnum.OVERDUEFILE.getKey());
+           parameterDto.setParameterName(ParameterEnum.OVERDUEFILE.getValue());
+           parameterDto.setParameterName(ParameterEnum.OVERDUEFILE.getValue());
+           parameterDto.setParameterValue(indexParameterDto.getOverdue());
+           create(parameterDto);
+       }else{
+           parameter3.setParameterValue(indexParameterDto.getReport());
+       }
+
+
+        //天贝黑名单检测
+       Parameter parameter4 = repository.findByParameterCode(ParameterEnum.BLACKLIST.getKey());
+       if(parameter4 == null){
+           ParameterDto parameterDto = new ParameterDto();
+           parameterDto.setParameterCode(ParameterEnum.BLACKLIST.getKey());
+           parameterDto.setParameterName(ParameterEnum.BLACKLIST.getValue());
+           parameterDto.setParameterName(ParameterEnum.BLACKLIST.getValue());
+           parameterDto.setParameterValue(indexParameterDto.getBlackList());
+           create(parameterDto);
+       }else{
+           parameter4.setParameterValue(indexParameterDto.getReport());
+       }
+
+
+        //新颜实名认证
+       Parameter parameter5 = repository.findByParameterCode(ParameterEnum.INFOAUTH.getKey());
+       if(parameter5 == null){
+           ParameterDto parameterDto = new ParameterDto();
+           parameterDto.setParameterCode(ParameterEnum.INFOAUTH.getKey());
+           parameterDto.setParameterName(ParameterEnum.INFOAUTH.getValue());
+           parameterDto.setParameterName(ParameterEnum.INFOAUTH.getValue());
+           parameterDto.setParameterValue(indexParameterDto.getInfoAuth());
+           create(parameterDto);
+       }else{
+           parameter5.setParameterValue(indexParameterDto.getReport());
+       }
+
+        //新颜逾期档案
+       Parameter parameter6 = repository.findByParameterCode(ParameterEnum.OVERDUEFILE.getKey());
+       if(parameter6 == null){
+           ParameterDto parameterDto = new ParameterDto();
+           parameterDto.setParameterCode(ParameterEnum.OVERDUEFILE.getKey());
+           parameterDto.setParameterName(ParameterEnum.OVERDUEFILE.getValue());
+           parameterDto.setParameterName(ParameterEnum.OVERDUEFILE.getValue());
+           parameterDto.setParameterValue(indexParameterDto.getOverdueFile());
+           create(parameterDto);
+       }else{
+           parameter6.setParameterValue(indexParameterDto.getReport());
+       }
+
+        //天贝报告
+       Parameter parameter7 = repository.findByParameterCode(ParameterEnum.ZMF.getKey());
+       if(parameter7 == null){
+           ParameterDto parameterDto = new ParameterDto();
+           parameterDto.setParameterCode(ParameterEnum.ZMF.getKey());
+           parameterDto.setParameterName(ParameterEnum.ZMF.getValue());
+           parameterDto.setParameterName(ParameterEnum.ZMF.getValue());
+           parameterDto.setParameterValue(indexParameterDto.getZmf());
+           create(parameterDto);
+       }else{
+           parameter7.setParameterValue(indexParameterDto.getReport());
+       }
         return parameter;
     }
 

@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * Created by Administrator on 2017/7/13.
  */
 public interface AgentRepository extends JpaRepository<Agent,Long>,JpaSpecificationExecutor<Agent> {
-
+    Agent findByUserId(Long userId);
 }

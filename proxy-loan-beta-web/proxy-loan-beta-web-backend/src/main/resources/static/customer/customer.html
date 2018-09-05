@@ -21,6 +21,7 @@
 				<th data-options="field:'certNo',width:160,align:'right'">身份证号码</th>
 				<th data-options="field:'bankAccountNo',width:160">银行卡账号</th>
 				<th data-options="field:'registerDate',width:160">注册时间</th>
+				<th data-options="field:'status',width:160,formatter:statusConvert">状态</th>
 				<th data-options="field:'xxxx',width:100,formatter:detail">操作</th>
 			</tr>
 		</thead>
@@ -31,6 +32,15 @@
 			<input name="name" style="line-height:26px;border:1px solid #ccc">
 			<span>手机号码:</span>
 			<input id="phone" name="phone" style="line-height:26px;border:1px solid #ccc">
+			<span>状态:</span>
+			<select id="status" name="status" style="line-height:26px;border:1px solid #ccc">
+				<option value="9">全部</option>
+				<option value="0">待审额</option>
+				<option value="1">审核通过</option>
+				<option value="2">拒绝</option>
+				<option value="3">已放款</option>
+				<option value="4">已还款</option>
+			</select>
 			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="Search()">查询</a>
 		</form>
     </div>
@@ -159,8 +169,22 @@
 			});
 		}
 		function detail(value, row, index){
-			return "<a href='audit.html'>详情</a>";
-
+			return "<a href='audit.html?id="+row.id+"'>详情</a>";
+		}
+		function statusConvert(value, row, index){
+		    var status="";
+		    if(value==0){
+		        status="待审核";
+			}else if(value==1){
+		        status="审核通过";
+			}else if(value==2){
+				status="拒绝";
+			}else if(value==3){
+				status="已放款";
+			}else if(value==4){
+				status="已还款";
+			}
+			return status;
 		}
 	</script>
 </body>

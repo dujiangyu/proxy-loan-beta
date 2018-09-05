@@ -1,6 +1,7 @@
 package com.cw.biz.channel.app.service;
 
 import com.cw.biz.channel.app.dto.AgentDto;
+import com.cw.biz.channel.app.dto.ThirdOperateDto;
 import com.cw.biz.channel.domain.entity.Agent;
 import com.cw.biz.channel.domain.service.AgentDomainService;
 import com.cw.biz.common.dto.Pages;
@@ -53,6 +54,18 @@ public class AgentAppService {
         domainService.enable(channelDto);
     }
 
+    /** 扣取费用
+     *&lt;功能简述&gt;
+     *&lt;功能详细描述&gt;
+     * ${tags} [参数说明]
+     *
+     * @return ${return_type} [返回类型说明]
+     * @exception throws [异常类型] [异常说明]
+     * @see [类、类#方法、类#成员]
+     */
+   public void queryInterfaceFee(AgentDto agentDto){
+      domainService.queryInterfaceFee(agentDto);
+   }
     /**
      * 查询代理商详情
      * @param id
@@ -60,6 +73,10 @@ public class AgentAppService {
      */
     public AgentDto findById(Long id){
         return domainService.findById(id).to(AgentDto.class);
+    }
+
+    public AgentDto findByUserId(Long id){
+        return domainService.findByUserId(id).to(AgentDto.class);
     }
 
     /**

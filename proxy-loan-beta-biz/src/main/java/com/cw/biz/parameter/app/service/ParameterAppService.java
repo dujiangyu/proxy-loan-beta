@@ -58,6 +58,21 @@ public class ParameterAppService {
             if(ParameterEnum.REPORT.getKey().equals(parameter.getParameterCode())) {
                 indexParameterDto.setReport(parameter.getParameterValue());
             }
+            if(ParameterEnum.BLACKLIST.getKey().equals(parameter.getParameterCode())) {
+                indexParameterDto.setBlackList(parameter.getParameterValue());
+            }
+            if(ParameterEnum.OVERDUE.getKey().equals(parameter.getParameterCode())) {
+                indexParameterDto.setOverdue(parameter.getParameterValue());
+            }
+            if(ParameterEnum.OVERDUEFILE.getKey().equals(parameter.getParameterCode())) {
+                indexParameterDto.setOverdueFile(parameter.getParameterValue());
+            }
+            if(ParameterEnum.INFOAUTH.getKey().equals(parameter.getParameterCode())) {
+                indexParameterDto.setInfoAuth(parameter.getParameterValue());
+            }
+            if(ParameterEnum.ZMF.getKey().equals(parameter.getParameterCode())) {
+                indexParameterDto.setZmf(parameter.getParameterValue());
+            }
 
         }
         return indexParameterDto;

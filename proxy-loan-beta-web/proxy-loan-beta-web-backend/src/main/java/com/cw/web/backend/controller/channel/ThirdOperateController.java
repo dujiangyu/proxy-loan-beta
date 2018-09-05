@@ -1,5 +1,6 @@
 package com.cw.web.backend.controller.channel;
 
+import com.cw.biz.channel.app.dto.AgentDto;
 import com.cw.biz.channel.app.dto.ThirdOperateDto;
 import com.cw.biz.channel.app.service.ThirdOperateAppService;
 import com.cw.web.backend.controller.AbstractBackendController;
@@ -34,6 +35,22 @@ public class ThirdOperateController extends AbstractBackendController {
         return cpViewResultInfo;
     }
 
+    /**
+       * 服务商充值
+       * @param thirdOperateDto
+       * @return
+       */
+      @PostMapping("/provider/recharge.json")
+      @ResponseBody
+      public CPViewResultInfo recharge(@RequestBody ThirdOperateDto thirdOperateDto){
+          CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
+          Long id = thirdOperateAppService.recharge(thirdOperateDto);
+          cpViewResultInfo.setData(id);
+          cpViewResultInfo.setSuccess(true);
+          cpViewResultInfo.setMessage("充值成功");
+
+          return cpViewResultInfo;
+      }
     /**
      * 查询代理商下级详情
      * @param id

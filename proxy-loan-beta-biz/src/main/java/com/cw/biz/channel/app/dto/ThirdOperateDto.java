@@ -32,7 +32,11 @@ public class ThirdOperateDto extends PageDto {
 
     private BigDecimal balance;
 
+    private BigDecimal interfaceFee;
+
     private Long userId;
+
+    private Long agentId;
 
     private Boolean isValid=Boolean.TRUE;
 

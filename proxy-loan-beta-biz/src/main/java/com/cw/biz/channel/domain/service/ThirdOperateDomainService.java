@@ -2,7 +2,10 @@ package com.cw.biz.channel.domain.service;
 
 import com.cw.biz.CPContext;
 import com.cw.biz.CwException;
+import com.cw.biz.channel.app.dto.AgentDto;
+import com.cw.biz.channel.app.dto.RechargeLogDto;
 import com.cw.biz.channel.app.dto.ThirdOperateDto;
+import com.cw.biz.channel.app.service.AgentAppService;
 import com.cw.biz.channel.domain.entity.ThirdOperate;
 import com.cw.biz.channel.domain.repository.ThirdOperateRepository;
 import com.cw.biz.user.domain.entity.SeUser;
@@ -19,6 +22,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -32,7 +36,13 @@ public class ThirdOperateDomainService {
     private SeUserService seUserService;
 
     @Autowired
+    private AgentAppService appService;
+
+    @Autowired
     private ThirdOperateRepository repository;
+
+    @Autowired
+    private RechargeLogDomainService rechargeLogDomainService;
     /**
      * 新增代理商下级
      * @param thirdOperateDto
@@ -80,6 +90,36 @@ public class ThirdOperateDomainService {
         return thirdOperate;
     }
 
+    public ThirdOperate recharge(ThirdOperateDto thirdOperateDto){
+        ThirdOperate thirdOperate = repository.findOne(thirdOperateDto.getId());
+        if(thirdOperate==null){
+            CwException.throwIt("代理商不存在");
+        }
+        //验证代理商金额是否够充值
+        AgentDto dto = appService.findByUserId(CPContext.getContext().getSeUserInfo().getId());
+        if(dto.getBalance().compareTo(thirdOperateDto.getBalance())<0){
+            CwException.throwIt("代理商金额不足，请联系客服充值");
+        }
+        BigDecimal currBalance = thirdOperate.getBalance();
+        if(thirdOperate.getBalance()==null){
+            thirdOperate.setBalance(BigDecimal.ZERO);
+        }
+        thirdOperate.setBalance(thirdOperate.getBalance().add(thirdOperateDto.getBalance()));
+        //减掉代理商充值的金额
+        AgentDto agentDto = new AgentDto();
+        agentDto.setBalance(dto.getBalance().subtract(thirdOperateDto.getBalance()));
+        agentDto.setId(dto.getId());
+        appService.update(agentDto);
+        //记录充值日志
+        RechargeLogDto rechargeLogDto = new RechargeLogDto();
+        rechargeLogDto.setRechargeObjectId(thirdOperateDto.getId());
+        rechargeLogDto.setRechargeOperateId(CPContext.getContext().getSeUserInfo().getId());
+        rechargeLogDto.setRechargeFee(thirdOperateDto.getBalance());
+        rechargeLogDto.setRechargeBalance(thirdOperateDto.getBalance().add(currBalance==null?BigDecimal.ZERO:currBalance));
+        rechargeLogDomainService.create(rechargeLogDto);
+
+        return thirdOperate;
+    }
 
     /**
      * 渠道停用
@@ -87,28 +127,43 @@ public class ThirdOperateDomainService {
      * @return
      */
     public ThirdOperate enable(ThirdOperateDto thirdOperateDto){
+          ThirdOperate thirdOperate = repository.findOne(thirdOperateDto.getId());
+          if(thirdOperate == null){
+              CwException.throwIt("渠道不存在");
+          }
+          if(thirdOperate.getIsValid()) {
+              thirdOperate.setIsValid(Boolean.FALSE);
+          }else{
+              thirdOperate.setIsValid(Boolean.TRUE);
+          }
+        return thirdOperate;
+    }
+
+    //扣取相关费用
+    public ThirdOperate queryInterfaceFee(ThirdOperateDto thirdOperateDto){
         ThirdOperate thirdOperate = repository.findOne(thirdOperateDto.getId());
         if(thirdOperate == null){
             CwException.throwIt("渠道不存在");
         }
-        if(thirdOperate.getIsValid()) {
-            thirdOperate.setIsValid(Boolean.FALSE);
-        }else{
-            thirdOperate.setIsValid(Boolean.TRUE);
+        if(thirdOperate.getBalance().compareTo(thirdOperateDto.getInterfaceFee())<0){
+            CwException.throwIt("金额不足，请联系客服充值后再查询！");
         }
-        return thirdOperate;
-    }
+        thirdOperate.setBalance(thirdOperate.getBalance().subtract(thirdOperateDto.getInterfaceFee()));
+       return thirdOperate;
+   }
 
     /**
      * 查询渠道详情
      * @param id
      * @return
      */
-    public ThirdOperate findById(Long id)
-    {
+    public ThirdOperate findById(Long id){
         return repository.findOne(id);
     }
 
+    public ThirdOperate findByUserId(Long id){
+        return repository.findByUserId(id);
+    }
     /**
      * 按条件查询渠道列表
      * @param thirdOperateDto

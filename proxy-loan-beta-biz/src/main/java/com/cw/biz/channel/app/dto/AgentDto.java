@@ -28,7 +28,11 @@ public class AgentDto extends PageDto {
 
     private BigDecimal balance;
 
+    private BigDecimal interfaceFee;
+
     private Boolean isValid=Boolean.TRUE;
+
+    private Long userId;
 
     public void prepareSave(){
     }

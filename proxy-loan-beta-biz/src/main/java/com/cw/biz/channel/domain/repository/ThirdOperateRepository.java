@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * Created by Administrator on 2017/7/13.
  */
 public interface ThirdOperateRepository extends JpaRepository<ThirdOperate,Long>,JpaSpecificationExecutor<ThirdOperate> {
-
+    ThirdOperate findByUserId(Long userId);
 }

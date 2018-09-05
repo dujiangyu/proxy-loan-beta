@@ -43,6 +43,9 @@ public class YxUserInfo extends AggEntity{
     @Column(name="sesame_score",columnDefinition="int(11)  comment '芝麻分'")
     private Integer sesameScore;
 
+    @Column(name="status",columnDefinition="int(11)  comment '状态'")
+    private Integer status=0;
+
     @Column(name="channel_user_id",columnDefinition="int(11)  comment '渠道登录账号ID'")
     private Integer channelUserId;
 

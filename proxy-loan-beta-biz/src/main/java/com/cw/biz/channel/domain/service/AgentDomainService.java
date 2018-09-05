@@ -53,7 +53,7 @@ public class AgentDomainService {
     }
 
     /**
-     * 修改渠道
+     * 修改代理商
      * @param agentDto
      * @return
      */
@@ -70,7 +70,8 @@ public class AgentDomainService {
             seUser.setRoleIdsStr(",18");
             seUser.setType("manager");
             seUser.setDisplayName(agentDto.getName());
-            seUserService.createUser(seUser);
+            SeUser seUser1 = seUserService.createUser(seUser);
+            agent.setUserId(seUser1.getId());
         }else {
             agent = repository.findOne(agentDto.getId());
             //修改渠道密码
@@ -104,6 +105,9 @@ public class AgentDomainService {
             CwException.throwIt("代理商不存在");
         }
         BigDecimal currBalance = agent.getBalance();
+        if(agent.getBalance()==null){
+            agent.setBalance(BigDecimal.ZERO);
+        }
         agent.setBalance(agent.getBalance().add(agentDto.getBalance()));
 
         //记录充值日志
@@ -111,7 +115,7 @@ public class AgentDomainService {
         rechargeLogDto.setRechargeObjectId(agentDto.getId());
         rechargeLogDto.setRechargeOperateId(CPContext.getContext().getSeUserInfo().getId());
         rechargeLogDto.setRechargeFee(agentDto.getBalance());
-        rechargeLogDto.setRechargeBalance(agentDto.getBalance().add(currBalance));
+        rechargeLogDto.setRechargeBalance(agentDto.getBalance().add(currBalance==null?BigDecimal.ZERO:currBalance));
         rechargeLogDomainService.create(rechargeLogDto);
 
         return agent;
@@ -125,7 +129,7 @@ public class AgentDomainService {
     public Agent enable(AgentDto agentDto){
         Agent channel = repository.findOne(agentDto.getId());
         if(channel == null){
-            CwException.throwIt("渠道不存在");
+            CwException.throwIt("代理商不存在");
         }
         if(channel.getIsValid()) {
             channel.setIsValid(Boolean.FALSE);
@@ -134,6 +138,19 @@ public class AgentDomainService {
         }
         return channel;
     }
+
+    //扣取相关费用
+    public Agent queryInterfaceFee(AgentDto agentDto){
+        Agent agent= repository.findOne(agentDto.getId());
+        if(agent == null){
+            CwException.throwIt("代理商不存在");
+        }
+        if(agent.getBalance().compareTo(agentDto.getInterfaceFee())<0){
+            CwException.throwIt("金额不足，请联系客服充值后再查询！");
+        }
+        agent.setBalance(agent.getBalance().subtract(agentDto.getInterfaceFee()));
+       return agent;
+   }
 
     /**
      * 查询渠道详情
@@ -145,6 +162,10 @@ public class AgentDomainService {
         return repository.findOne(id);
     }
 
+    //查询代理商
+    public Agent findByUserId(Long id){
+        return repository.findByUserId(id);
+    }
     /**
      * 按条件查询渠道列表
      * @param agentDto

@@ -23,92 +23,159 @@
 	<div class="easyui-panel" title="审核详情" style="width:98%">
 		<div id="productList" style="margin-top: 10px">
 				<ul class="th">
-					<li>查询结果码</li>
-					<li>1命中 </li>
+					<li>运营商数据整理</li>
 				</ul>
 				<ul>
-					<li>姓名:XXXXX</li>
-					<li>身份证号:XXXXX</li>
-					<li>全景雷达报告详情:XXXX</li>
-					<li>申请雷达报告详情:XXXX</li>
+					<li>运营商:<span id="cell_operator"></span></li>
+					<li>运营商（中文）:<span id="cell_operator_zh"></span>X</li>
+					<li>号码:<span id="cell_phone_num"></span></li>
+					<li>归属地:<span id="cell_loc"></span></li>
+					<li>月份:<span id="cell_mth"></span></li>
+					<li>呼叫次数	:<span id="call_cnt"></span></li>
+					<li>主叫次数	:<span id="call_out_cnt"></span></li>
+					<li>主叫时间	:<span id="call_out_time"></span></li>
+					<li>被叫次数	:<span id="call_in_cnt"></span></li>
+					<li>被叫时间	:<span id="call_in_time"></span></li>
+					<li>流量	:<span id="net_flow"></span></li>
+					<li>短信数目	:<span id="sms_cnt"></span></li>
+					<li>话费消费	:<span id="total_amount"></span></li>
 				</ul>
 				<ul class="th">
-					<li>多头申请</li>
+					<li>联系人区域汇总</li>
 				</ul>
 				<ul>
-					<li>查询机构数:999</li>
-					<li>查询消费金融类机构数:999</li>
-					<li>查询网络贷款类机构数:0</li>
-					<li>总查询次数:10</li>
-					<li>最近查询时间:yyyy-MM-dd</li>
+					<li>地区名称:<span id="region_loc"></span></li>
+					<li>号码数量	:<span id="region_uniq_num_cnt"></span></li>
+					<li>电话呼入次数	:<span id="region_call_in_cnt"></span></li>
+					<li>电话呼出次数	:<span id="region_call_out_cnt"></span></li>
+					<li>电话呼入时间	:<span id="region_call_in_time"></span></li>
+					<li>电话呼出时间		:<span id="region_call_out_time"></span></li>
+					<li>平均电话呼入时间		:<span id="region_avg_call_in_time"></span></li>
+					<li>平均电话呼出时间		:<span id="region_avg_call_out_time"></span></li>
+					<li>电话呼入次数百分比		:<span id="region_call_in_cnt_pct"></span></li>
+					<li>电话呼出次数百分比		:<span id="region_call_out_cnt_pct"></span></li>
+					<li>电话呼入时间百分比		:<span id="region_call_in_time_pct"></span></li>
+					<li>电话呼出时间百分比		:<span id="region_call_out_time_pct"></span></li>
 				</ul>
 				<ul class="th">
-					<li>申请历史</li>
+					<li>运营商联系人通话详情</li>
 				</ul>
-				<ul>
-					<li>近1个月总查询笔数</li>
-					<li>近3个月总查询笔数</li>
-					<li>近6个月总查询笔数</li>
+				<ul style="width: 300px;">
+					<table id="contact_list" class="easyui-datagrid" style="width:300px;height: 300px;">
+						<thead>
+						<tr>
+							<th data-options="field:'phone_num',width:120">号码</th>
+							<th data-options="field:'phone_num_loc',width:150">号码归属地</th>
+							<th data-options="field:'contact_name',width:150">号码标注</th>
+							<th data-options="field:'needs_type',width:150">需求类别</th>
+							<th data-options="field:'call_cnt',width:150">通话次数</th>
+							<th data-options="field:'call_len',width:150">通话时长</th>
+							<th data-options="field:'call_out_cnt',width:150">呼出次数</th>
+							<th data-options="field:'call_out_len',width:150">呼出时间</th>
+							<th data-options="field:'call_in_cnt',width:150">呼入次数</th>
+							<th data-options="field:'call_in_len',width:150">呼入时间</th>
+							<th data-options="field:'p_relation',width:150">关系推测</th>
+							<th data-options="field:'contact_1w',width:150">最近一周联系次数</th>
+							<th data-options="field:'contact_1m',width:150">最近一月联系次数</th>
+							<th data-options="field:'contact_3m',width:150">最近三月联系次数</th>
+							<th data-options="field:'contact_3m_plus',width:150">三个月以上联系次数</th>
+							<th data-options="field:'contact_early_morning',width:150">凌晨联系次数</th>
+							<th data-options="field:'contact_morning',width:150">上午联系次数</th>
+							<th data-options="field:'contact_noon',width:150">中午联系次数</th>
+							<th data-options="field:'contact_afternoon',width:150">下午联系次数</th>
+							<th data-options="field:'contact_night',width:150">晚上联系次数</th>
+							<th data-options="field:'contact_all_day	',width:150">是否全天联系</th>
+							<th data-options="field:'contact_weekday',width:150">周中联系次数</th>
+							<th data-options="field:'contact_weekend',width:150">周末联系次数</th>
+							<th data-options="field:'contact_holiday',width:150">节假日联系次数</th>
+						</tr>
+						</thead>
+					</table>
 				</ul>
 				<ul class="th">
-					<li>履约行为</li>
+					<li>常用服务</li>
 				</ul>
 				<ul>
-					<li>贷款放款总订单数</li>
-					<li>贷款已结清订单数</li>
-					<li>贷款逾期订单数</li>
+					<li>企业名称	<span id="company_name"></span></li>
+					<li>服务企业类型	<span id="company_type"></span></li>
+					<li>总互动次数	<span id="total_service_cnt"></span></li>
+					<li>月互动详情<span id="service_details"></span></li>
+					<li>月互动次数		<span id="interact_cnt"></span></li>
+					<li>互动月份		<span id="interact_mth"></span></li>
 				</ul>
 
 				<ul class="th">
-					<li>多头贷款</li>
+					<li>电商地址分析</li>
 				</ul>
-				<ul>
-					<li>贷款机构数</li>
-					<li>消费金融类机构数</li>
-					<li>网络贷款类机构数</li>
-				</ul>
-				<ul class="th">
-					<li>贷款历史</li>
-				</ul>
-				<ul>
-					<li>近1个月贷款笔数</li>
-					<li>近3个月贷款笔数</li>
-					<li>近6个月贷款笔数</li>
-					<li>信用贷款时长</li>
-				</ul>
-				<ul class="th">
-					<li>履约意愿</li>
-				</ul>
-				<ul>
-					<li>历史贷款机构成功扣款笔数</li>
-					<li>历史贷款机构失败扣款笔数</li>
-					<li>近1个月贷款机构成功扣款笔数</li>
-					<li>近1个月贷款机构失败扣款笔数</li>
-				</ul>
-				<ul>
-					<li>信用贷款时长</li>
-					<li>最近一次贷款时间</li>
-					<li>信用现状报告详情</li>
+				<ul style="width:300px;">
+					<table id="deliver_address" class="easyui-datagrid" style="width:800px;height: 300px;">
+						<thead>
+						<tr>
+							<th data-options="field:'address',width:120">收货地址</th>
+							<th data-options="field:'lng',width:150">经度</th>
+							<th data-options="field:'lat',width:150">纬度</th>
+							<th data-options="field:'predict_addr_type',width:150">地址类型</th>
+							<th data-options="field:'begin_date',width:150">开始送货时间</th>
+							<th data-options="field:'end_date',width:150">结束送货时间</th>
+							<th data-options="field:'total_amount',width:150">总送货金额</th>
+							<th data-options="field:'total_count',width:150">总送货次数</th>
+							<th data-options="field:'receiver',width:150">收货人列表</th>
+							<th data-options="field:'count',width:150">收获次数</th>
+							<th data-options="field:'amount',width:150">收获金额</th>
+							<th data-options="field:'name',width:150">收货人名称</th>
+							<th data-options="field:'phone_num_list',width:150">收货人号码</th>
+						</tr>
+						</thead>
+					</table>
+
 				</ul>
 				<ul class="th">
-					<li>网贷额度</li>
+					<li>电商月消费</li>
 				</ul>
-				<ul>
-					<li>网贷建议授信额度</li>
-					<li>网络贷款类机构数</li>
-					<li>网络贷款类产品数</li>
-					<li>网络贷款机构最大授信额度</li>
-					<li>网络贷款机构平均授信额度</li>
+				<ul style="width: 300px;">
+					<table id="ebusiness_expense" class="easyui-datagrid" style="width:300px;height: 300px;">
+						<thead>
+						<tr>
+							<th data-options="field:'trans_mth',width:120">月份</th>
+							<th data-options="field:'all_amount',width:150">全部消费金额</th>
+							<th data-options="field:'all_count',width:150">全部消费次数	</th>
+							<th data-options="field:'all_category',width:150">本月商品品类</th>
+						</tr>
+						</thead>
+					</table>
 				</ul>
-			<ul class="th">
-				<li>消金额度</li>
-			</ul>
-				<ul>
-					<li>消金建议授信额度</li>
-					<li>消费金融类机构数</li>
-					<li>消费金融类产品数</li>
-					<li>消费金融类机构最大授</li>
-					<li>消费金融类机构平均授</li>
+				<ul class="th">
+					<li>联系人名单</li>
+				</ul>
+				<ul style="width: 300px;">
+					<table id="collection_contact" class="easyui-datagrid" style="width:300px;height: 300px;">
+						<thead>
+						<tr>
+							<th data-options="field:'contact_name',width:120">联系人姓名</th>
+							<th data-options="field:'begin_date',width:150">最早出现时间</th>
+							<th data-options="field:'end_date',width:150">最晚出现时间	</th>
+							<th data-options="field:'total_count',width:150">电商送货总数</th>
+							<th data-options="field:'total_amount',width:150">电商送货总金额	</th>
+							<th data-options="field:'contact_details',width:150">呼叫信息统计	</th>
+						</tr>
+						</thead>
+					</table>
+				</ul>
+				<ul class="th">
+					<li>出行分析</li>
+				</ul>
+				<ul style="width: 300px;">
+					<table id="trip_info" class="easyui-datagrid" style="width:300px;height: 300px;">
+						<thead>
+						<tr>
+							<th data-options="field:'trip_leave',width:120">出发地</th>
+							<th data-options="field:'trip_dest',width:150">目的地</th>
+							<th data-options="field:'trip_type',width:150">出行时间类型	</th>
+							<th data-options="field:'trip_start_time',width:150">出行开始时间</th>
+							<th data-options="field:'trip_end_time',width:150">出行结束时间	</th>
+						</tr>
+						</thead>
+					</table>
 				</ul>
 		</div>
 	</div>
@@ -116,35 +183,6 @@
 		$(function() {
 		    Search();
 		});
-		function pagerFilter(data){
-			if(data.data!=undefined) {
-                data = {
-					total: data.data.totalCount,
-					rows: data.data.result
-                }
-            }
-			var dg = $('#productList');
-			var opts = dg.datagrid('options');
-			var pager = $('#productList').datagrid('getPager');
-			$(pager).pagination({
-				onSelectPage:function(pageNum, pageSize){
-					opts.pageNumber = pageNum;
-					opts.pageSize = pageSize;
-					pager.pagination('refresh',{
-					pageNumber:pageNum,
-					pageSize:pageSize
-				});
-				Search();
-			},
-			beforePageText : '第', //页数文本框前显示的汉字
-			afterPageText : '页    共 {pages} 页',
-			displayMsg : '当前显示 {from} - {to} 条记录   共 {total} 条记录'
-			});
-
-			return data;
-		}
-
-
 		function Search() {
 			var parameter = $("#searchForm").serializeArray();
 			var values={};
@@ -155,18 +193,9 @@
 					values[parameter[item].name] = parameter[item].value.trim();
 				}
 			}
-			//pageNumber为datagrid的当前页码
-			var page_Number = $('#productList').datagrid('options').pageNumber;
-			//pageSize为datagrid的每页记录条数
-			var page_Size = $('#productList').datagrid('options').pageSize;
-			values["pageNo"]=page_Number;
-			values["pageSize"]=page_Size;
-			values["pageSize"]=page_Size;
-			values["customerType"]="audit";
-
 
 			$.ajax({
-				url : customerListUrl,
+				url : queryYysUrl,
 				type : "POST",
 				contentType:"application/json",
 				data :JSON.stringify(values),
@@ -183,7 +212,55 @@
 				},
 				success : function(datas) {
 				    if(datas.success){
-						//$('#productList').datagrid('loadData',{total:datas.data.totalElements,rows:datas.data.content});
+						console.log(datas.data);
+						var dataObj = eval('(' + datas.data + ')');
+						if(dataObj.code==0){
+							$("#cell_operator").html(dataObj.data.report.cell_behavior.cell_operator);
+							$("#cell_operator_zh").html(dataObj.data.report.cell_behavior.cell_operator_zh);
+							$("#cell_phone_num").html(dataObj.data.report.cell_behavior.cell_phone_num);
+							$("#cell_loc").html(dataObj.data.report.cell_behavior.cell_loc);
+							$("#cell_mth").html(dataObj.data.report.cell_behavior.cell_mth);
+							$("#call_cnt").html(dataObj.data.report.cell_behavior.call_cnt);
+							$("#call_out_cnt").html(dataObj.data.report.cell_behavior.call_out_cnt);
+							$("#call_out_time").html(dataObj.data.report.cell_behavior.call_out_time);
+							$("#call_in_cnt").html(dataObj.data.report.cell_behavior.call_in_cnt);
+							$("#call_in_time").html(dataObj.data.report.cell_behavior.call_in_time);
+							$("#net_flow").html(dataObj.data.report.cell_behavior.net_flow);
+							$("#sms_cnt").html(dataObj.data.report.cell_behavior.sms_cnt);
+							$("#total_amount").html(dataObj.data.report.cell_behavior.total_amount);
+							//联系人区域汇总
+							$("#region_loc").html(dataObj.data.report.contact_region.region_loc);
+							$("#region_uniq_num_cnt").html(dataObj.data.report.contact_region.region_uniq_num_cnt);
+							$("#region_call_in_cnt").html(dataObj.data.report.contact_region.region_call_in_cnt);
+							$("#region_call_out_cnt").html(dataObj.data.report.contact_region.region_call_out_cnt);
+							$("#region_call_in_time").html(dataObj.data.report.contact_region.region_call_in_time);
+							$("#region_call_out_time").html(dataObj.data.report.contact_region.region_call_out_time);
+							$("#region_avg_call_in_time").html(dataObj.data.report.contact_region.region_avg_call_in_time);
+							$("#region_avg_call_out_time").html(dataObj.data.report.contact_region.region_avg_call_out_time);
+							$("#region_call_in_cnt_pct").html(dataObj.data.report.contact_region.region_call_in_cnt_pct);
+							$("#region_call_out_cnt_pct").html(dataObj.data.report.contact_region.region_call_out_cnt_pct);
+							$("#region_call_in_time_pct").html(dataObj.data.report.contact_region.region_call_in_time_pct);
+							$("#region_call_out_time_pct").html(dataObj.data.report.contact_region.region_call_out_time_pct);
+							//常用服务（main_service）
+							$("#company_name").html(dataObj.data.report.main_service.company_name);
+							$("#company_type").html(dataObj.data.report.main_service.company_type);
+							$("#total_service_cnt").html(dataObj.data.report.main_service.total_service_cnt);
+							$("#service_details").html(dataObj.data.report.main_service.service_details);
+							$("#interact_cnt").html(dataObj.data.report.main_service.interact_cnt);
+							$("#interact_mth").html(dataObj.data.report.main_service.interact_mth);
+							//电商地址分析（deliver_address）
+							$("#deliver_address").datagrid("loadData",dataObj.data.report.deliver_address);
+							//电商月消费
+							$("#ebusiness_expense").datagrid("loadData",dataObj.data.report.ebusiness_expense);
+							//运营商联系人通话详情（contact_list）
+							$("#contact_list").datagrid("loadData",dataObj.data.report.contact_list);
+							//联系人名单（collection_contact）
+							$("#collection_contact").datagrid("loadData",dataObj.data.report.collection_contact);
+							//出行分析
+							$("#trip_info").datagrid("loadData",dataObj.data.report.trip_info);
+						}else{
+							$.messager.alert('Info', dataObj.msg, 'info');
+						}
 					}else{
 				        if(datas.code==999999){
 				            top.location.href="/login.html";

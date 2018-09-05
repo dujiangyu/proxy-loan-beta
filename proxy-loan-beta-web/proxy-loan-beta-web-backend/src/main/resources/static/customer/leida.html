@@ -22,108 +22,98 @@
 <body>
 		<div id="productList" style="margin-top: 10px">
 				<ul class="th">
-					<li>7天被查询1次	</li>
-					<li>15天被查询1次	 </li>
-					<li>30天被查询1次	 </li>
+					<li>查询结果:&nbsp;&nbsp;<span id="hit"></span></li>
 				</ul>
 				<ul class="th">
 					<li>基本信息</li>
 				</ul>
 				<ul>
-					<li>姓名:XXXXX</li>
-					<li>身份证号:XXXXX</li>
-					<li>年龄:XXXX</li>
-					<li>性别:XXXX</li>
-					<li>身份证所在地:XXXX</li>
-					<li>手机号码:XXXX</li>
-					<li>手机所属运营商:XXXX</li>
-					<li>身份证是否有效:XXXX</li>
+					<li>姓名:&nbsp;&nbsp;<span id="name"></span></li>
+					<li>身份证号:&nbsp;&nbsp;<span id="idCard"></span></li>
 				</ul>
 				<ul class="th">
-					<li>手机号码存疑</li>
+					<li>多头申请</li>
 				</ul>
 				<ul>
-					<li>使用过此手机的其他姓名</li>
-					<li>最后使用时间</li>
-				</ul>
-				<ul>
-					<li>使用过此手机的其他身份证</li>
-					<li>最后使用时间</li>
-				</ul>
-				<ul>
-					<li>电话号码在那些类型的机构中使用过</li>
-					<li>最后使用时间</li>
+					<li>查询机构数:&nbsp;&nbsp;<span id="query_org_count"></span></li>
+					<li>查询消费金融类机构数:&nbsp;&nbsp;<span id="query_finance_count"></span></li>
+					<li>查询网络贷款类机构数:&nbsp;&nbsp;<span id="query_cash_count"></span></li>
+					<li>总查询次数:&nbsp;&nbsp;<span id="query_sum_count"></span></li>
+					<li>最近查询时间:&nbsp;&nbsp;<span id="latest_query_time"></span></li>
 				</ul>
 				<ul class="th">
-					<li>身份证号码存疑</li>
+					<li>申请历史</li>
 				</ul>
 				<ul>
-					<li>使用过此手机的其他姓名</li>
-					<li>最后使用时间</li>
+					<li>近1个月总查询笔数&nbsp;&nbsp;<span id="latest_one_month"></span></li>
+					<li>近3个月总查询笔数&nbsp;&nbsp;<span id="latest_three_month"></span></li>
+					<li>近6个月总查询笔数&nbsp;&nbsp;<span id="latest_six_month"></span></li>
+				</ul>
+				<ul class="th">
+					<li>履约行为</li>
 				</ul>
 				<ul>
-					<li>使用过此手机的其他身份证</li>
-					<li>最后使用时间</li>
-				</ul>
-				<ul>
-					<li>电话号码在那些类型的机构中使用过</li>
-					<li>最后使用时间</li>
+					<li>贷款放款总订单数&nbsp;&nbsp;<span id="loans_count"></span></li>
+					<li>贷款已结清订单数&nbsp;&nbsp;<span id="loans_settle_count"></span></li>
+					<li>贷款逾期订单数&nbsp;&nbsp;<span id="loans_overdue_count"></span></li>
 				</ul>
 
-
-
 				<ul class="th">
-					<li>用户被机构查询历史</li>
+					<li>多头贷款</li>
 				</ul>
 				<ul>
-					<li>近1个月总查询笔数</li>
-					<li>近3个月总查询笔数</li>
-					<li>近6个月总查询笔数</li>
+					<li>贷款机构数&nbsp;&nbsp;<span id="loans_org_count"></span></li>
+					<li>消费金融类机构数&nbsp;&nbsp;<span id="consfin_org_count"></span></li>
+					<li>网络贷款类机构数&nbsp;&nbsp;<span id="loans_cash_count"></span></li>
 				</ul>
 				<ul class="th">
-					<li>用户被机构批量查询历史</li>
+					<li>贷款历史</li>
 				</ul>
 				<ul>
-					<li>贷款放款总订单数</li>
-					<li>贷款已结清订单数</li>
-					<li>贷款逾期订单数</li>
+					<li>近1个月贷款笔数&nbsp;&nbsp;<span id="latest_one_month1"></span></li>
+					<li>近3个月贷款笔数&nbsp;&nbsp;<span id="latest_three_month1"></span></li>
+					<li>近6个月贷款笔数&nbsp;&nbsp;<span id="latest_six_month1"></span></li>
+					<li>信用贷款时长&nbsp;&nbsp;<span id="loans_long_time"></span></li>
+				</ul>
+				<ul class="th">
+					<li>履约意愿</li>
+				</ul>
+				<ul>
+					<li>历史贷款机构成功扣款笔数&nbsp;&nbsp;<span id="history_suc_fee"></span></li>
+					<li>历史贷款机构失败扣款笔数&nbsp;&nbsp;<span id="history_fail_fee"></span></li>
+					<li>近1个月贷款机构成功扣款笔数&nbsp;&nbsp;<span id="latest_one_month_suc"></span></li>
+				</ul>
+				<ul>
+					<li>近1个月贷款机构失败扣款笔数&nbsp;&nbsp;<span id="latest_one_month_fail"></span></li>
+					<li>最近一次贷款时间&nbsp;&nbsp;<span id="loans_latest_time"></span></li>
+				</ul>
+				<ul class="th">
+					<li>网贷额度</li>
+				</ul>
+				<ul>
+					<li>网贷建议授信额度&nbsp;&nbsp;<span id="loans_credit_limit"></span></li>
+					<li>网络贷款类机构数&nbsp;&nbsp;<span id="loans_org_count1"></span></li>
+					<li>网络贷款类产品数&nbsp;&nbsp;<span id="loans_product_count"></span></li>
+					<li>网络贷款机构最大授信额度&nbsp;&nbsp;<span id="loans_max_limit"></span></li>
+					<li>网络贷款机构平均授信额度&nbsp;&nbsp;<span id="loans_avg_limit"></span></li>
+				</ul>
+			<ul class="th">
+				<li>消金额度</li>
+			</ul>
+				<ul>
+					<li>消金建议授信额度&nbsp;&nbsp;<span id="consfin_credit_limit"></span></li>
+					<li>消费金融类机构数&nbsp;&nbsp;<span id="consfin_org_count1"></span></li>
+					<li>消费金融类产品数&nbsp;&nbsp;<span id="consfin_product_count"></span></li>
+					<li>消费金融类机构最大授&nbsp;&nbsp;<span id="consfin_max_limit"></span></li>
+					<li>消费金融类机构平均授&nbsp;&nbsp;<span id="consfin_avg_limit"></span></li>
 				</ul>
 		</div>
 	<script type="text/javascript">
 		$(function() {
 		    Search();
 		});
-		function pagerFilter(data){
-			if(data.data!=undefined) {
-                data = {
-					total: data.data.totalCount,
-					rows: data.data.result
-                }
-            }
-			var dg = $('#productList');
-			var opts = dg.datagrid('options');
-			var pager = $('#productList').datagrid('getPager');
-			$(pager).pagination({
-				onSelectPage:function(pageNum, pageSize){
-					opts.pageNumber = pageNum;
-					opts.pageSize = pageSize;
-					pager.pagination('refresh',{
-					pageNumber:pageNum,
-					pageSize:pageSize
-				});
-				Search();
-			},
-			beforePageText : '第', //页数文本框前显示的汉字
-			afterPageText : '页    共 {pages} 页',
-			displayMsg : '当前显示 {from} - {to} 条记录   共 {total} 条记录'
-			});
-
-			return data;
-		}
-
-
 		function Search() {
-			var parameter = $("#searchForm").serializeArray();
+			var parameter = parent.$("#searchForm").serializeArray();
 			var values={};
 			for (var item in parameter) {
 				if(values[parameter[item].name]!=null||values[parameter[item].name]!=undefined) {
@@ -132,18 +122,8 @@
 					values[parameter[item].name] = parameter[item].value.trim();
 				}
 			}
-			//pageNumber为datagrid的当前页码
-			var page_Number = $('#productList').datagrid('options').pageNumber;
-			//pageSize为datagrid的每页记录条数
-			var page_Size = $('#productList').datagrid('options').pageSize;
-			values["pageNo"]=page_Number;
-			values["pageSize"]=page_Size;
-			values["pageSize"]=page_Size;
-			values["customerType"]="audit";
-
-
 			$.ajax({
-				url : customerListUrl,
+				url : queryReiDaUrl,
 				type : "POST",
 				contentType:"application/json",
 				data :JSON.stringify(values),
@@ -160,13 +140,72 @@
 				},
 				success : function(datas) {
 				    if(datas.success){
-						//$('#productList').datagrid('loadData',{total:datas.data.totalElements,rows:datas.data.content});
-					}else{
-				        if(datas.code==999999){
-				            top.location.href="/login.html";
-						}else{
-							$.messager.alert('Info', datas.message, 'info');
+				        console.log(datas.data);
+				        var dataObj = eval('(' + datas.data + ')');
+				        if(dataObj.code==0) {
+                            $("#name").text(dataObj.data.id_name);
+                            $("#idCard").text(dataObj.data.id_no);
+                            var queryResult = "";
+                            if (dataObj.hit == 1) {
+                                queryResult = "<font color='red'>命中</font>";
+                            } else if (dataObj.hit == 0) {
+                                queryResult = "未命中";
+                            } else if (dataObj.hit == 2) {
+                                queryResult = "用户未注册或设置隐私不可被搜索";
+                            } else if (dataObj.hit == 3) {
+                                queryResult = "不存在逾期记录";
+                            } else if (dataObj.hit == -1) {
+                                queryResult = "三方接口异常";
+                            }
+
+                            $("#hit").html(queryResult);
+
+                            $("#query_org_count").text(dataObj.data.result_detail.apply_report_detail.query_org_count);
+                            $("#query_finance_count").text(dataObj.data.result_detail.apply_report_detail.query_finance_count);
+                            $("#query_cash_count").text(dataObj.data.result_detail.apply_report_detail.query_cash_count);
+                            $("#query_sum_count").text(dataObj.data.result_detail.apply_report_detail.query_sum_count);
+                            $("#latest_query_time").text(dataObj.data.result_detail.apply_report_detail.latest_query_time);
+                            $("#latest_one_month").text(dataObj.data.result_detail.apply_report_detail.latest_one_month);
+                            $("#latest_three_month").text(dataObj.data.result_detail.apply_report_detail.latest_three_month);
+                            $("#latest_six_month").text(dataObj.data.result_detail.apply_report_detail.latest_six_month);
+                            $("#latest_one_month1").text(dataObj.data.result_detail.apply_report_detail.latest_one_month);
+                            $("#latest_three_month1").text(dataObj.data.result_detail.apply_report_detail.latest_three_month);
+                            $("#latest_six_month1").text(dataObj.data.result_detail.apply_report_detail.latest_six_month);
+
+                            $("#loans_count").text(dataObj.data.result_detail.behavior_report_detail.loans_count);
+                            $("#loans_count1").text(dataObj.data.result_detail.behavior_report_detail.loans_count);
+                            $("#loans_settle_count").text(dataObj.data.result_detail.behavior_report_detail.loans_settle_count);
+                            $("#loans_overdue_count").text(dataObj.data.result_detail.behavior_report_detail.loans_overdue_count);
+                            $("#loans_org_count").text(dataObj.data.result_detail.behavior_report_detail.loans_org_count);
+                            $("#consfin_org_count").text(dataObj.data.result_detail.behavior_report_detail.consfin_org_count);
+                            $("#loans_cash_count").text(dataObj.data.result_detail.behavior_report_detail.loans_cash_count);
+                            $("#latest_one_month").text(dataObj.data.result_detail.behavior_report_detail.latest_one_month);
+                            $("#latest_three_month").text(dataObj.data.result_detail.behavior_report_detail.latest_three_month);
+                            $("#latest_six_month").text(dataObj.data.result_detail.behavior_report_detail.latest_six_month);
+                            $("#history_suc_fee").text(dataObj.data.result_detail.behavior_report_detail.history_suc_fee);
+                            $("#history_fail_fee").text(dataObj.data.result_detail.behavior_report_detail.history_fail_fee);
+                            $("#latest_one_month_suc").text(dataObj.data.result_detail.behavior_report_detail.latest_one_month_suc);
+                            $("#latest_one_month_fail").text(dataObj.data.result_detail.behavior_report_detail.latest_one_month_fail);
+                            $("#loans_long_time").text(dataObj.data.result_detail.behavior_report_detail.loans_long_time);
+                            $("#loans_latest_time").text(dataObj.data.result_detail.behavior_report_detail.loans_latest_time);
+
+                            $("#loans_credit_limit").text(dataObj.data.result_detail.current_report_detail.loans_credit_limit);
+                            $("#loans_org_count1").text(dataObj.data.result_detail.current_report_detail.loans_org_count);
+                            $("#loans_product_count").text(dataObj.data.result_detail.current_report_detail.loans_product_count);
+
+                            $("#loans_max_limit").text(dataObj.data.result_detail.current_report_detail.loans_max_limit);
+                            $("#loans_avg_limit").text(dataObj.data.result_detail.current_report_detail.loans_avg_limit);
+                            $("#consfin_credit_limit").text(dataObj.data.result_detail.current_report_detail.consfin_credit_limit);
+                            $("#consfin_org_count1").text(dataObj.data.result_detail.current_report_detail.consfin_org_count);
+                            $("#consfin_product_count").text(dataObj.data.result_detail.current_report_detail.consfin_product_count);
+                            $("#consfin_max_limit").text(dataObj.data.result_detail.current_report_detail.consfin_max_limit);
+                            $("#consfin_avg_limit").text(dataObj.data.result_detail.current_report_detail.consfin_avg_limit);
+                        }else{
+							$.messager.alert('Info', dataObj.msg, 'info');
 						}
+				    }else{
+				       $.messager.alert('Info', datas.message, 'info');
+
 					}
 				}
 			});

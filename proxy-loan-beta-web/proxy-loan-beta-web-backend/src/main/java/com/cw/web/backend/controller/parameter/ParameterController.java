@@ -1,6 +1,7 @@
 package com.cw.web.backend.controller.parameter;
 
 import com.cw.biz.parameter.app.dto.IndexParameterDto;
+import com.cw.biz.parameter.app.dto.ParameterDto;
 import com.cw.biz.parameter.app.service.ParameterAppService;
 import com.cw.web.backend.controller.AbstractBackendController;
 import com.cw.web.common.dto.CPViewResultInfo;
@@ -31,6 +32,25 @@ public class ParameterController extends AbstractBackendController {
         cpViewResultInfo.setMessage("成功");
         return cpViewResultInfo;
     }
+
+    /** 查询接口请求费用
+     *&lt;功能简述&gt;
+     *&lt;功能详细描述&gt;
+     * ${tags} [参数说明]
+     *
+     * @return ${return_type} [返回类型说明]
+     * @exception throws [异常类型] [异常说明]
+     * @see [类、类#方法、类#成员]
+     */
+    @GetMapping("/parameter/findByCode.json")
+    public CPViewResultInfo findByCode(String code){
+       CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
+       ParameterDto parameterDtos = parameterAppService.findByCode(code);
+       cpViewResultInfo.setData(parameterDtos);
+       cpViewResultInfo.setSuccess(true);
+       cpViewResultInfo.setMessage("成功");
+       return cpViewResultInfo;
+   }
 
     /**
      * 修改参数

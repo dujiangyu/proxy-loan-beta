@@ -24,6 +24,8 @@ public class YxUserInfoDto extends PageDto{
 
     private String phone;
 
+    private Integer status=0;
+
     private String bankAccountNo;
 
     private String address;
