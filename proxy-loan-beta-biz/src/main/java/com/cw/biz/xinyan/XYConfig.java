@@ -72,6 +72,9 @@ public class XYConfig {
 //     */
 //    public static final String TAOBAO_URL="https://api.xinyan.com/spider-h5/#/taobao?";//正式环境
 
+    /**
+     * 授权回调接口
+     */
     public static final String NOTIFY_URL="http://karl-leo.imwork.net:57701/common/receiveXinYanNotify.json";
 
     /**
