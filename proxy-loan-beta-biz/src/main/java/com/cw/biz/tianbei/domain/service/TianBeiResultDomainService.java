@@ -1,5 +1,6 @@
 package com.cw.biz.tianbei.domain.service;
 
+import com.cw.biz.CPContext;
 import com.cw.biz.tianbei.app.dto.TianBeiResultDto;
 import com.cw.biz.tianbei.domain.entity.TianBeiResult;
 import com.cw.biz.tianbei.domain.repository.TianBeiResultRepository;
@@ -58,6 +59,7 @@ public class TianBeiResultDomainService {
             result.setQueryResult(resultStr);
             result.setIdCard(idcard);
             result.setQueryType(queryType);
+            result.setQueryUser(ObjectHelper.isNotEmpty(CPContext.getContext().getSeUserInfo())?CPContext.getContext().getSeUserInfo().getId()+"":"");
         }
         this.tianBeiResultRepository.saveAndFlush(result);
         return result.to(TianBeiResultDto.class);

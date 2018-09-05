@@ -1,4 +1,4 @@
-package com.cw.biz.tianbei.domain.entity;
+package com.cw.biz.xinyan.domain.entity;
 
 import com.cw.biz.common.entity.BaseEntity;
 import lombok.Data;
@@ -8,16 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * @Title: TianBeiResult
- * @Description: 天贝接口请求结果
+ * @Title: XinYanResult
+ * @Description: 新颜接口请求结果
  * @Author: Away
  * @Date: 2018/9/1 15:15
  */
 @Entity
-@Table(name="yx_tianbei_result")
-@org.hibernate.annotations.Table(appliesTo = "yx_tianbei_result",comment = "天贝接口请求结果")
+@Table(name="yx_xinyan_result")
+@org.hibernate.annotations.Table(appliesTo = "yx_xinyan_result",comment = "新颜接口请求结果")
 @Data
-public class TianBeiResult extends BaseEntity{
+public class XinYanResult extends BaseEntity{
 
     @Column(name="id_card",columnDefinition="varchar(18) not null comment '身份证号'")
     private String idCard;

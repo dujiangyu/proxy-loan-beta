@@ -1,16 +1,18 @@
-package com.cw.biz.tianbei.app.dto;
+package com.cw.biz.xinyan.app.dto;
 
 import com.cw.biz.common.dto.BaseDto;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * @Title: TianBeiResultDto
- * @Description: 天贝接口请求结果
+ * @Title: XinYanResultDto
+ * @Description:
  * @Author: Away
- * @Date: 2018/9/1 15:15
+ * @Date: 2018/9/5 21:31
  */
-@Data
-public class TianBeiResultDto extends BaseDto{
+@Getter
+@Setter
+public class XinYanResultDto extends BaseDto{
 
     /**身份证号**/
     private String idCard;
@@ -23,5 +25,4 @@ public class TianBeiResultDto extends BaseDto{
 
     /**查询人**/
     private String queryUser;
-
 }

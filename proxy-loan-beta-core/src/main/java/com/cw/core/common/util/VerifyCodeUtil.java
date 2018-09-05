@@ -262,13 +262,13 @@ public class VerifyCodeUtil {
         }
 
     }
-    public static void main(String[] args) throws IOException{
-        File dir = new File("F:/verifies");
-        int w = 45, h = 80;
-        for(int i = 0; i < 50; i++){
-            String verifyCode = generateVerifyCode(5);
-            File file = new File(dir, verifyCode + ".jpg");
-            outputImage(w*verifyCode.length(), h, file, verifyCode);
-        }
-    }
+//    public static void main(String[] args) throws IOException{
+//        File dir = new File("F:/verifies");
+//        int w = 45, h = 80;
+//        for(int i = 0; i < 50; i++){
+//            String verifyCode = generateVerifyCode(5);
+//            File file = new File(dir, verifyCode + ".jpg");
+//            outputImage(w*verifyCode.length(), h, file, verifyCode);
+//        }
+//    }
 }
