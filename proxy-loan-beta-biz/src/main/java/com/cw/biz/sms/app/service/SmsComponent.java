@@ -176,8 +176,6 @@ public class SmsComponent {
            }
            seUser1.setPassword(registerDto.getVerifyCode());
            seUserService.updateUser(seUser1, Boolean.TRUE);
-           //保存用户信息
-           registerUserInfo(seUser1,registerDto);
        }
    }
 

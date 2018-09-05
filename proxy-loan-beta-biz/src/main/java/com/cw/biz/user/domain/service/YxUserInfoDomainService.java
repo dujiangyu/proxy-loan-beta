@@ -1,6 +1,7 @@
 package com.cw.biz.user.domain.service;
 
 import com.cw.biz.CPContext;
+import com.cw.biz.CwException;
 import com.cw.biz.channel.app.dto.ChannelDto;
 import com.cw.biz.channel.app.service.ChannelAppService;
 import com.cw.biz.user.app.dto.YxUserInfoDto;
@@ -55,9 +56,8 @@ public class YxUserInfoDomainService {
      */
     public YxUserInfo update(YxUserInfoDto cwUserInfoDto){
         //借款起始金额
-        YxUserInfo cwUserInfo = repository.findByPhone(CPContext.getContext().getSeUserInfo().getPhone());
-        if(cwUserInfo == null)
-        {
+        YxUserInfo cwUserInfo= repository.findByPhone(CPContext.getContext().getSeUserInfo().getPhone());
+        if(cwUserInfo == null){
             cwUserInfo = create(cwUserInfoDto);
         }else{
             cwUserInfo.from(cwUserInfoDto);
