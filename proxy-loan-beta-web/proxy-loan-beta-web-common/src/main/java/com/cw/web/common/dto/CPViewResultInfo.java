@@ -87,6 +87,12 @@ public class CPViewResultInfo implements Serializable{
         this.message=e.getMessage();
         log.error(e.getMessage(),e);
     }
+
+    public void newFalse(String errorMsg){
+        this.success=false;
+        this.message=errorMsg;
+        log.error(errorMsg);
+    }
     public void newFalse(Exception e){
         if(e.getClass().getName().equalsIgnoreCase(BusinessException.class.getName()))this.code=((BusinessException) e).getCode();
         this.success=false;

@@ -2,6 +2,29 @@
 @import "font/iconfont.css";/*midea定制矢量图标样式*/
 
 
+body .mask {
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 100000;
+  top: -45px;
+  padding-bottom: 45px;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+body .mask #loader {
+  background: url(../images/loader.gif) center center no-repeat;
+  height: 15px;
+  width: 15px;
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  margin: -25px 0 0 -25px;
+}
+
 html{font-family:sans-serif;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;overflow-y:scroll;font-size: 80%;/*不同分辨率的字体自动缩小*/}
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display: block;}
 audio,canvas,video{display: inline-block;}

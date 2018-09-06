@@ -130,12 +130,12 @@ public class CustomerInfoController extends AbstractWechatController{
                    userInfoDto.setOpenId(dataJson.getString("openId"));
                    yxUserInfoAppService.update(userInfoDto);
                }
+               cpViewResultInfo.newSuccess(authUrl);
+           }else{
+                cpViewResultInfo.newFalse(initJson.getString("errorMsg"));
            }
-           cpViewResultInfo.setData(authUrl);
-           cpViewResultInfo.setSuccess(true);
-           cpViewResultInfo.setMessage("初始化成功");
         }catch (Exception e){
-            cpViewResultInfo.setSuccess(false);
+            cpViewResultInfo.newFalse(e);
             throw new CwException(e.getMessage());
         }
        return cpViewResultInfo;
@@ -158,11 +158,9 @@ public class CustomerInfoController extends AbstractWechatController{
             String phone = CPContext.getContext().getSeUserInfo().getPhone();
             YxUserInfoDto userInfoDto = yxUserInfoAppService.findByPhone(phone);
             String authUrl = tianBeiClient.submitValidateCode(userInfoDto.getCertNo(),yxUserInfoDto.getOpenId(),yxUserInfoDto.getCaptcha());
-            cpViewResultInfo.setData(authUrl);
-            cpViewResultInfo.setSuccess(true);
-            cpViewResultInfo.setMessage("授权成功");
+            cpViewResultInfo.newSuccess(authUrl);
         }catch (Exception e){
-            cpViewResultInfo.setSuccess(false);
+           cpViewResultInfo.newFalse(e);
             throw new CwException(e.getMessage());
         }
        return cpViewResultInfo;

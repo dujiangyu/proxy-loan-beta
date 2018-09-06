@@ -6,9 +6,12 @@ var findByIdUrl = httpUrl +"/wechat/customer/findById.json";
 var updateUrl = httpUrl +"/wechat/customer/updateUserInfo.json";
 
 var zmfAuthUrl= httpUrl+"/wechat/customer/buildXinYanOrder.json";//芝麻分订单
+var taobaozmurl=httpUrl+"/xinyan/startAuthTaobao.json";
 var yysAuthUrl = httpUrl+"/wechat/customer/getTelecomOperatorsReportInit.json";//运营商授权初始化
 var submitYzmAuthUrl = httpUrl+"/wechat/customer/submitValidateCode.json";//运营商授权初始化
 var resendYzmAuthUrl = httpUrl+"/wechat/customer/resendVlidateCode.json";//运营商授权初始化
+
+
 /**
  * 是否是手机号码
  * @param phone
@@ -151,10 +154,17 @@ function post(url,data) {
         dataType: "json",
         async: false,
         success: function (data) {
+            $("#loader").fadeOut(300);
+            $(".mask").fadeOut(300);
             returnData = data;
         },
         error: function () {
-            alert("服务请求出错");
+            $("#loader").fadeOut(300);
+            $(".mask").fadeOut(300);
+            toastr.error('网络错误');
+        },beforeSend:function(){
+            $(".mask").fadeIn(200);
+            $("#loader").fadeIn(200);
         }
     });
     return returnData;
