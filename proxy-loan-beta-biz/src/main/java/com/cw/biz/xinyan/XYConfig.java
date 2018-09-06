@@ -95,5 +95,5 @@ public class XYConfig {
     /**
      * 用户淘宝全部信息
      */
-    public static final String USER_TAOBAO_ALL_INFO_URL = BASE_URL + "/data/taobao/v3/userdata/";
+    public static final String USER_TAOBAO_ALL_INFO_URL = BASE_URL + "/data/taobao/v3/user/";
 }

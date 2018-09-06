@@ -1,5 +1,5 @@
-var httpUrl = "http://127.0.0.1:9527";
-// var httpUrl = "http://www.youxinjk.com/";
+// var httpUrl = "http://127.0.0.1:9527";
+var httpUrl = "http://www.youxinjk.com/";
 var sendSmsUrl = httpUrl + "/common/sendValidateCode.json";
 var loginUrl = httpUrl + "/common/passwordLogin.json";
 var findByIdUrl = httpUrl +"/wechat/customer/findById.json";

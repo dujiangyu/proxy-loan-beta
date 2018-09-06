@@ -2,6 +2,10 @@ package com.cw.biz.xinyan.app.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.cw.biz.CPContext;
+import com.cw.biz.user.app.dto.CustomerAuditDto;
+import com.cw.biz.user.domain.entity.YxUserInfo;
+import com.cw.biz.user.domain.service.YxUserInfoDomainService;
 import com.cw.biz.xinyan.ENUM_XINYAN_PHASE_TYPE;
 import com.cw.biz.xinyan.ENUM_XINYAN_TYPE;
 import com.cw.biz.xinyan.XYConfig;
@@ -32,6 +36,8 @@ public class XinYanAppService {
 
     private final XYClient xyClient;
 
+    @Autowired
+    private YxUserInfoDomainService domainService;
 
     @Autowired
     public XinYanAppService(XinYanResultDomainService xinYanResultDomainService,XYClient xyClient) {
@@ -99,6 +105,34 @@ public class XinYanAppService {
         return result;
     }
 
+    /** 获取用户芝麻分
+     *&lt;功能简述&gt;
+     *&lt;功能详细描述&gt;
+     * ${tags} [参数说明]
+     *
+     * @return ${return_type} [返回类型说明]
+     * @exception throws [异常类型] [异常说明]
+     * @see [类、类#方法、类#成员]
+     */
+    public String queryTaobaoUserInfo(CustomerAuditDto customerAuditDto) throws Exception {
+        YxUserInfo yxUserInfo = domainService.findByPhone(customerAuditDto.getPhone());
+        XinYanResultDto resultDto=this.xinYanResultDomainService.findByIdCardAndQueryType(yxUserInfo.getCertNo(),ENUM_XINYAN_TYPE.ZHIMA.code);
+        if(ObjectHelper.isNotEmpty(resultDto)){
+            return resultDto.getQueryResult();
+        }
+           //未采集完成则调用查询淘宝用户全部信息接口
+           Map<String,String> params=new HashMap<>();
+           params.put("memberId",XYConfig.MEMBER_ID);
+           params.put("terminalId",XYConfig.TERMINAL_ID);
+           params.put("orderNo",yxUserInfo.getTradeNo());
+           String result=xyClient.doRequestWithRsa(XYConfig.USER_TAOBAO_ALL_INFO_URL+yxUserInfo.getTradeNo(),params,"get",true);
+           JSONObject jsonResult=JSON.parseObject(result);
+           if(jsonResult.getBoolean("success")){
+               this.xinYanResultDomainService.saveOrUpdate(yxUserInfo.getCertNo(),ENUM_XINYAN_TYPE.ZHIMA.code,result);
+           }
+           return result;
+    }
+
     /**
      * @Author: Away
      * @Title: saveOrUpdateNotify
@@ -119,7 +153,7 @@ public class XinYanAppService {
             String result=xyClient.doRequestWithRsa(XYConfig.USER_TAOBAO_ALL_INFO_URL+xinYanNotifyResultParamDto.getTrade_no(),params,"get",true);
             JSONObject jsonResult=JSON.parseObject(result);
             if(jsonResult.getBoolean("success")){
-                this.xinYanResultDomainService.saveOrUpdate(xinYanNotifyResultParamDto.getTask_content().getUser_id(),ENUM_XINYAN_TYPE.ZHIMA.code,result);
+              //  this.xinYanResultDomainService.saveOrUpdate(xinYanNotifyResultParamDto.getTask_content().getUser_id(),ENUM_XINYAN_TYPE.ZHIMA.code,result);
             }
         }
         return source;
@@ -143,6 +177,9 @@ public class XinYanAppService {
         String result= xyClient.doRequestWithRsa(XYConfig.BUILD_ORDER_URL,param,"post",false);
         JSONObject jsonResult=JSON.parseObject(result);
         if(jsonResult.getBoolean("success")){
+            //保存交易号码
+            YxUserInfo yxUserInfo = domainService.findByPhone(CPContext.getContext().getSeUserInfo().getPhone());
+            yxUserInfo.setTradeNo(jsonResult.getString("data"));
             return XYConfig.TAOBAO_URL+"trade_no="+jsonResult.getString("data")+"&user_id="+idCard+"&member_id="+XYConfig.MEMBER_ID+"&terminal_id="+XYConfig.TERMINAL_ID+"&succ_url="+XYConfig.TAOBAO_AUTH_SUCCESS_URL;
         }else{
             return result;

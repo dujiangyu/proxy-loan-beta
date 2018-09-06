@@ -1,5 +1,5 @@
-var http="http://127.0.0.1:9527/";
-// var http = "http://www.youxinjk.com/";
+// var http="http://127.0.0.1:9527/";
+var http = "http://www.youxinjk.com/";
 var allProductAllUrl = http + "/backend/product/findAllProduct.json";
 var channelAllUrl=http+"/backend/channel/findAllChannel.json";
 var uploadUrl = http + "/common/upload.json";

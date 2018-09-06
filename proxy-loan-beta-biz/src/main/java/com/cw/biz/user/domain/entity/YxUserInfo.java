@@ -57,4 +57,7 @@ public class YxUserInfo extends AggEntity{
 
     @Column(name="open_id",columnDefinition="varchar(32)  comment 'openID'")
     private String openId;
+
+    @Column(name="trade_no",columnDefinition="varchar(64)  comment '交易号码'")
+    private String tradeNo;
 }

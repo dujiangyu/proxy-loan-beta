@@ -287,7 +287,7 @@ public class CustomerController  extends AbstractBackendController {
              ParameterDto parameterDto = new ParameterDto();
              parameterDto.setParameterCode(ParameterEnum.ZMF.getKey());
              substractFee(customerAuditDto,parameterDto);
-             String result = "";//xinYanAppService.buildXinYanOrder(customerAuditDto.getPhone(),customerAuditDto.getName(), customerAuditDto.getIdCard());
+             String result = xinYanAppService.queryTaobaoUserInfo(customerAuditDto);
              cpViewResultInfo.setData(result);
              cpViewResultInfo.setSuccess(true);
              cpViewResultInfo.setMessage("查询成功");
@@ -304,21 +304,23 @@ public class CustomerController  extends AbstractBackendController {
    private void substractFee(CustomerAuditDto customerAuditDto,ParameterDto parameterDto){
        ParameterDto parameterDto1 = parameterAppService.findByCode(parameterDto.getParameterCode());
        //是否是服务商下级用户审核
-        ThirdOperateDto thirdOperateDto = thirdOperateAppService.findByUserId(CPContext.getContext().getSeUserInfo().getMerchantId());
-        if(thirdOperateDto==null){
+        ThirdOperateDto thirdOperateDto = thirdOperateAppService.findByUserId(CPContext.getContext().getSeUserInfo().getId());
+        if(thirdOperateDto!=null){
             //服务商自己请求接口
             if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())) {
-                thirdOperateDto = thirdOperateAppService.findByUserId(CPContext.getContext().getSeUserInfo().getId());
+                if(CPContext.getContext().getSeUserInfo().getrId()==4){
+                    thirdOperateDto = thirdOperateAppService.findByUserId(CPContext.getContext().getSeUserInfo().getMerchantId());
+                }
                 thirdOperateDto.setInterfaceFee(parameterDto1.getParameterValue());
                 thirdOperateAppService.queryInterfaceFee(thirdOperateDto);
             }
         }else{
             //判断是否收取本次费用
-            SeUser seUser = seUserService.findOne(CPContext.getContext().getSeUserInfo().getMerchantId());
+            SeUser seUser = seUserService.findOne(CPContext.getContext().getSeUserInfo().getId());
             //查询客服信息获取用户是否是本组的人员
             TianBeiResultDto tianBeiResultDto=this.tianBeiResultAppService.findByIdcardAndQueryType(customerAuditDto.getIdCard(), ENUM_TIANBEI_TYPE.RADAR.code);
             if(ObjectHelper.isNotEmpty(tianBeiResultDto)){
-                String roleIds = seUserService.findOne(tianBeiResultDto.getId()).getRoleIdsStr();
+                String roleIds = seUserService.findOne(Long.parseLong(tianBeiResultDto.getQueryUser())).getRoleIdsStr();
                 if(compareStr(roleIds,seUser.getRoleIdsStr())) {
                     return;
                 }

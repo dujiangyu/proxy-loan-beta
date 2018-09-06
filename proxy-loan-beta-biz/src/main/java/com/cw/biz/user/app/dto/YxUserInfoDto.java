@@ -52,4 +52,6 @@ public class YxUserInfoDto extends PageDto{
 
     private String showPageContent;
 
+    private String tradeNo;
+
 }
