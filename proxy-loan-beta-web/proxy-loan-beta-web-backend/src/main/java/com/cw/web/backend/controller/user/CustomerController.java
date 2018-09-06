@@ -8,7 +8,6 @@ package com.cw.web.backend.controller.user;/*
 import com.cw.biz.CPContext;
 import com.cw.biz.CwException;
 import com.cw.biz.channel.app.dto.ThirdOperateDto;
-import com.cw.biz.channel.app.service.AgentAppService;
 import com.cw.biz.channel.app.service.ThirdOperateAppService;
 import com.cw.biz.parameter.app.ParameterEnum;
 import com.cw.biz.parameter.app.dto.ParameterDto;
@@ -22,14 +21,13 @@ import com.cw.biz.user.app.dto.YxUserInfoDto;
 import com.cw.biz.user.app.service.CustomerAppService;
 import com.cw.biz.user.domain.entity.SeUser;
 import com.cw.biz.user.domain.service.SeUserService;
+import com.cw.biz.xinyan.app.service.XinYanAppService;
 import com.cw.core.common.util.ObjectHelper;
 import com.cw.web.backend.controller.AbstractBackendController;
 import com.cw.web.common.dto.CPViewResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
 
 @RestController
 public class CustomerController  extends AbstractBackendController {
@@ -42,9 +40,12 @@ public class CustomerController  extends AbstractBackendController {
 
     @Autowired
     private ThirdOperateAppService thirdOperateAppService;
-
+    /** 天贝接口 **/
     @Autowired
     private TianBeiClient tianBeiClient;
+    /** 新颜接口 **/
+    @Autowired
+    private XinYanAppService xinYanAppService;
 
     @Autowired
     private SeUserService seUserService;
@@ -68,24 +69,35 @@ public class CustomerController  extends AbstractBackendController {
         cpViewResultInfo.setMessage("查询成功");
         return cpViewResultInfo;
     }
+
+    @GetMapping("/customer/findById.json")
+    @ResponseBody
+    public CPViewResultInfo findById(Long id) {
+      CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
+      YxUserInfoDto yxUserInfoDto = yxUserInfoAppService.findById(id);
+      cpViewResultInfo.setData(yxUserInfoDto);
+      cpViewResultInfo.setSuccess(true);
+      cpViewResultInfo.setMessage("查询成功");
+      return cpViewResultInfo;
+    }
     /** 修改用户信息
-         *&lt;功能简述&gt;
-         *&lt;功能详细描述&gt;
-         * ${tags} [参数说明]
-         *
-         * @return ${return_type} [返回类型说明]
-         * @exception throws [异常类型] [异常说明]
-         * @see [类、类#方法、类#成员]
-         */
-        @PostMapping("/customer/update.json")
-        @ResponseBody
-        public CPViewResultInfo update(@RequestBody YxUserInfoDto yxUserInfoDto) {
-           CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
-           yxUserInfoAppService.update(yxUserInfoDto);
-           cpViewResultInfo.setSuccess(true);
-           cpViewResultInfo.setMessage("查询成功");
-           return cpViewResultInfo;
-        }
+     *&lt;功能简述&gt;
+     *&lt;功能详细描述&gt;
+     * ${tags} [参数说明]
+     *
+     * @return ${return_type} [返回类型说明]
+     * @exception throws [异常类型] [异常说明]
+     * @see [类、类#方法、类#成员]
+     */
+    @PostMapping("/customer/update.json")
+    @ResponseBody
+    public CPViewResultInfo update(@RequestBody YxUserInfoDto yxUserInfoDto) {
+       CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
+       yxUserInfoAppService.update(yxUserInfoDto);
+       cpViewResultInfo.setSuccess(true);
+       cpViewResultInfo.setMessage("查询成功");
+       return cpViewResultInfo;
+    }
     /**
     * 天贝全景雷达接口
     * @param customerAuditDto
@@ -150,8 +162,9 @@ public class CustomerController  extends AbstractBackendController {
        try {
            ParameterDto parameterDto = new ParameterDto();
            parameterDto.setParameterCode(ParameterEnum.YUNYINGSHANG.getKey());
+           String openId = yxUserInfoAppService.findByPhone(customerAuditDto.getPhone()).getOpenId();
            substractFee(customerAuditDto,parameterDto);
-           String result = tianBeiClient.getTelecomOperatorsReportInit(customerAuditDto.getName(),customerAuditDto.getPhone(), customerAuditDto.getIdCard(), customerAuditDto.getServicePwd());
+           String result = tianBeiClient.getTelecomOperatorsReport(customerAuditDto.getIdCard(),openId);
            cpViewResultInfo.setData(result);
            cpViewResultInfo.setSuccess(true);
            cpViewResultInfo.setMessage("查询成功");
@@ -211,6 +224,79 @@ public class CustomerController  extends AbstractBackendController {
           return cpViewResultInfo;
       }
 
+
+    /**
+      * 实名认证
+      * @param customerAuditDto
+      * @return
+      */
+     @PostMapping("/customer/queryXinyuanNameAuth.json")
+     @ResponseBody
+     public CPViewResultInfo queryXinyuanNameAuth(@RequestBody CustomerAuditDto customerAuditDto) {
+         CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
+         try {
+             ParameterDto parameterDto = new ParameterDto();
+             parameterDto.setParameterCode(ParameterEnum.INFOAUTH.getKey());
+             substractFee(customerAuditDto,parameterDto);
+             String result = xinYanAppService.getXinYanRealName(customerAuditDto.getIdCard(),customerAuditDto.getName());
+             cpViewResultInfo.setData(result);
+             cpViewResultInfo.setSuccess(true);
+             cpViewResultInfo.setMessage("查询成功");
+         }catch (Exception e){
+             cpViewResultInfo.setSuccess(false);
+             throw new CwException(e.getMessage());
+         }
+         return cpViewResultInfo;
+     }
+
+    /**
+      * 逾期档案
+      * @param customerAuditDto
+      * @return
+      */
+     @PostMapping("/customer/queryXinyuanOverdue.json")
+     @ResponseBody
+     public CPViewResultInfo queryXinyuanOverdue(@RequestBody CustomerAuditDto customerAuditDto) {
+         CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
+         try {
+             ParameterDto parameterDto = new ParameterDto();
+             parameterDto.setParameterCode(ParameterEnum.OVERDUEFILE.getKey());
+             substractFee(customerAuditDto,parameterDto);
+             String result = xinYanAppService.getOverdue(customerAuditDto.getIdCard(),customerAuditDto.getName(),customerAuditDto.getPhone(),customerAuditDto.getBankAccount());
+             cpViewResultInfo.setData(result);
+             cpViewResultInfo.setSuccess(true);
+             cpViewResultInfo.setMessage("查询成功");
+         }catch (Exception e){
+             cpViewResultInfo.setSuccess(false);
+             throw new CwException(e.getMessage());
+         }
+         return cpViewResultInfo;
+     }
+
+
+    /**
+      * 芝麻分
+      * @param customerAuditDto
+      * @return
+      */
+     @PostMapping("/customer/queryXinyuanZmf.json")
+     @ResponseBody
+     public CPViewResultInfo queryXinyuanZmf(@RequestBody CustomerAuditDto customerAuditDto) {
+         CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
+         try {
+             ParameterDto parameterDto = new ParameterDto();
+             parameterDto.setParameterCode(ParameterEnum.ZMF.getKey());
+             substractFee(customerAuditDto,parameterDto);
+             String result = "";//xinYanAppService.buildXinYanOrder(customerAuditDto.getPhone(),customerAuditDto.getName(), customerAuditDto.getIdCard());
+             cpViewResultInfo.setData(result);
+             cpViewResultInfo.setSuccess(true);
+             cpViewResultInfo.setMessage("查询成功");
+         }catch (Exception e){
+             cpViewResultInfo.setSuccess(false);
+             throw new CwException(e.getMessage());
+         }
+         return cpViewResultInfo;
+     }
 
 
 

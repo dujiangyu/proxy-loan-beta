@@ -54,4 +54,7 @@ public class YxUserInfo extends AggEntity{
 
     @Column(name="register_date",columnDefinition="datetime comment '注册时间'")
     private Date registerDate;
+
+    @Column(name="open_id",columnDefinition="varchar(32)  comment 'openID'")
+    private String openId;
 }

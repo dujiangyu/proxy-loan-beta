@@ -27,15 +27,19 @@
 				</ul>
 				<ul>
 					<li>运营商:<span id="cell_operator"></span></li>
-					<li>运营商（中文）:<span id="cell_operator_zh"></span>X</li>
+					<li>运营商（中文）:<span id="cell_operator_zh"></span></li>
 					<li>号码:<span id="cell_phone_num"></span></li>
 					<li>归属地:<span id="cell_loc"></span></li>
 					<li>月份:<span id="cell_mth"></span></li>
+				</ul>
+				<ul>
 					<li>呼叫次数	:<span id="call_cnt"></span></li>
 					<li>主叫次数	:<span id="call_out_cnt"></span></li>
 					<li>主叫时间	:<span id="call_out_time"></span></li>
 					<li>被叫次数	:<span id="call_in_cnt"></span></li>
 					<li>被叫时间	:<span id="call_in_time"></span></li>
+				</ul>
+								<ul>
 					<li>流量	:<span id="net_flow"></span></li>
 					<li>短信数目	:<span id="sms_cnt"></span></li>
 					<li>话费消费	:<span id="total_amount"></span></li>
@@ -49,19 +53,23 @@
 					<li>电话呼入次数	:<span id="region_call_in_cnt"></span></li>
 					<li>电话呼出次数	:<span id="region_call_out_cnt"></span></li>
 					<li>电话呼入时间	:<span id="region_call_in_time"></span></li>
+				</ul>
+					<ul>
 					<li>电话呼出时间		:<span id="region_call_out_time"></span></li>
 					<li>平均电话呼入时间		:<span id="region_avg_call_in_time"></span></li>
 					<li>平均电话呼出时间		:<span id="region_avg_call_out_time"></span></li>
 					<li>电话呼入次数百分比		:<span id="region_call_in_cnt_pct"></span></li>
 					<li>电话呼出次数百分比		:<span id="region_call_out_cnt_pct"></span></li>
+				</ul>
+				<ul>
 					<li>电话呼入时间百分比		:<span id="region_call_in_time_pct"></span></li>
 					<li>电话呼出时间百分比		:<span id="region_call_out_time_pct"></span></li>
 				</ul>
 				<ul class="th">
 					<li>运营商联系人通话详情</li>
 				</ul>
-				<ul style="width: 300px;">
-					<table id="contact_list" class="easyui-datagrid" style="width:300px;height: 300px;">
+				<ul style="width: 1200px;height: 300px;">
+					<table id="contact_list" class="easyui-datagrid" style="width:1200px;height: 300px;">
 						<thead>
 						<tr>
 							<th data-options="field:'phone_num',width:120">号码</th>
@@ -99,15 +107,32 @@
 					<li>企业名称	<span id="company_name"></span></li>
 					<li>服务企业类型	<span id="company_type"></span></li>
 					<li>总互动次数	<span id="total_service_cnt"></span></li>
-					<li>月互动详情<span id="service_details"></span></li>
-					<li>月互动次数		<span id="interact_cnt"></span></li>
-					<li>互动月份		<span id="interact_mth"></span></li>
+					<li>月互动详情</li>
 				</ul>
-
+				<ul style="width:300px;height: 300px;">
+					<table id="main_service" class="easyui-datagrid" style="width:800px;height: 300px;">
+							<thead>
+							<tr>
+								<th data-options="field:'company_name',width:120">企业名称</th>
+								<th data-options="field:'company_type',width:150">服务企业类型</th>
+								<th>
+									<!--<table id="service_details" class="easyui-datagrid" style="width:800px;height: 300px;">-->
+										<!--<thead>-->
+										<!--<tr>-->
+											<!--<th data-options="field:'interact_cnt',width:120">月互动次数</th>-->
+											<!--<th data-options="field:'interact_mth',width:150">互动月份</th>-->
+										<!--</tr>-->
+										<!--</thead>-->
+									<!--</table>-->
+								</th>
+							</tr>
+							</thead>
+					</table>
+				</ul>
 				<ul class="th">
 					<li>电商地址分析</li>
 				</ul>
-				<ul style="width:300px;">
+				<ul style="width:300px;height: 300px;">
 					<table id="deliver_address" class="easyui-datagrid" style="width:800px;height: 300px;">
 						<thead>
 						<tr>
@@ -132,7 +157,7 @@
 				<ul class="th">
 					<li>电商月消费</li>
 				</ul>
-				<ul style="width: 300px;">
+				<ul style="	width: 300px;height: 300px;">
 					<table id="ebusiness_expense" class="easyui-datagrid" style="width:300px;height: 300px;">
 						<thead>
 						<tr>
@@ -147,7 +172,7 @@
 				<ul class="th">
 					<li>联系人名单</li>
 				</ul>
-				<ul style="width: 300px;">
+				<ul style="width: 300px;height: 300px;">
 					<table id="collection_contact" class="easyui-datagrid" style="width:300px;height: 300px;">
 						<thead>
 						<tr>
@@ -164,7 +189,7 @@
 				<ul class="th">
 					<li>出行分析</li>
 				</ul>
-				<ul style="width: 300px;">
+				<ul style="width: 300px;height: 300px;">
 					<table id="trip_info" class="easyui-datagrid" style="width:300px;height: 300px;">
 						<thead>
 						<tr>
@@ -184,7 +209,7 @@
 		    Search();
 		});
 		function Search() {
-			var parameter = $("#searchForm").serializeArray();
+			var parameter = parent.$("#searchForm").serializeArray();
 			var values={};
 			for (var item in parameter) {
 				if(values[parameter[item].name]!=null||values[parameter[item].name]!=undefined) {
@@ -244,8 +269,9 @@
 							//常用服务（main_service）
 							$("#company_name").html(dataObj.data.report.main_service.company_name);
 							$("#company_type").html(dataObj.data.report.main_service.company_type);
-							$("#total_service_cnt").html(dataObj.data.report.main_service.total_service_cnt);
-							$("#service_details").html(dataObj.data.report.main_service.service_details);
+							$("#main_service").html(dataObj.data.report.main_service);
+							$("#service_details").datagrid("loadData",dataObj.data.report.main_service.service_details);
+
 							$("#interact_cnt").html(dataObj.data.report.main_service.interact_cnt);
 							$("#interact_mth").html(dataObj.data.report.main_service.interact_mth);
 							//电商地址分析（deliver_address）

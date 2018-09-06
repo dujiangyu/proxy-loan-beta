@@ -4,6 +4,11 @@ var sendSmsUrl = httpUrl + "/common/sendValidateCode.json";
 var loginUrl = httpUrl + "/common/passwordLogin.json";
 var findByIdUrl = httpUrl +"/wechat/customer/findById.json";
 var updateUrl = httpUrl +"/wechat/customer/updateUserInfo.json";
+
+var zmfAuthUrl= httpUrl+"/wechat/customer/buildXinYanOrder.json";//芝麻分订单
+var yysAuthUrl = httpUrl+"/wechat/customer/getTelecomOperatorsReportInit.json";//运营商授权初始化
+var submitYzmAuthUrl = httpUrl+"/wechat/customer/submitValidateCode.json";//运营商授权初始化
+var resendYzmAuthUrl = httpUrl+"/wechat/customer/resendVlidateCode.json";//运营商授权初始化
 /**
  * 是否是手机号码
  * @param phone
@@ -116,22 +121,10 @@ function findById() {
     var jsonStr=$("#userForm").serialize();
     var result =get(findByIdUrl,jsonStr);
     if(result.success){
-        $("#loanPurpose").val(result.data.loanPurpose);
-        $("#loanPurposeText").text(result.data.loanPurpose==null?"请选择":result.data.loanPurpose);
+        $("#name").val(result.data.name);
         $("#certNo").val(result.data.certNo);
-        $("#city").val(result.data.city);
-        $("#wechatNumber").val(result.data.wechatNumber);
-        $("#wechatAmount").val(result.data.wechatAmount);
-        $("#creditCardAmount").val(result.data.creditCardAmount);
+        $("#bankAccount").val(result.data.bankAccount);
         $("#loanAmount").val(result.data.loanAmount);
-        $("#income").val(result.data.income);
-        $("input:radio[name=isFund][value="+result.data.isFund+"]").prop("checked",true);
-        $("input:radio[name=isSocial][value="+result.data.isSocial+"]").prop("checked",true);
-        $("input:radio[name=isWechatAmount][value="+result.data.isWechatAmount+"]").prop("checked",true);
-        $("input:radio[name=isHouseLoan][value="+result.data.isHouseLoan+"]").prop("checked",true);
-        $("input:radio[name=isCarLoan][value="+result.data.isCarLoan+"]").prop("checked",true);
-        $("input:radio[name=isBorrow][value="+result.data.isBorrow+"]").prop("checked",true);
-
     }else{
         showMessage(result.message);
         window.location.href="/register.html";

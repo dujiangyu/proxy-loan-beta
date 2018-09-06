@@ -64,11 +64,11 @@
 						if(dataObj.success) {
 
                             var showStatus = "";
-                            if (dataObj.code == 0) {
+                            if (dataObj.data.code == 0) {
                                 showStatus = "认证成功";
-                            } else if (dataObj.code == 1) {
+                            } else if (dataObj.data.code == 1) {
                                 showStatus = "认证信息不一致";
-                            } else if (dataObj.code == 2) {
+                            } else if (dataObj.data.code == 2) {
                                 showStatus = "认证信息不存在";
                             } else {
                                 showStatus = "其他异常";

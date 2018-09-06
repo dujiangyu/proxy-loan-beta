@@ -55,7 +55,7 @@ public class XYConfig {
     /**
      * 公司所处行业
      */
-    public static final String INDUSTRY_TYPE="A";
+    public static final String INDUSTRY_TYPE="B14";
 
     /**
      * 淘宝芝麻分H5授权成功回调页面（不是回调接口）
@@ -75,7 +75,7 @@ public class XYConfig {
     /**
      * 授权回调接口
      */
-    public static final String NOTIFY_URL="http://karl-leo.imwork.net:57701/common/receiveXinYanNotify.json";
+    public static final String NOTIFY_URL="http://www.youxinjk.com/common/receiveXinYanNotify.json";
 
     /**
      * 实名认证接口

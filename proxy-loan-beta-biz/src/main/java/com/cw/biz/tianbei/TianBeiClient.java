@@ -237,8 +237,9 @@ public class TianBeiClient {
         String initResultStr=doCommonPost(initUrl,initPara,null);
         JSONObject initJson= JSON.parseObject(initResultStr);
         if(initJson.getString("code").equalsIgnoreCase("0")){
-            String state=initJson.getString("state");
-            if(state.equalsIgnoreCase("0")){
+            String data=initJson.getString("data");
+            JSONObject dataJson= JSON.parseObject(data);
+            if(dataJson.getString("state").equalsIgnoreCase("0")){
                 return getTelecomOperatorsReport(idNo,initJson.getString("openId"));
             }else{
                 return initResultStr;
@@ -272,7 +273,9 @@ public class TianBeiClient {
         String resultStr=doCommonPost(validateCodeUrl,param,null);
         JSONObject resultJson=JSON.parseObject(resultStr);
         if(resultJson.getString("code").equalsIgnoreCase("0")){
-            if(resultJson.getString("state").equalsIgnoreCase("0")){
+            String data=resultJson.getString("data");
+            JSONObject dataJson= JSON.parseObject(data);
+            if(dataJson.getString("state").equalsIgnoreCase("0")){
                 return getTelecomOperatorsReport(idCard, openId);
             }else{
                 return resultStr;
@@ -327,9 +330,13 @@ public class TianBeiClient {
         return resultStr;
 
     }
-
-    private String getTelecomOperatorsReport(String idCard,String openId) throws Exception {
+    //获取运营商报告
+    public String getTelecomOperatorsReport(String idCard,String openId) throws Exception {
         //获得报告
+        TianBeiResultDto tianBeiResultDto=this.tianBeiResultAppService.findByIdcardAndQueryType(idCard, ENUM_TIANBEI_TYPE.TELECOM_OPERATORS_REPORT_RESULT.code);
+        if(ObjectHelper.isNotEmpty(tianBeiResultDto)){
+           return tianBeiResultDto.getQueryResult();
+        }
         String getReportUrl=TELECOM_OPERATORS_REPORT+"report";
         Map<String,Object> param=new HashMap<>();
         param.put("openId",openId);

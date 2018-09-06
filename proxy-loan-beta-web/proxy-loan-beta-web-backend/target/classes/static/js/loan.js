@@ -43,9 +43,9 @@ var queryTianbeiUrl=http+"/backend/customer/queryTianbeiReport.json";
 var queryYysUrl=http+"/backend/customer/queryTianbeiYys.json";
 var blacklistCheckUrl = http+"/backend/customer/queryTianbeiBlackList.json";
 var jtOverdueCheckUrl = http+"/backend/customer/queryTianbeiOverdue.json";
-var xyInfoCheckUrl=http+"/backend/customer/queryXyInfoCheck.json";
-var xyZmfUrl=http+"/backend/customer/queryXyZmf.json";
-var xyOverdueFileUrl=http+"/backend/customer/queryXyOverdueFile.json";
+var xyInfoCheckUrl=http+"/backend/customer/queryXinyuanNameAuth.json";
+var xyZmfUrl=http+"/backend/customer/queryXinyuanZmf.json";
+var xyOverdueFileUrl=http+"/backend/customer/queryXinyuanOverdue.json";
 
 function getQueryString(key){
     var reg = new RegExp("(^|&)"+key+"=([^&]*)(&|$)");

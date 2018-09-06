@@ -21,4 +21,6 @@ public class CustomerAuditDto extends PageDto{
     private String idCard;
 
     private String servicePwd;
+
+    private String bankAccount;
 }

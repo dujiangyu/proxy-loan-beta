@@ -38,7 +38,7 @@
 			</ul>
 			<ul style="height:300px;">
 				<li>
-					<table id="result_details" class="easyui-datagrid" style="width:300px;height: 300px;">
+					<table id="result_details" class="easyui-datagrid" style="width:600px;height: 300px;">
 						<thead>
 						<tr>
 							<th data-options="field:'date',width:120">逾期时间</th>
@@ -85,13 +85,25 @@
 						console.log(datas.data);
 						var dataObj = eval('(' + datas.data + ')');
 						if(dataObj.success){
-							$("#code").html(dataObj.data.code);
+						    var codeDesc = "";
+							if(dataObj.data.code==0){
+							    codeDesc="查询成功"
+							}else if(dataObj.data.code==1){
+								codeDesc="查询未命中"
+							}else if(dataObj.data.code==9){
+							    codeDesc="其他异常";
+							}
+							debugger;
+
+							$("#code").html(codeDesc);
 							$("#id_no").html(dataObj.data.id_no);
 							$("#id_name").html(dataObj.data.id_name);
-							$("#member_count").html(dataObj.data.result_detail.member_count);
-							$("#order_count").html(dataObj.data.result_detail.order_count);
-							$("#debt_amount").html(dataObj.data.result_detail.debt_amount);
-							$("#result_details").datagrid("loadData",dataObj.data.result_detail.details);
+							if(dataObj.data.result_detail!=null){
+								$("#member_count").html(dataObj.data.result_detail.member_count);
+								$("#order_count").html(dataObj.data.result_detail.order_count);
+								$("#debt_amount").html(dataObj.data.result_detail.debt_amount);
+								$("#result_details").datagrid("loadData",dataObj.data.result_detail.details);
+							}
 						}else{
 							$.messager.alert('Info', dataObj.errorMsg, 'info');
 						}

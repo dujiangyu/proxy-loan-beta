@@ -42,6 +42,14 @@ public class YxUserInfoDto extends PageDto{
 
     private String endDate;
 
+    private String servicePwd;
+
     private String customerType;
+
+    private String openId;
+
+    private String captcha;
+
+    private String showPageContent;
 
 }
