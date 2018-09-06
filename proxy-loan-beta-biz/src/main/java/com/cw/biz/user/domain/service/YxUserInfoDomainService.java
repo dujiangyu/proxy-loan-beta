@@ -56,7 +56,12 @@ public class YxUserInfoDomainService {
      */
     public YxUserInfo update(YxUserInfoDto cwUserInfoDto){
         //借款起始金额
-        YxUserInfo cwUserInfo= repository.findOne(cwUserInfoDto.getId());
+        YxUserInfo cwUserInfo;
+        if(cwUserInfoDto.getId()==null){
+            cwUserInfo = findByPhone(cwUserInfoDto.getPhone());
+        }else {
+            cwUserInfo = repository.findOne(cwUserInfoDto.getId());
+        }
         if(cwUserInfo == null){
             cwUserInfo = create(cwUserInfoDto);
         }else{
