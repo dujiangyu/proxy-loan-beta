@@ -82,9 +82,11 @@ public class XYClient {
             httpParams.put("data_type", "json");
             httpParams.put("data_content", data_content);
         }else{
-            httpParams.put("memberId", member_id);
-            httpParams.put("terminalId", terminal_id);
-            httpParams.put("dataContent", data_content);
+            if(!requestType.equalsIgnoreCase("get")){
+                httpParams.put("memberId", member_id);
+                httpParams.put("terminalId", terminal_id);
+                httpParams.put("dataContent", data_content);
+            }
         }
         long startTime = System.currentTimeMillis();
         log.info("开始时间："+startTime);
@@ -92,6 +94,8 @@ public class XYClient {
         if(requestType.equalsIgnoreCase("post")){
             PostString = HttpUtils.doPostByForm(url, headers,httpParams);
         }else{
+            headers.put("memberId",member_id);
+            headers.put("terminalId",terminal_id);
             PostString=HttpUtils.doGet(url,headers,httpParams);
         }
         long endTime = System.currentTimeMillis();
