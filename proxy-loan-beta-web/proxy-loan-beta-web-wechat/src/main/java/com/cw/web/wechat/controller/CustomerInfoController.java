@@ -132,7 +132,7 @@ public class CustomerInfoController extends AbstractWechatController{
                }
                cpViewResultInfo.newSuccess(authUrl);
            }else{
-                cpViewResultInfo.newFalse(initJson.getString("errorMsg"));
+                cpViewResultInfo.newFalse(initJson.getString("msg"));
            }
         }catch (Exception e){
             cpViewResultInfo.newFalse(e);

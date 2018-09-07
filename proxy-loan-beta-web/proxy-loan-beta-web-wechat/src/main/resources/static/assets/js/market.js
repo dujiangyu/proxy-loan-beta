@@ -1,4 +1,5 @@
-var httpUrl = "http://127.0.0.1:9527";
+// var httpUrl = "http://127.0.0.1:9527";
+var httpUrl = "http://karl-leo.imwork.net:57701/";
 // var httpUrl = "http://www.youxinjk.com/";
 var sendSmsUrl = httpUrl + "/common/sendValidateCode.json";
 var loginUrl = httpUrl + "/common/passwordLogin.json";

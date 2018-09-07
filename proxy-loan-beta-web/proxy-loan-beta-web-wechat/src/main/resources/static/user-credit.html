@@ -15,12 +15,12 @@
     <link rel="stylesheet" href="/style/css/bootstrap.min.css">
     <link rel="stylesheet" href="/style/css/bootstrap-modal.css">
     <link rel="stylesheet" href="/style/css/bootstrap-combined.min.css">
-    <link rel="stylesheet" href="/style/css/toastr.min.css">
+    <link rel="stylesheet" href="/style/css/toastr.css">
     <script src="/assets/js/jquery-1.11.3.min.js"></script>
     <script src="/style/js/bootstrap.min.js"></script>
     <script src="/style/js/bootstrap-modal.js"></script>
     <script src="/style/js/bootstrap-modalmanager.js"></script>
-    <script src="/style/js/toastr.min.js"></script>
+    <script src="/style/js/toastr.js"></script>
     <script src="/assets/js/zepto.min.js"></script>
     <script src="/assets/js/dialog.js"></script>
     <script src="/assets/js/iradio.js"></script>
@@ -123,7 +123,7 @@
                     <li class="clearfix" style="line-height: 60px">
                         <span class="text">手机服务密码：</span>
                         <div class="input" style="height: 100%">
-                            <input type="text" style="margin: auto;height: 100%;width: 60%" id="userName"
+                            <input type="text" style="margin: auto;height: 100%;" id="userName"
                                    name="userName" maxlength="11" data-val="true"
                                    data-val-required="" placeholder="">
                         </div>
@@ -137,7 +137,7 @@
                 </ul>
             </div>
             <div class="pro-info-btn">
-                <a class="btn-apply ap-fz16" onclick="saveUserServicePwd()" href="javascript:void(0);">提交</a>
+                <a class="btn-apply ap-fz16" id="submitServicePwdBtn" href="javascript:void(0);">提交</a>
                 <!--<a class="btn-apply ap-fz16" onclick="submitVerifyCode()" href="javascript:void(0);">提交验证码</a>-->
             </div>
         </div>
@@ -165,7 +165,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                         </button>
-                        <button type="button" class="btn btn-primary" onclick="submitVerifyCode()">
+                        <button type="button" class="btn btn-primary" id="submitVerifyCodeBtn">
                             提交
                         </button>
                     </div>
@@ -175,33 +175,57 @@
     </form>
 </div>
 <script>
-    function saveUserServicePwd() {
-        var jsonStr = serializeToJson($("#userForm"));
-//    var params={servicePwd:$("#servicePwd").val()};
-        var result = post(yysAuthUrl, jsonStr);
-        if (result.success) {
-            var dataObj = eval('(' + result.data + ')');
-            $("#openId").val(dataObj.data.openId);
-            console.log(dataObj.data.openId);
-            if (dataObj.data.state == 1) {
-                //弹出输入框输入验证码
-                $("#myModal").modal();
-            } else if (dataObj.data.state == 0) {
-                toastr.success('验证成功');
-                setTimeout("jumpToNext()",1000);
-            }
-        } else {
-            toastr.error(result.message==null?result.errorMsg:result.message);
-        }
-    }
-    
-    function jumpToNext() {
-        window.location="user-income.html";
-    }
+    $(function () {
+        toastr.options = {
+            "closeButton": false, //是否显示关闭按钮
+            "debug": false, //是否使用debug模式
+            "positionClass": "toast-top-center",//弹出窗的位置
+            "showDuration": "300",//显示的动画时间
+            "hideDuration": "300",//消失的动画时间
+            "timeOut": "2000", //展现时间
+            "extendedTimeOut": "1000",//加长展示时间
+            "showEasing": "swing",//显示时的动画缓冲方式
+            "hideEasing": "linear",//消失时的动画缓冲方式
+            "showMethod": "fadeIn",//显示时的动画方式
+            "hideMethod": "fadeOut" //消失时的动画方式
+        };
 
-    /**
-     * 模态框剧中
-     */
+        $("#submitServicePwdBtn").click(function () {
+            saveUserServicePwd();
+        });
+
+        $("#submitVerifyCodeBtn").click(function () {
+            submitVerifyCode();
+        });
+
+        function saveUserServicePwd() {
+            var jsonStr = serializeToJson($("#userForm"));
+//    var params={servicePwd:$("#servicePwd").val()};
+            var result = post(yysAuthUrl, jsonStr);
+            debugger;
+            if (result.success) {
+                var dataObj = eval('(' + result.data + ')');
+                $("#openId").val(dataObj.data.openId);
+                console.log(dataObj.data.openId);
+                if (dataObj.data.state == 1) {
+                    //弹出输入框输入验证码
+                    $("#myModal").modal();
+                } else if (dataObj.data.state == 0) {
+                    toastr.success('验证成功');
+                    setTimeout("jumpToNext()",1000);
+                }
+            } else {
+                toastr.error(result.message==null?result.errorMsg:result.message);
+            }
+        }
+
+        function jumpToNext() {
+            window.location="user-income.html";
+        }
+
+        /**
+         * 模态框剧中
+         */
 //    $('#myModal').on('shown.bs.modal', function (e) {
 //        // 关键代码，如没将modal设置为 block，则$modala_dialog.height() 为零
 //        $(this).css('display', 'block');
@@ -210,19 +234,20 @@
 //            'margin-top': modalHeight
 //        });
 //    });
-    function submitVerifyCode() {
-        var jsonStr = serializeToJson($("#captchaForm"));
-        var result = post(submitYzmAuthUrl, jsonStr);
-        if (result.success) {
-            if (result.data.state == 1) {
-                toastr.error(result.data.errorMsg);
-            }else if(result.data.state == 0){
-                toastr.success("验证成功");
+        function submitVerifyCode() {
+            var jsonStr = serializeToJson($("#captchaForm"));
+            var result = post(submitYzmAuthUrl, jsonStr);
+            if (result.success) {
+                if (result.data.state == 1) {
+                    toastr.error(result.data.errorMsg);
+                }else if(result.data.state == 0){
+                    toastr.success("验证成功");
+                }
+            } else {
+                toastr.error(result.message==null?result.errorMsg:result.message);
             }
-        } else {
-            toastr.error(result.message==null?result.errorMsg:result.message);
         }
-    }
+    });
 </script>
 </body>
 </html>
