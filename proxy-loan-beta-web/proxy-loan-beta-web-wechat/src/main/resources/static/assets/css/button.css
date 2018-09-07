@@ -1,0 +1,65 @@
+/*
+Error: Undefined variable: "$bg-color-blue-child".
+        on line 150 of E:\phpStudy\wwww\piaojuke\html\app\assets\sass\button.scss
+
+145: .btn-primary:focus,
+146: .btn-primary:active,
+147: .btn-primary.active{color:#fff;background-color:#6aa2e0;border-color:#6aa2e0}
+148: 
+149: /*次要按钮*\/
+150: .btn-secondary{color:#fff; background-color:$bg-color-blue-child; border-color:$bg-color-blue-child}
+151: .btn-secondary:hover,
+152: .btn-secondary:focus,
+153: .btn-secondary:active,
+154: .btn-secondary.active{color:#fff;background-color:#0f9ae0;border-color:#0f9ae0}
+155: 
+
+Backtrace:
+E:\phpStudy\wwww\piaojuke\html\app\assets\sass\button.scss:150
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/script/tree/variable.rb:49:in `_perform'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/script/tree/node.rb:50:in `perform'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:384:in `visit_prop'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:36:in `visit'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/stack.rb:79:in `block in with_base'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/stack.rb:115:in `with_frame'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/stack.rb:79:in `with_base'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:158:in `visit'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:420:in `block (2 levels) in visit_rule'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:420:in `map'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:420:in `block in visit_rule'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:418:in `visit_rule'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:36:in `visit'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/stack.rb:79:in `block in with_base'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/stack.rb:115:in `with_frame'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/stack.rb:79:in `with_base'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:158:in `visit'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:52:in `map'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/base.rb:36:in `visit'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:157:in `visit'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:8:in `visit'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/root_node.rb:36:in `css_tree'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/engine.rb:368:in `_render_with_sourcemap'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/engine.rb:285:in `render_with_sourcemap'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/exec/sass_scss.rb:396:in `run'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/exec/sass_scss.rb:62:in `process_result'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/exec/base.rb:52:in `parse'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/lib/sass/exec/base.rb:19:in `parse!'
+E:/Koala/Koala/rubygems/gems/sass-3.4.9/bin/sass:13:in `<top (required)>'
+E:/Koala/Koala/bin/sass:18:in `load'
+E:/Koala/Koala/bin/sass:18:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Undefined variable: \"$bg-color-blue-child\".\A         on line 150 of E:\phpStudy\wwww\piaojuke\html\app\assets\sass\button.scss\A \A 145: .btn-primary:focus,\A 146: .btn-primary:active,\A 147: .btn-primary.active{color:#fff;background-color:#6aa2e0;border-color:#6aa2e0}\A 148: \A 149: /*次要按钮*/\A 150: .btn-secondary{color:#fff; background-color:$bg-color-blue-child; border-color:$bg-color-blue-child}\A 151: .btn-secondary:hover,\A 152: .btn-secondary:focus,\A 153: .btn-secondary:active,\A 154: .btn-secondary.active{color:#fff;background-color:#0f9ae0;border-color:#0f9ae0}\A 155: "; }

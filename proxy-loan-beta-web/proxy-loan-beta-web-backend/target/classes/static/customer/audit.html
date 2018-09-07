@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>全景雷达</title>
+	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/icon.css">
+	<script type="text/javascript" src="/js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="/js/loan.js"></script>
+	<script>
+		function checkElement(id,title, url){
+		    var flag=true;
+
+			if($("#name").val()==null||$("#name").val()==""){
+				showTipMessage("请输入客户姓名");
+				flag = false;
+			}
+			if($("#phone").val()==null||$("#phone").val()==""){
+				showTipMessage("请输入手机号码");
+				flag = false;
+			}
+			if($("#idCard").val()==null||$("#idCard").val()==""){
+				showTipMessage("请输入证件号码");
+				flag = false;
+			}
+
+			if(flag) {
+				enableChannel(id,title,url);
+            }
+		}
+		function addTab(title,url) {
+		    debugger;
+			if ($('#tt').tabs('exists', title)) {
+				$('#tt').tabs('select', title);
+			} else {
+				var content = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:100%;"></iframe>';
+				$('#tt').tabs('add', {
+					title: title,
+					content: content,
+					closable: true
+				});
+			}
+        }
+
+		function enableChannel(code,title,url){
+			$.ajax({
+				url: findByCodeUrl+"?code="+code,
+				type: "get",
+				contentType: "application/json",
+				dataType: "json",
+				success: function (datas) {
+					$.messager.confirm('温馨提示', '调用该接口收取'+datas.data.parameterValue+'金币?', function (r) {
+					    if(r){
+							addTab(title,url);
+						}
+					});
+				}
+			});
+		}
+		function Search() {
+			var hrefUrl = window.location.href;
+		    var id= getArgsFromHref(hrefUrl,"id");
+			var result = httpGet(findByIdUrl+"?id="+id);
+			if(result.success) {
+				$("#name").val(result.data.name);
+			    $("#phone").val(result.data.phone);
+			    $("#idCard").val(result.data.certNo);
+            }
+		}
+		$(function() {
+			Search();
+		});
+	</script>
+</head>
+<body>
+	<div id="tb" style="padding:3px">
+		<form id="searchForm" class="easyui-text">
+			<span>客户名称:</span>
+			<input id="name" name="name" style="line-height:26px;border:1px solid #ccc">
+			<span>手机号码:</span>
+			<input id="phone" name="phone" style="line-height:20px;border:1px solid #ccc">
+			<span>身份证号码:</span>
+			<input id="idCard" name="idCard" style="line-height:20px;border:1px solid #ccc">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkElement('tianbeileidai','全景雷达','leida.html')">全景雷达</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkElement('yingyunshang','运营商报告','yunyingshang.html')">运营商报告</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkElement('tianbeireport','天贝报告','report.html')">天贝报告</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkElement('blacklist','黑名单检测','blacklist.html')">黑名单检测</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkElement('overdue','借条逾期','overdue.html')">借条逾期</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkElement('infoauth','实名认证','smrz.html')">实名认证</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkElement('overduefile','逾期档案','overdueFile.html')">逾期档案</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkElement('zmf','芝麻分','zmf.html')">芝麻分</a>
+		</form>
+    </div>
+	<div id="tt" class="easyui-tabs" style="width:100%;height:768px;">
+
+	</div>
+</body>
+</html>

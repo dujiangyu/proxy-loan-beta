@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>参数管理</title>
+	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/icon.css">
+	<script type="text/javascript" src="/js/jquery-easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script src="/js/loan.js"></script>
+</head>
+<body>
+<div>
+	<form id="fm" action="" style="margin-top: 10px;" method="post">
+		<span>天贝报告:</span>
+		<input type="text" id="tianbeireport" name="report"><br>
+		<span>天贝全景雷达:</span>
+		<input type="text" id="tianbeileidai" name="leida"><br>
+		<span>天贝运营商报告:</span>
+		<input type="text" id="yunyingshang" name="yunyingshang"><br>
+		<span>天贝黑名单检测:</span>
+		<input type="text" id="blackList" name="blackList"><br>
+		<span>天贝借条逾期:</span>
+		<input type="text" id="overdue" name="overdue"><br>
+		<span>新颜实名认证:</span>
+		<input type="text" id="infoAuth" name="infoAuth"><br>
+		<span>新颜逾期档案:</span>
+		<input type="text" id="overdueFile" name="overdueFile"><br>
+		<span>新颜芝麻分:</span>
+		<input type="text" id="zmf" name="zmf"><br>
+	</form>
+	<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveParameter()">保存</a>
+</div>
+	<script type="text/javascript">
+		function findByData() {
+		    var param = "1=1";
+		    var result = httpGet(findParameterUrl,param);
+		    if(result.success){
+		        $("#tianbeireport").val(result.data.report);
+		        $("#tianbeileidai").val(result.data.leida);
+		        $("#yunyingshang").val(result.data.yunyingshang);
+				$("#blackList").val(result.data.blackList);
+				$("#overdue").val(result.data.overdue);
+				$("#infoAuth").val(result.data.infoAuth);
+				$("#overdueFile").val(result.data.overdueFile);
+				$("#zmf").val(result.data.zmf);
+		    }else{
+		        showTipMessage(result.message,true);
+		    }
+		}
+		//保存产品
+		function saveParameter() {
+		    var data = $("#fm").serializeArray();
+		    var values={};
+		    for (var item in data) {
+		        values[data[item].name] = data[item].value;
+		    }
+		    if($("#tianbeireport").val()==undefined||$("#tianbeireport").val()=='')
+		    {
+		        showTipMessage("请填写天贝报告请求金额");
+		        return false;
+		    }
+		    if($("#tianbeileidai").val()==undefined||$("#tianbeileidai").val()=='')
+		    {
+		        showTipMessage("请填写天贝全景雷达请求金额");
+		        return false;
+		    }
+		    if($("#yunyingshang").val()==undefined||$("#yunyingshang").val()=='') {
+                showTipMessage("请填写天贝运营商报告请求金额");
+                return false;
+            }
+			if($("#blackList").val()==undefined||$("#blackList").val()=='') {
+				showTipMessage("请填写天贝黑名单请求金额");
+				return false;
+			}
+			if($("#overdue").val()==undefined||$("#overdue").val()=='') {
+				showTipMessage("请填写天贝借条逾期请求金额");
+				return false;
+			}
+			if($("#infoAuth").val()==undefined||$("#infoAuth").val()=='') {
+				showTipMessage("请填写天新颜实名认证请求金额");
+				return false;
+			}
+			if($("#overdueFile").val()==undefined||$("#overdueFile").val()=='') {
+				showTipMessage("请填写新颜逾期档案请求金额");
+				return false;
+			}
+			if($("#zmf").val()==undefined||$("#zmf").val()=='') {
+				showTipMessage("请填写新颜芝麻分请求金额");
+				return false;
+			}
+		    var result = post(saveParameterUrl,values);
+		    if(result.success){
+		        showTipMessage(result.message);
+		        window.location.href="/parameter/parameter.html";
+		    }else{
+		        showTipMessage(result.message);
+		    }
+		}
+		$(function(){
+		    findByData();
+		});
+	</script>
+</body>
+</html>

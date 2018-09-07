@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="manifest.json">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#1f212f">
+    <meta name="theme-color" content="#1f212f">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta http-equiv="cache-control" content="max-age=864000">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta itemprop="name">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/Favicons/favicon-96x96.png">
+    <title>数据管理系统</title>
+    <link rel="stylesheet" type="text/css" href="/static/style/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/bootstrap-modal-bs3patch.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/bootstrap-modal.css">
+    <script language="javascript" type="text/javascript" src="/static/script/WdatePicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/style/css/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/font.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/styles-responsive.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/plugins.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/theme-style9.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/yc.sby.admin.old.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/css/yc.sby.admin.extension.css">
+    <style>
+        li a span.notification-count {
+            float: right;
+        }
+    </style>
+</head>
+<body class="text-shadow">
+<div id="loadingLayer" class="loading-layer" style="display: none;">
+    <div class="form-loading">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<div class="main-wrapper">
+    <nav id="pageslide-left" class="pageslide inner">
+        <div class="navbar-content" style="height: 620px;">
+            <div class="main-navigation left-wrapper transition-left ps-container" style="height: 570px;">
+                <div class="user-profile border-top padding-horizontal-10 block">
+                    <div class="inline-block ml5">
+                        <img src="/style/images/default.png" alt="img" style="width: 40px; height: 40px;">
+                    </div>
+                    <div class="inline-block">
+                        <h4 class="no-margin"></h4>
+                    </div>
+                    <a href="javascript:void(0);" class="btn user-options sb_toggle" title="个人信息">
+                        <span class="fa fa-cog text-white"></span>
+                    </a>
+                </div>
+                <ul class="main-navigation-menu">
+
+                    <li class="active open">
+                        <a href="javascript:void(0);">
+                            <span class="title">运营管理</span>
+                            <span class="icon-arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="active">
+                                <a href="/static/order.html">
+                                    <span class="title">订单信息</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px; width: 250px; display: none;">
+                    <div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div>
+                </div>
+                <div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px; height: 570px; display: inherit;">
+                    <div class="ps-scrollbar-y" style="top: 0px; height: 0px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-tools">
+            <div class="col-xs-24 text-left no-padding">
+                <a href="javascript:void(0);" class="btn btn-sm">
+                    CopyRight©2018 © 金控系统
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="main-container inner">
+        <div class="main-content" style="min-height: 620px;">
+            <div class="container">
+                <div class="toolbar row">
+                    <div class="col-sm-8 hidden-xs">
+                        <div class="page-header">
+                            <h1>
+                                订单列表
+                                <small></small>
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="col-sm-16">
+                        <a href="javascript:void(0);" class="leftbar-toggle sb-toggle-left hidden-md hidden-lg">
+                            <span class="fa fa-bars"></span>
+                        </a>
+                        <div class="toolbar-tools pull-right">
+                            <ul class="nav navbar-right">
+                                <li class="dropdown">
+                                    <a id="logout" href="/static/bgLogin.html">
+                                        <span class="fa fa-power-off"></span>
+                                        退出
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="body-container">
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            <form doAction="/wechat/userInfo/findByCondition.json" class="form-horizontal form-search"
+                                  id="frmList" method="post" novalidate="novalidate">
+                                <div class="col-sm-5">
+                                    <div class="input-group">
+                                        <label class="input-group-addon control-label">时间</label>
+                                        <div class="input-icon datetimepicker"><span class="fa fa-calendar"></span>
+                                            <input class="form-control Wdate" type="text" name="applyDate" style="height: 32px;" id="d15" onFocus="WdatePicker({isShowClear:false,readOnly:true})"/>
+                                            <span class="fa fa-caret-down"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 datalist-action">
+                                    <button class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                        查询
+                                    </button>
+                                    <button type="button" id="btnExport" class="btn btn-warning">
+                                        <i class="fa fa-cloud-download"></i>导出
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                            <div id="tbData" class="datalist">
+                                <div class="datalist-body table-responsive">
+                                    <table id="dategrid" class="table table-striped table-hover"
+                                           style="min-width: 1200px;">
+                                        <thead>
+                                        <tr id="dategrid_title">
+                                            <th data-index="0" class="text-center" style="width: 18.75%;">渠道名</th>
+                                            <th data-index="1" class="text-center" style="width: 37.5%;">申请人手机号</th>
+                                            <th data-index="2" class="text-center" style="width: 18.75%;">申请时间</th>
+                                            <th data-index="3" class="text-center" style="width: 25%;">状态</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="dategrid_pagination" class="datalist-footer row">
+                                    <div id="dategrid_pagination_info" class="col-md-16 pagination-info">
+                                        <ul class="pagination pagination-noborder pagination-sm">
+                                            <li class="pagination-info-rows"><span class="text-gray">每页显示</span><select
+                                                    id="dategrid_pagination_info_rows"
+                                                    class="form-control input-sm pull-left" style="width: 75px;">
+                                                <option selected="selected" value="15">15</option>
+                                                <option value="20">20</option>
+                                                <option value="30">30</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select><span class="text-gray">条记录，共</span><span
+                                                    id="dategrid_pagination_info_totalpage"
+                                                    class="text-gray pl0 pr0">1</span><span
+                                                    class="text-gray hidden-xs hidden-sm">页</span><span
+                                                    class="text-gray visible-xs pr0 visible-sm">页（</span><span
+                                                    id="dategrid_pagination_info_totalrecord"
+                                                    class="text-gray pl0 pr0 visible-xs visible-sm">5</span><span
+                                                    class="text-gray visible-xs visible-sm">条数据）</span></li>
+                                            <li><span class="text-muted hidden-xs">|</span></li>
+                                            <li class="pagination-info-pages"><a id="dategrid_pagination_info_first"
+                                                                                 class="text-muted"
+                                                                                 href="javascript:void(0);"
+                                                                                 title="跳转到首页">首页</a><a
+                                                    id="dategrid_pagination_info_prev" class="text-muted"
+                                                    href="javascript:void(0);" title="跳转到上一页"><span
+                                                    class="fa fa-chevron-left"></span></a><span
+                                                    class="text-gray">当前第</span><input
+                                                    id="dategrid_pagination_info_current"
+                                                    class="form-control input-sm pull-left" style="width: 75px;"
+                                                    type="text" value="1" title="跳转到指定页"><a
+                                                    id="dategrid_pagination_info_next" class="text-muted"
+                                                    href="javascript:void(0);" title="跳转到下一页"><span
+                                                    class="fa fa-chevron-right"></span></a><a
+                                                    id="dategrid_pagination_info_last" class="text-muted"
+                                                    href="javascript:void(0);" title="跳转到尾页">尾页</a></li>
+                                            <li><span class="text-muted">|</span></li>
+                                            <li class="pagination-info-refresh"><a id="dategrid_pagination_info_refresh"
+                                                                                   href="javascript:void(0);"
+                                                                                   title="刷新数据"><span class="hidden-xs">刷新数据</span><span
+                                                    class="fa fa-refresh"></span></a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="dategrid_pagination_record"
+                                         class="col-md-8 pagination-record hidden-xs hidden-sm">
+                                        <ul class="pagination pagination-noborder pagination-sm">
+                                            <li class="pagination-record-total"><span class="text-gray">共</span><span
+                                                    id="dategrid_pagination_record_total"
+                                                    class="text-gray pl0 pr0">5</span><span class="text-gray">条记录</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="subviewLayer" class="subview-layer app-hide">
+                <a id="btnCloseNote" href="javascript:void(0);" class="close-subviews"
+                   style="display: block; opacity: 1; left: 0px;">
+                    <span class="fa fa-times"></span>
+                    关闭
+                </a>
+                <hr>
+                <div class="subview-content"></div>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript" src="/static/style/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/static/style/js/knockout-3.4.0.js"></script>
+<script type="text/javascript" src="/static/style/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/style/js/jquery.transit.js"></script>
+<script type="text/javascript" src="/static/style/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/static/style/js/jquery.validate.unobtrusive.min.js"></script>
+<script type="text/javascript" src="/static/style/js/jquery.scrollTo.min.js"></script>
+<script type="text/javascript" src="/static/style/js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="/static/style/js/perfect-scrollbar.js"></script>
+<script type="text/javascript" src="/static/style/js/bootstrap-modal.js"></script>
+<script type="text/javascript" src="/static/style/js/bootstrap-modalmanager.js"></script>
+<script type="text/javascript" src="/static/style/js/moment.min.js"></script>
+<script language="javascript" type="text/javascript" src="/static/script/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/style/js/jquery.velocity.min.js"></script>
+<script type="text/javascript" src="/static/style/js/select2.full.min.js"></script>
+<script type="text/javascript" src="/static/style/js/zh-CN.js"></script>
+<script type="text/javascript" src="/static/style/js/toastr.min.js"></script>
+<script type="text/javascript" src="/static/style/js/jquery.touchSwipe.min.js"></script>
+<script type="text/javascript" src="/static/style/js/main.js"></script>
+<script type="text/javascript" src="/static/style/js/crypto-js.js"></script>
+<script type="text/javascript" src="/static/style/js/yc.sby.jquery.validate.unobtrusive.js"></script>
+<script type="text/javascript" src="/static/style/js/yc.sby.enum.mapping.js"></script>
+<script type="text/javascript" src="/static/style/js/yc.sby.form.old.js"></script>
+<script type="text/javascript" src="/static/style/js/yc.sby.admin.js"></script>
+<script type="text/javascript" src="/static/style/js/orderlist.js"></script>
+
+<div class="daterangepicker dropdown-menu ltr show-calendar opensright">
+    <div class="calendar left">
+        <div class="daterangepicker_input">
+            <input class="input-mini form-control" type="text" name="daterangepicker_start" value="">
+            <i class="fa fa-calendar glyphicon glyphicon-calendar"></i>
+            <div class="calendar-time" style="display: none;">
+                <div>
+                </div>
+                <i class="fa fa-clock-o glyphicon glyphicon-time"></i></div>
+        </div>
+        <div class="calendar-table"></div>
+    </div>
+    <div class="calendar right">
+        <div class="daterangepicker_input"><input class="input-mini form-control" type="text" name="daterangepicker_end"
+                                                  value="">
+            <i class="fa fa-calendar glyphicon glyphicon-calendar"></i>
+            <div class="calendar-time" style="display: none;">
+                <div></div>
+                <i class="fa fa-clock-o glyphicon glyphicon-time"></i></div>
+        </div>
+        <div class="calendar-table"></div>
+    </div>
+    <div class="ranges" style="display: none;">
+        <div class="range_inputs">
+            <button class="applyBtn btn btn-sm hide" disabled="disabled" type="button">确定</button>
+            <button class="cancelBtn btn btn-sm hide" type="button">取消</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

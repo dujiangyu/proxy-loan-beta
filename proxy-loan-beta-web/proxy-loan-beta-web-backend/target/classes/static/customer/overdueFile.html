@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>新颜逾期档案</title>
+	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/icon.css">
+	<script type="text/javascript" src="/js/jquery-easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="/js/loan.js"></script>
+	<style type="text/css">
+		<!--
+		ul{ list-style:none; padding:0px; margin:0px; width:100%;
+		height:30px; line-height:30px; border:1px solid #E0ECFF;
+		border-top:0px; font-size:12px;}
+		ul li{ display:block; width:20%; float:left;text-indent:2em}
+		.th{ background:#F1FADE; font-weight:bold; border-top:1px }
+		-->
+	</style>
+</head>
+<body>
+			<ul class="th">
+				<li>逾期档案</li>
+			</ul>
+			<ul>
+				<li>是否命中黑名单:&nbsp;&nbsp;<span id="code"></span></li>
+				<li>被查询身份证号:&nbsp;&nbsp;<span id="id_no"></span></li>
+				<li>被查询姓名:&nbsp;&nbsp;<span id="id_name"></span></li>
+			</ul>
+			<ul>
+				<li>逾期机构数:&nbsp;&nbsp;<span id="member_count"></span></li>
+				<li>逾期订单数:&nbsp;&nbsp;<span id="order_count"></span></li>
+				<li>逾期总额:&nbsp;&nbsp;<span id="debt_amount"></span></li>
+			</ul>
+			<ul>
+				<li>逾期详情</li>
+			</ul>
+			<ul style="height:300px;">
+				<li>
+					<table id="result_details" class="easyui-datagrid" style="width:600px;height: 300px;">
+						<thead>
+						<tr>
+							<th data-options="field:'date',width:120">逾期时间</th>
+							<th data-options="field:'count',width:150">逾期账期数</th>
+							<th data-options="field:'amount',width:150">逾期额</th>
+							<th data-options="field:'settlement',width:150">是否结清</th>
+						</tr>
+						</thead>
+					</table>
+				</li>
+			</ul>
+	<script type="text/javascript">
+		$(function() {
+		    Search();
+		});
+		function Search() {
+			var parameter = parent.$("#searchForm").serializeArray();
+			var values={};
+			for (var item in parameter) {
+				if(values[parameter[item].name]!=null||values[parameter[item].name]!=undefined) {
+					values[parameter[item].name] = values[parameter[item].name]+","+parameter[item].value.trim();
+				}else{
+					values[parameter[item].name] = parameter[item].value.trim();
+				}
+			}
+			$.ajax({
+				url : xyOverdueFileUrl,
+				type : "POST",
+				contentType:"application/json",
+				data :JSON.stringify(values),
+				dataType : "json",
+				beforeSend: function () {
+					$.messager.progress({
+					   title: '提示',
+					   msg: '数据加载中，请稍候……',
+					   text: ''
+					});
+				},
+			   complete: function () {
+				 $.messager.progress('close');
+				},
+				success : function(datas) {
+				    if(datas.success){
+						console.log(datas.data);
+						var dataObj = eval('(' + datas.data + ')');
+						if(dataObj.success){
+						    var codeDesc = "";
+							if(dataObj.data.code==0){
+							    codeDesc="查询成功"
+							}else if(dataObj.data.code==1){
+								codeDesc="查询未命中"
+							}else if(dataObj.data.code==9){
+							    codeDesc="其他异常";
+							}
+							debugger;
+
+							$("#code").html(codeDesc);
+							$("#id_no").html(dataObj.data.id_no);
+							$("#id_name").html(dataObj.data.id_name);
+							if(dataObj.data.result_detail!=null){
+								$("#member_count").html(dataObj.data.result_detail.member_count);
+								$("#order_count").html(dataObj.data.result_detail.order_count);
+								$("#debt_amount").html(dataObj.data.result_detail.debt_amount);
+								$("#result_details").datagrid("loadData",dataObj.data.result_detail.details);
+							}
+						}else{
+							$.messager.alert('Info', dataObj.errorMsg, 'info');
+						}
+					}else{
+				        $.messager.alert('Info', datas.message, 'info');
+					}
+				}
+			});
+		}
+	</script>
+</body>
+</html>

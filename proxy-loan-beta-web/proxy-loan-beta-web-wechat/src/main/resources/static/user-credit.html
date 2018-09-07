@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>运营商认证</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <link rel="stylesheet" href="/style/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/style/css/bootstrap-modal.css">
+    <link rel="stylesheet" href="/style/css/bootstrap-combined.min.css">
+    <link rel="stylesheet" href="/style/css/toastr.min.css">
+    <script src="/assets/js/jquery-1.11.3.min.js"></script>
+    <script src="/style/js/bootstrap.min.js"></script>
+    <script src="/style/js/bootstrap-modal.js"></script>
+    <script src="/style/js/bootstrap-modalmanager.js"></script>
+    <script src="/style/js/toastr.min.js"></script>
+    <script src="/assets/js/zepto.min.js"></script>
+    <script src="/assets/js/dialog.js"></script>
+    <script src="/assets/js/iradio.js"></script>
+    <script src="/assets/js/market.js"></script>
+</head>
+<style>
+    .main {
+        margin: 0rem 0 5rem;
+    }
+
+    /*隐藏radio按钮 diy样式*/
+    input[type="radio"] {
+        opacity: 0;
+    }
+
+    .myradio {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0;
+        padding: 0;
+        width: 60px;
+        height: 30px;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+        background-color: #67e66c;
+    }
+
+    .myradio .open, .myradio .close {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+        border-radius: 50%;
+        background: white;
+        color: white;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    /*yuchuang 2017.5.12*/
+    .myradio .open {
+    }
+
+    .myradio .close {
+        background: #e8e8e8
+    }
+
+    .hidden {
+        display: none
+    }
+
+    .disabled {
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .myradio .close {
+        left: auto;
+        right: 0;
+        color: #e8e8e8;
+    }
+
+    .myradio .open:after {
+        content: '有';
+        position: absolute;
+        top: 0;
+        left: 35px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .myradio .close:before {
+        content: '无';
+        position: absolute;
+        top: 0;
+        left: -20px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .page-index .img img {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+</style>
+<body class="bg-gray">
+<div class="mask" style="display: none">
+    <div id="loader"></div>
+</div>
+<div class="container page-index">
+    <div class="img"><img src="/assets/images/banner.jpg" alt=""/></div>
+    <form id="userForm"><input type="hidden" name="showPageContent" value="credit">
+        <div class="main">
+            <div class="pro-infoimg"><img src="/assets/images/info02.jpg"></div>
+            <div class="pro-detail-list">
+                <ul>
+                    <li class="clearfix" style="line-height: 60px">
+                        <span class="text">手机服务密码：</span>
+                        <div class="input" style="height: 100%">
+                            <input type="text" style="margin: auto;height: 100%;width: 60%" id="userName"
+                                   name="userName" maxlength="11" data-val="true"
+                                   data-val-required="" placeholder="">
+                        </div>
+                        <!--<em><input type="text" name="servicePwd" style="text-align: right" id="servicePwd"/> </em>-->
+                    </li>
+                    <!--<input type="hidden" name="openId" value="2fd883fd963740bb84b1fa3a5761982a" style="text-align: right" id="openId"/>-->
+                    <!--<li class="clearfix">-->
+                    <!--<span class="text">验证码</span>-->
+                    <!--<em><input type="text" name="captcha" style="text-align: right" id="captcha"/> </em>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+            <div class="pro-info-btn">
+                <a class="btn-apply ap-fz16" onclick="saveUserServicePwd()" href="javascript:void(0);">提交</a>
+                <!--<a class="btn-apply ap-fz16" onclick="submitVerifyCode()" href="javascript:void(0);">提交验证码</a>-->
+            </div>
+        </div>
+    </form>
+    <form id="captchaForm">
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            请输入验证码
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input">
+                            <input type="tel" id="captcha" name="captcha" maxlength="11" data-val="true"
+                                   data-val-required="" placeholder="请输入验证码">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="submitVerifyCode()">
+                            提交
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+    </form>
+</div>
+<script>
+    function saveUserServicePwd() {
+        var jsonStr = serializeToJson($("#userForm"));
+//    var params={servicePwd:$("#servicePwd").val()};
+        var result = post(yysAuthUrl, jsonStr);
+        if (result.success) {
+            var dataObj = eval('(' + result.data + ')');
+            $("#openId").val(dataObj.data.openId);
+            console.log(dataObj.data.openId);
+            if (dataObj.data.state == 1) {
+                //弹出输入框输入验证码
+                $("#myModal").modal();
+            } else if (dataObj.data.state == 0) {
+                toastr.success('验证成功');
+                setTimeout("jumpToNext()",1000);
+            }
+        } else {
+            toastr.error(result.message==null?result.errorMsg:result.message);
+        }
+    }
+    
+    function jumpToNext() {
+        window.location="user-income.html";
+    }
+
+    /**
+     * 模态框剧中
+     */
+//    $('#myModal').on('shown.bs.modal', function (e) {
+//        // 关键代码，如没将modal设置为 block，则$modala_dialog.height() 为零
+//        $(this).css('display', 'block');
+//        var modalHeight=$(window).height() / 2 - $('#youModel .modal-dialog').height() / 2;
+//        $(this).find('.modal-dialog').css({
+//            'margin-top': modalHeight
+//        });
+//    });
+    function submitVerifyCode() {
+        var jsonStr = serializeToJson($("#captchaForm"));
+        var result = post(submitYzmAuthUrl, jsonStr);
+        if (result.success) {
+            if (result.data.state == 1) {
+                toastr.error(result.data.errorMsg);
+            }else if(result.data.state == 0){
+                toastr.success("验证成功");
+            }
+        } else {
+            toastr.error(result.message==null?result.errorMsg:result.message);
+        }
+    }
+</script>
+</body>
+</html>
