@@ -165,7 +165,7 @@ public class SmsComponent {
            newUser.setPhone(registerDto.getPhone());
            newUser.setMerchantId(1L);
            newUser.setType("user");
-           newUser.setrId(5L);
+           newUser.setrId(1L);
            newUser.setPassword(registerDto.getVerifyCode());
            SeUser seUser= seUserService.createUser(newUser);
            //保存用户信息

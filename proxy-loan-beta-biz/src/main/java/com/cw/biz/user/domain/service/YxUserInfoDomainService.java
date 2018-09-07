@@ -60,7 +60,7 @@ public class YxUserInfoDomainService {
         if(cwUserInfoDto.getId()==null){
             cwUserInfo = findByPhone(cwUserInfoDto.getPhone());
         }else {
-             cwUserInfo = repository.findOne(cwUserInfoDto.getId());
+            cwUserInfo = repository.findOne(cwUserInfoDto.getId());
         }
         if(cwUserInfo == null){
             cwUserInfo = create(cwUserInfoDto);
@@ -97,13 +97,7 @@ public class YxUserInfoDomainService {
            List<Predicate> predicates = Lists.newArrayListWithCapacity(20);
 
            if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())) {
-               if(CPContext.getContext().getSeUserInfo().getrId()==4) {
-                   predicates.add(cb.equal(root.get("userId"), CPContext.getContext().getSeUserInfo().getMerchantId()));
-               }else if(CPContext.getContext().getSeUserInfo().getrId()==3){
-                   predicates.add(cb.equal(root.get("userId"), CPContext.getContext().getSeUserInfo().getId()));
-               }else if(CPContext.getContext().getSeUserInfo().getrId()==2){
-                  predicates.add(cb.equal(root.get("userId"), CPContext.getContext().getSeUserInfo().getId()));
-               }
+               predicates.add(cb.equal(root.get("userId"), CPContext.getContext().getSeUserInfo().getId()));
            }
            if("audit".equals(yxUserInfoDto.getCustomerType())){
                predicates.add(root.get("name").isNotNull());

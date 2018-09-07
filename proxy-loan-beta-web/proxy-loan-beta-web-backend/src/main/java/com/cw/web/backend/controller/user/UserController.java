@@ -56,7 +56,7 @@ public class UserController extends AbstractBackendController {
     public CPViewResultInfo add(@RequestBody SeUser seUser) {
         CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
         seUser.setMerchantId(1L);
-        seUser.setrId(4L);
+        seUser.setrId(1L);
         SeUser seUser1 = seUserService.createUser(seUser);
         cpViewResultInfo.setData(seUser1.getId());
         cpViewResultInfo.setSuccess(true);
@@ -93,8 +93,8 @@ public class UserController extends AbstractBackendController {
     @ResponseBody
     public CPViewResultInfo update(@RequestBody SeUser seUser) {
         CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
-        seUser.setMerchantId(CPContext.getContext().getSeUserInfo().getId());
-        seUser.setrId(4L);
+        seUser.setMerchantId(1L);
+        seUser.setrId(1L);
         seUser.setType("manager");
         SeUser seUser1;
         if(seUser.getId() == null ){

@@ -10,6 +10,7 @@ import com.cw.biz.user.domain.dao.SeUserDao;
 import com.cw.biz.user.domain.entity.SeResource;
 import com.cw.biz.user.domain.entity.SeRole;
 import com.cw.biz.user.domain.entity.SeUser;
+import com.cw.core.common.util.ObjectHelper;
 import com.cw.core.common.util.Utils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,8 +86,10 @@ public class SeUserService {
     public SeUser updateUser(SeUser user, Boolean isReEncryptPassword) {
         Assert.notNull(user.getId());
         SeUser saved = seUserDao.findOne(user.getId());
-        if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())){
-            user.setMerchantId(CPContext.getContext().getSeUserInfo().getId());
+        if(ObjectHelper.isNotEmpty(CPContext.getContext().getSeUserInfo())){
+            if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())){
+                user.setMerchantId(CPContext.getContext().getSeUserInfo().getId());
+            }
         }
         Assert.notNull(saved);
         if (user.getPassword() != null && isReEncryptPassword) {

@@ -50,7 +50,6 @@ public class ShiroConfiguration{
          proxy.setTargetFilterLifecycle(true);
          proxy.setTargetBeanName("shiroFilter");
          filterRegistrationBean.setFilter(proxy);
-         filterRegistrationBean.setOrder(0);
          return filterRegistrationBean;
      }
 

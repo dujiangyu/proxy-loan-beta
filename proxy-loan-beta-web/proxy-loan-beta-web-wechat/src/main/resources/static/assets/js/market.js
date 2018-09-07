@@ -1,13 +1,16 @@
-// var httpUrl = "http://192.168.1.101:9527";
-var httpUrl = "http://www.youxinjk.com/";
+// var httpUrl = "http://127.0.0.1:9527";
+var httpUrl = "http://karl-leo.imwork.net:57701/";
+// var httpUrl = "http://www.youxinjk.com/";
 var sendSmsUrl = httpUrl + "/common/sendValidateCode.json";
 var loginUrl = httpUrl + "/common/passwordLogin.json";
-var findByIdUrl = httpUrl +"/wechat/customer/findCustomerById.json";
+var findByIdUrl = httpUrl +"/wechat/customer/findById.json";
 var updateUrl = httpUrl +"/wechat/customer/updateUserInfo.json";
 
 var zmfAuthUrl= httpUrl+"/wechat/customer/buildXinYanOrder.json";//芝麻分订单
+var taobaozmurl=httpUrl+"/xinyan/startAuthTaobao.json";
 var yysAuthUrl = httpUrl+"/wechat/customer/getTelecomOperatorsReportInit.json";//运营商授权初始化
 var submitYzmAuthUrl = httpUrl+"/wechat/customer/submitValidateCode.json";//运营商授权初始化
+var resendYzmAuthUrl = httpUrl+"/wechat/customer/resendVlidateCode.json";//运营商授权初始化
 
 
 /**
@@ -124,7 +127,7 @@ function findById() {
     if(result.success){
         $("#name").val(result.data.name);
         $("#certNo").val(result.data.certNo);
-        $("#bankAccountNo").val(result.data.bankAccountNo);
+        $("#bankAccount").val(result.data.bankAccount);
         $("#loanAmount").val(result.data.loanAmount);
     }else{
         showMessage(result.message);
@@ -171,22 +174,18 @@ function post(url,data) {
 function get(url,data) {
     var returnData;
     $.ajax({
-            url: url,
-            contentType: "application/json;charset=utf-8",
-            data: data,
-            method:"get",
-            dataType: "json",
-            async: false,
-            beforeSend:function () {
-            },
-            success: function (data) {
-                returnData = data;
-            },
-            complete:function () {
-            },
-            error: function () {
-                //showTipMessage("数据请求错误!",true);
-            }
+        url: url,
+        contentType: "application/json;charset=utf-8",
+        data: data,
+        method:"get",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            returnData = data;
+        },
+        error: function () {
+            alert("服务请求出错");
+        }
     });
     return returnData;
 }
@@ -307,6 +306,14 @@ function IdentityCodeValid(code) {
     }
     if(!pass) showMessage(tip);
     return pass;
+}
+
+function getLocation(){
+    if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(showPosition,showError);
+    }else{
+        showMessage("浏览器不支持地理定位。");
+    }
 }
 
 function showPosition(position){

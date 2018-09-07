@@ -20,8 +20,6 @@
 				<th data-options="field:'phone',width:80">手机号码</th>
 				<th data-options="field:'certNo',width:160,align:'right'">身份证号码</th>
 				<th data-options="field:'bankAccountNo',width:160">银行卡账号</th>
-				<th data-options="field:'loanPurpose',width:160">借款用途</th>
-				<th data-options="field:'registerDate',width:160">注册时间</th>
 				<th data-options="field:'registerDate',width:160">注册时间</th>
 				<th data-options="field:'xxxx',width:100,formatter:isLock">操作</th>
 			</tr>
@@ -159,7 +157,11 @@
 			});
 		}
 		function isLock(value, row, index){
-			return value;
+			if(value){
+				return "<a>逾期黑名单</a><a>多头借贷</a>";
+			}else{
+				return "<a>天贝API</a>";
+			}
 		}
 	</script>
 </body>

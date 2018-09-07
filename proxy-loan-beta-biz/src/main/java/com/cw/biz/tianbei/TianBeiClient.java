@@ -223,10 +223,10 @@ public class TianBeiClient {
      * @Version: 1
      */
     public String getTelecomOperatorsReportInit(String name,String phone,String idNo,String servicePwd) throws Exception {
-//        TianBeiResultDto tianBeiResultDto=this.tianBeiResultAppService.findByIdcardAndQueryType(idNo, ENUM_TIANBEI_TYPE.TELECOM_OPERATORS_REPORT_RESULT.code);
-//        if(ObjectHelper.isNotEmpty(tianBeiResultDto)){
-//            return tianBeiResultDto.getQueryResult();
-//        }
+        TianBeiResultDto tianBeiResultDto=this.tianBeiResultAppService.findByIdcardAndQueryType(idNo, ENUM_TIANBEI_TYPE.TELECOM_OPERATORS_REPORT_RESULT.code);
+        if(ObjectHelper.isNotEmpty(tianBeiResultDto)){
+            return tianBeiResultDto.getQueryResult();
+        }
         //初始化
         String initUrl=TELECOM_OPERATORS_REPORT+"init";
         Map<String,Object> initPara=new HashMap<>();
@@ -261,28 +261,28 @@ public class TianBeiClient {
      * @Version: 1
      */
     public String submitValidateCode(String idCard,String openId,String captcha) throws Exception {
-//        TianBeiResultDto tianBeiResultDto=this.tianBeiResultAppService.findByIdcardAndQueryType(idCard, ENUM_TIANBEI_TYPE.TELECOM_OPERATORS_REPORT_RESULT.code);
-//        if(ObjectHelper.isNotEmpty(tianBeiResultDto)){
-//            return tianBeiResultDto.getQueryResult();
-//        }
+        TianBeiResultDto tianBeiResultDto=this.tianBeiResultAppService.findByIdcardAndQueryType(idCard, ENUM_TIANBEI_TYPE.TELECOM_OPERATORS_REPORT_RESULT.code);
+        if(ObjectHelper.isNotEmpty(tianBeiResultDto)){
+            return tianBeiResultDto.getQueryResult();
+        }
         //提交验证码
         String validateCodeUrl=TELECOM_OPERATORS_REPORT+"captcha/commit";
         Map<String,Object> param=new HashMap<>();
         param.put("openId",openId);
         param.put("captcha",captcha);
         String resultStr=doCommonPost(validateCodeUrl,param,null);
-//        JSONObject resultJson=JSON.parseObject(resultStr);
-//        if(resultJson.getString("code").equalsIgnoreCase("0")){
-//            String data=resultJson.getString("data");
-//            JSONObject dataJson= JSON.parseObject(data);
-//            if(dataJson.getString("state").equalsIgnoreCase("0")){
-//                return getTelecomOperatorsReport(idCard, openId);
-//            }else{
-//                return resultStr;
-//            }
-//        }else {
+        JSONObject resultJson=JSON.parseObject(resultStr);
+        if(resultJson.getString("code").equalsIgnoreCase("0")){
+            String data=resultJson.getString("data");
+            JSONObject dataJson= JSON.parseObject(data);
+            if(dataJson.getString("state").equalsIgnoreCase("0")){
+                return getTelecomOperatorsReport(idCard, openId);
+            }else{
+                return resultStr;
+            }
+        }else {
             return resultStr;
-
+        }
     }
 
     /**

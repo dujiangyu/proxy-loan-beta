@@ -13,14 +13,12 @@ import com.cw.biz.tianbei.TianBeiClient;
 import com.cw.biz.user.app.dto.YxUserInfoDto;
 import com.cw.biz.user.app.service.CustomerAppService;
 import com.cw.biz.xinyan.app.service.XinYanAppService;
-import com.cw.web.common.controller.AbstractController;
 import com.cw.web.common.dto.CPViewResultInfo;
-import com.cw.web.wechat.AbstractWechatController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class CustomerInfoController extends AbstractWechatController {
+public class CustomerInfoController extends AbstractWechatController{
 
     @Autowired
     private CustomerAppService yxUserInfoAppService;
@@ -44,7 +42,7 @@ public class CustomerInfoController extends AbstractWechatController {
     */
    @GetMapping("/customer/findCustomerById.json")
    @ResponseBody
-   public CPViewResultInfo findCustomerById(Long id) {
+   public CPViewResultInfo findCustomerById() {
       String phone = CPContext.getContext().getSeUserInfo().getPhone();
       CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
       YxUserInfoDto yxUserInfoDto = yxUserInfoAppService.findByPhone(phone);

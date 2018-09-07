@@ -1,7 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### JetBrains template
 .idea
-#target
+target
 *.iml
 /proxy-loan-beta-web/proxy-loan-beta-web-common/proxy-loan-beta-web-common.iml
 /proxy-loan-beta-web/proxy-loan-beta-web-backend/proxy-loan-beta-web-backend.iml

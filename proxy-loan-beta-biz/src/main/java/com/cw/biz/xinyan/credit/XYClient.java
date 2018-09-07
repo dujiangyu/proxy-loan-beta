@@ -61,8 +61,8 @@ public class XYClient {
         log.info("====base64 编码:"+base64str);
 
         /** rsa加密  **/
-        String pfxpath = "/home/youxin/keys/"+XYConfig.PFX_NAME;// 商户私钥
-//        String pfxpath = "/Users/mac/Desktop/code/"+XYConfig.PFX_NAME;
+//        String pfxpath = "/home/youxin/keys/"+XYConfig.PFX_NAME;// 商户私钥
+        String pfxpath = "/Users/mac/Desktop/code/"+XYConfig.PFX_NAME;
         File pfxfile = ResourceUtils.getFile(pfxpath);
         if (!pfxfile.exists()) {
             log.info("私钥文件不存在！");

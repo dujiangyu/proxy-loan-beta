@@ -53,7 +53,7 @@ public class ThirdOperateDomainService {
         thirdOperate.from(thirdOperateDto);
         thirdOperate.prepareSave();
         thirdOperate.setAccountNo(thirdOperateDto.getName());
-        thirdOperate.setAgentId(CPContext.getContext().getSeUserInfo().getId());
+        thirdOperate.setUserId(CPContext.getContext().getSeUserInfo().getId());
         return repository.save(thirdOperate);
     }
 
@@ -69,13 +69,12 @@ public class ThirdOperateDomainService {
             //保存登录用户信息
             SeUser seUser = new SeUser();
             seUser.setUsername(thirdOperateDto.getName());
+            seUser.setrId(1L);
             seUser.setType("manager");
             seUser.setRoleIdsStr(",20");
             seUser.setPassword(thirdOperateDto.getPassword());
             seUser.setDisplayName(thirdOperateDto.getName());
-            seUser.setrId(3L);
-            SeUser seUser1 = seUserService.createUser(seUser);
-            thirdOperate.setUserId(seUser1.getId());
+            seUserService.createUser(seUser);
         }else {
             thirdOperate = repository.findOne(thirdOperateDto.getId());
             thirdOperate.from(thirdOperateDto);
@@ -178,7 +177,7 @@ public class ThirdOperateDomainService {
             List<Predicate> predicates = Lists.newArrayListWithCapacity(20);
 
             if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())) {
-                predicates.add(cb.equal(root.get("agentId"), CPContext.getContext().getSeUserInfo().getId()));
+                predicates.add(cb.equal(root.get("userId"), CPContext.getContext().getSeUserInfo().getId()));
             }
             predicates.add(cb.equal(root.get("isValid"),Boolean.TRUE));
             if(!StringUtils.isEmpty(thirdOperateDto.getName())) {

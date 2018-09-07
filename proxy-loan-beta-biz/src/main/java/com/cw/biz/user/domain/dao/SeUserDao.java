@@ -83,7 +83,7 @@ public class SeUserDao {
     public JdbcPage<SeUser> findByPage(ListParamDto dto){
 
         StringBuilder sb = new StringBuilder(QUERY_SQL);
-        sb.append(" where 1=1 and rid!=0 and merchant_id = ").append(dto.getMerchantId());
+        sb.append(" where merchant_id = ").append(dto.getMerchantId());
         if (StringUtils.isNotBlank(dto.getUserType())) {
             sb.append(" and type = '").append(dto.getUserType()).append("'");
         }

@@ -4,7 +4,6 @@ import com.cw.biz.common.dto.PageDto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -53,9 +52,4 @@ public class YxUserInfoDto extends PageDto{
 
     private String showPageContent;
 
-    private String tradeNo;
-
-    private BigDecimal loanAmount;
-
-    private String loanPurpose;
 }

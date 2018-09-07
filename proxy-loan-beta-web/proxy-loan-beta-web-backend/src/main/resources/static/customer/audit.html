@@ -27,11 +27,7 @@
 			}
 
 			if(flag) {
-			    if(id=='ypz'){
-			        addTab(title,url);
-				}else {
-                    enableChannel(id, title, url);
-                }
+				enableChannel(id,title,url);
             }
 		}
 		function addTab(title,url) {
@@ -95,8 +91,6 @@
 			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkElement('infoauth','实名认证','smrz.html')">实名认证</a>
 			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkElement('overduefile','逾期档案','overdueFile.html')">逾期档案</a>
 			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkElement('zmf','芝麻分','zmf.html')">芝麻分</a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkElement('ypz','有凭证','http://ypz.youmaijinkong.com/m/home/enter?returnurl=')">有凭证</a>
-
 		</form>
     </div>
 	<div id="tt" class="easyui-tabs" style="width:100%;height:768px;">

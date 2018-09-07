@@ -67,7 +67,7 @@ public class ChannelDomainService {
             seUser.setUsername(channelDto.getName());
             seUser.setDisplayName(channelDto.getName());
             seUser.setPassword(channelDto.getPassword());
-            seUser.setrId(0L);
+            seUser.setrId(1L);
             SeUser seUser1 = seUserService.createUser(seUser);
             channel.setChannelUserId(seUser1.getId());
         }else {

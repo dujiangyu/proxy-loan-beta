@@ -78,16 +78,16 @@ public class ParameterDomainService {
         }
 
         //天贝借条逾期
-       Parameter parameter3 = repository.findByParameterCode(ParameterEnum.OVERDUE.getKey());
+       Parameter parameter3 = repository.findByParameterCode(ParameterEnum.OVERDUEFILE.getKey());
        if(parameter3 == null){
            ParameterDto parameterDto = new ParameterDto();
-           parameterDto.setParameterCode(ParameterEnum.OVERDUE.getKey());
-           parameterDto.setParameterName(ParameterEnum.OVERDUE.getValue());
-           parameterDto.setParameterName(ParameterEnum.OVERDUE.getValue());
+           parameterDto.setParameterCode(ParameterEnum.OVERDUEFILE.getKey());
+           parameterDto.setParameterName(ParameterEnum.OVERDUEFILE.getValue());
+           parameterDto.setParameterName(ParameterEnum.OVERDUEFILE.getValue());
            parameterDto.setParameterValue(indexParameterDto.getOverdue());
            create(parameterDto);
        }else{
-           parameter3.setParameterValue(indexParameterDto.getOverdue());
+           parameter3.setParameterValue(indexParameterDto.getReport());
        }
 
 
@@ -101,7 +101,7 @@ public class ParameterDomainService {
            parameterDto.setParameterValue(indexParameterDto.getBlackList());
            create(parameterDto);
        }else{
-           parameter4.setParameterValue(indexParameterDto.getBlackList());
+           parameter4.setParameterValue(indexParameterDto.getReport());
        }
 
 
@@ -115,7 +115,7 @@ public class ParameterDomainService {
            parameterDto.setParameterValue(indexParameterDto.getInfoAuth());
            create(parameterDto);
        }else{
-           parameter5.setParameterValue(indexParameterDto.getInfoAuth());
+           parameter5.setParameterValue(indexParameterDto.getReport());
        }
 
         //新颜逾期档案
@@ -128,10 +128,10 @@ public class ParameterDomainService {
            parameterDto.setParameterValue(indexParameterDto.getOverdueFile());
            create(parameterDto);
        }else{
-           parameter6.setParameterValue(indexParameterDto.getOverdueFile());
+           parameter6.setParameterValue(indexParameterDto.getReport());
        }
 
-        //芝麻分
+        //天贝报告
        Parameter parameter7 = repository.findByParameterCode(ParameterEnum.ZMF.getKey());
        if(parameter7 == null){
            ParameterDto parameterDto = new ParameterDto();
@@ -141,7 +141,7 @@ public class ParameterDomainService {
            parameterDto.setParameterValue(indexParameterDto.getZmf());
            create(parameterDto);
        }else{
-           parameter7.setParameterValue(indexParameterDto.getZmf());
+           parameter7.setParameterValue(indexParameterDto.getReport());
        }
         return parameter;
     }

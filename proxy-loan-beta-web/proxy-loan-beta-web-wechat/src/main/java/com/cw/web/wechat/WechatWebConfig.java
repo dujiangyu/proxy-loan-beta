@@ -14,7 +14,7 @@ public class WechatWebConfig {
 
     @Bean(name = "wechat_loginFilter_reg")
     public FilterRegistrationBean loginFilterRegistrationBean() {
-        FilterRegistrationBean bean = new CwFilter.Builder().loginUrl("/wechat/register.html")
+        FilterRegistrationBean bean = new CwFilter.Builder().loginUrl("/wechat/login.html")
                 .notNeedLoginUrls("/css/login.css","/static/scripts/*","/static/css/*","/static/fronts/*","/static/images/*","/static/*.html")
                 .urlPatterns("/wechat/*").supportUserType("user").build();
         bean.setName("wechat_loginFilter");
