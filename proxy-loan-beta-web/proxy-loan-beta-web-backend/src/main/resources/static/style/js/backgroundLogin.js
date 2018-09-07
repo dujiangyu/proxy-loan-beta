@@ -91,7 +91,7 @@ $(function () {
                 } else {
                     cookie.remove(e);
                 }
-                location.href = "/frame.html";//g.data
+                location.href = "/youxin.html";//g.data
             } else {
                 alert(g.data && g.data.length ? g.data[0] : g.message);
                 $("#btnLogin").removeAttr("disabled")

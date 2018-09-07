@@ -1,4 +1,4 @@
-package com.cw.web.wechat.controller;
+package com.cw.web.wechat;
 
 import com.cw.web.common.controller.AbstractController;
 import org.springframework.web.bind.annotation.RequestMapping;

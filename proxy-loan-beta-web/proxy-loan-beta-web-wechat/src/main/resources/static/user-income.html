@@ -134,7 +134,7 @@
             if(result.success) {
                   window.location.href = result.data;
             }else{
-                toastr.success(result.message);
+                showMessage(result.message);
             }
         }
 

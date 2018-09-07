@@ -5,7 +5,7 @@ import com.cw.biz.xinyan.credit.rsa.RsaCodingUtil;
 import com.cw.biz.xinyan.credit.util.HttpUtils;
 import com.cw.biz.xinyan.credit.util.JXMConvertUtil;
 import com.cw.biz.xinyan.credit.util.MapToXMLString;
-import com.cw.biz.xinyan.credit.util.SecurityUtil;
+import com.cw.biz.xinyan.credit.util.YouxinSecurityUtil;
 import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -73,7 +73,7 @@ public class IdentityCardAction extends HttpServlet {
 		log("====请求明文:" + XmlOrJson);
 		
 		/** base64 编码 **/
-		String base64str = SecurityUtil.Base64Encode(XmlOrJson);
+		String base64str = YouxinSecurityUtil.Base64Encode(XmlOrJson);
 		log("====base64 编码:"+base64str);
 		
 		/** rsa加密  **/

@@ -14,7 +14,7 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 
 
-public class SecurityUtil {
+public class YouxinSecurityUtil {
 	/***
 	 * MD5 加密
 	 */

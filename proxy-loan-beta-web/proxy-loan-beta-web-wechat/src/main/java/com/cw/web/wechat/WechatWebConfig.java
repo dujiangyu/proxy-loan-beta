@@ -1,4 +1,4 @@
-package com.cw.web.wechat.controller;
+package com.cw.web.wechat;
 
 import com.cw.web.common.filter.CwFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -18,6 +18,7 @@ public class WechatWebConfig {
                 .notNeedLoginUrls("/css/login.css","/static/scripts/*","/static/css/*","/static/fronts/*","/static/images/*","/static/*.html")
                 .urlPatterns("/wechat/*").supportUserType("user").build();
         bean.setName("wechat_loginFilter");
+        bean.setOrder(1);
         return bean;
     }
 }

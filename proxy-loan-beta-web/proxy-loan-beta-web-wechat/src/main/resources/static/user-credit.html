@@ -187,13 +187,13 @@
                     //弹出输入框输入验证码
                     $("#myModal").modal();
                 } else {
-                    toastr.error(dataObj.errorMsg);
+                    showMessage(dataObj.errorMsg);
                 }
             }else{
-                toastr.error(dataObj.msg);
+                showMessage(dataObj.msg);
             }
         } else {
-            toastr.error(result.message);
+            showMessage(result.message);
         }
     }
     
@@ -217,13 +217,13 @@
         var result = post(submitYzmAuthUrl, jsonStr);
         if (result.success) {
             if (result.data.state == 1) {
-                toastr.error(result.data.errorMsg);
+                showMessage(result.data.errorMsg);
             }else if(result.data.state == 0){
                 toastr.success('验证成功');
                 setTimeout("jumpToNext()",1000);
             }
         } else {
-            toastr.error(result.message==null?result.errorMsg:result.message);
+            showMessage(result.message==null?result.errorMsg:result.message);
         }
     }
 </script>

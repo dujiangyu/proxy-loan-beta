@@ -59,8 +59,6 @@ public class CwFilter extends OncePerRequestFilter {
             }
             //认证判断
             if (!SecurityUtils.getSubject().isAuthenticated()) {
-//                response.sendRedirect(response.encodeRedirectURL(loginUrl));
-//                response.setStatus(707);
                 response.setCharacterEncoding("utf-8");
                 request.setCharacterEncoding("UTF-8");
                 response.setContentType("application/json");

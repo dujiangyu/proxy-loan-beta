@@ -12,6 +12,7 @@ import com.cw.biz.user.app.dto.CustomerDto;
 import com.cw.biz.user.app.dto.YxUserInfoDto;
 import com.cw.biz.user.app.service.CustomerAppService;
 import com.cw.web.common.dto.CPViewResultInfo;
+import com.cw.web.wechat.AbstractWechatController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ChannelUserController extends AbstractWechatController{
+public class ChannelUserController extends AbstractWechatController {
 
     @Autowired
     private CustomerAppService yxUserInfoAppService;
@@ -37,16 +38,16 @@ public class ChannelUserController extends AbstractWechatController{
         * @exception throws [异常类型] [异常说明]
         * @see [类、类#方法、类#成员]
         */
-//       @PostMapping("/customer/findChannelByCondition.json")
-//       @ResponseBody
-//       public CPViewResultInfo findChannelByCondition(@RequestBody YxUserInfoDto yxUserInfoDto) {
-//           CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
-//           ChannelDto channelDto = channelAppService.findByChannelUserId(CPContext.getContext().getSeUserInfo().getId());
-//           yxUserInfoDto.setSourceChannel(channelDto.getCode());
-//           Page<CustomerDto> userInfoDtos = yxUserInfoAppService.findChannelByCondition(yxUserInfoDto);
-//           cpViewResultInfo.setData(userInfoDtos);
-//           cpViewResultInfo.setSuccess(true);
-//           cpViewResultInfo.setMessage("查询成功");
-//           return cpViewResultInfo;
-//       }
+       @PostMapping("/customer/findChannelByCondition.json")
+       @ResponseBody
+       public CPViewResultInfo findChannelByCondition(@RequestBody YxUserInfoDto yxUserInfoDto) {
+           CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
+           ChannelDto channelDto = channelAppService.findByChannelUserId(CPContext.getContext().getSeUserInfo().getId());
+           yxUserInfoDto.setSourceChannel(channelDto.getCode());
+           Page<CustomerDto> userInfoDtos = yxUserInfoAppService.findChannelByCondition(yxUserInfoDto);
+           cpViewResultInfo.setData(userInfoDtos);
+           cpViewResultInfo.setSuccess(true);
+           cpViewResultInfo.setMessage("查询成功");
+           return cpViewResultInfo;
+       }
 }

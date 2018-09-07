@@ -1,7 +1,7 @@
 package com.cw.web.wechat.controller;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -212,7 +212,7 @@ public class GeetestLib {
 			}
 			
 			gtlog("result:" + result_str);
-			JSONObject jsonObject = new JSONObject(result_str);
+			JSONObject jsonObject = JSONObject.parseObject(result_str);
 		    String return_challenge = jsonObject.getString("challenge");
 		
 			gtlog("return_challenge:" + return_challenge);
@@ -266,7 +266,7 @@ public class GeetestLib {
 	/**
 	 * 检查客户端的请求是否合法,三个只要有一个为空，则判断不合法
 	 * 
-	 * @param request
+	 * @param
 	 * @return
 	 */
 	private boolean resquestIsLegal(String challenge, String validate, String seccode) {
@@ -362,7 +362,7 @@ public class GeetestLib {
 		
 		try {
 			
-			JSONObject return_map = new JSONObject(response);
+			JSONObject return_map = JSONObject.parseObject(response);
 			return_seccode = return_map.getString("seccode");
 			gtlog("md5: " + md5Encode(return_seccode));
 
@@ -425,7 +425,7 @@ public class GeetestLib {
 	/**
 	 * 发送GET请求，获取服务器返回结果
 	 * 
-	 * @param getURL
+	 * @param
 	 * @return 服务器返回结果
 	 * @throws IOException
 	 */
@@ -465,7 +465,7 @@ public class GeetestLib {
 	/**
 	 * 发送POST请求，获取服务器返回结果
 	 * 
-	 * @param getURL
+	 * @param
 	 * @return 服务器返回结果
 	 * @throws IOException
 	 */
