@@ -19,11 +19,11 @@
 				<th data-options="field:'name',width:150">渠道名称</th>
 				<th data-options="field:'linkPerson',width:100,align:'center'">联系人</th>
 				<th data-options="field:'linkPhone',width:100,align:'center'">联系电话</th>
-				<th data-options="field:'tgUrl',width:100,align:'center'">推广链接</th>
-				<th data-options="field:'backLoginUrl',width:100,align:'center'">后台链接</th>
+				<th data-options="field:'tgUrl',width:200,align:'center'">推广链接</th>
+				<th data-options="field:'backLoginUrl',width:200,align:'center'">后台链接</th>
 				<th data-options="field:'accountNo',width:100">后台账号</th>
 				<th data-options="field:'password',width:100,align:'center'">后台密码</th>
-				<th data-options="field:'xxxx',width:100,align:'center',formatter:copyInfo">操作</th>
+				<th data-options="field:'xxxx',width:200,align:'center',formatter:copyInfo">操作</th>
 			</tr>
 		</thead>
 	</table>
@@ -69,6 +69,9 @@
 	    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveProduct()">保存</a>
 	    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
 	</div>
+	<div id="imgdlg" class="easyui-dialog" style="width:350px;height:300px;padding:10px 20px" closed="true">
+			<img id="qrCode" src="" width="300px" height="300px"/>
+		</div>
 	<script type="text/javascript">
 		function add(){
 			$('#dlg').dialog('open').dialog('setTitle','新增渠道');
@@ -113,8 +116,10 @@
 		function copyInfo(value, rowData, index) {
 
 			return "<a href='javascript:void(0)' onclick='copyData(\""+rowData.tgUrl+"\",\""+rowData.backLoginUrl
-				+"\",\""+rowData.accountNo+"\",\""+rowData.password+"\")'>复制链接</a>"
+				+"\",\""+rowData.accountNo+"\",\""+rowData.password+"\")'>复制链接</a>&nbsp;&nbsp;"+
+				"<a href='javascript:void(0)' onclick='viewImage(\""+rowData.id+"\")'>查看二维码</a>"
 		}
+		//查看二维码
 		function copyData(h5Url,backgroundUrl,loginAccount,loginPassword) {
 			var strText="推广链接："+h5Url+"\t\r\n";
 				strText+="后台链接："+backgroundUrl+"\t\r\n";
@@ -129,6 +134,10 @@
 			$.messager.alert('温馨提示', "链接复制成功\n"+strText, 'info');
 
 		}
+		function viewImage(id) {
+			$('#imgdlg').dialog('open').dialog('setTitle','查看二维码');
+			$("#qrCode").attr("src",http+"/common/generateImage?channelId="+id);
+        }
 		function Search(pageNumber,pageSize) {
 			var parameter = $("#searchForm").serializeArray();
 			var values={};

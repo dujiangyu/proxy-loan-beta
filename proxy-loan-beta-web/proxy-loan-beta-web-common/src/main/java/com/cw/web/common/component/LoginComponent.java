@@ -101,7 +101,7 @@ public class LoginComponent {
         }
         //微信登录绑定openid
         if(isWechatAccess(httpServletRequest)){
-           userService.updateUser(seUser, false);
+           //userService.updateUser(seUser, false);
         }
 
     }

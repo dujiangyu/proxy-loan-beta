@@ -23,7 +23,6 @@ public class CustomerInfoController extends AbstractWechatController{
     @Autowired
     private CustomerAppService yxUserInfoAppService;
 
-
     /** 新颜接口 **/
     @Autowired
     private XinYanAppService xinYanAppService;
@@ -31,6 +30,7 @@ public class CustomerInfoController extends AbstractWechatController{
     /** 天贝接口 **/
     @Autowired
     private TianBeiClient tianBeiClient;
+
     /** 查询用户信息
     *&lt;功能简述&gt;
     *&lt;功能详细描述&gt;
@@ -40,9 +40,9 @@ public class CustomerInfoController extends AbstractWechatController{
     * @exception throws [异常类型] [异常说明]
     * @see [类、类#方法、类#成员]
     */
-   @GetMapping("/customer/findById.json")
+   @GetMapping("/customer/findCustomerById.json")
    @ResponseBody
-   public CPViewResultInfo findById() {
+   public CPViewResultInfo findCustomerById() {
       String phone = CPContext.getContext().getSeUserInfo().getPhone();
       CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
       YxUserInfoDto yxUserInfoDto = yxUserInfoAppService.findByPhone(phone);
@@ -130,12 +130,11 @@ public class CustomerInfoController extends AbstractWechatController{
                    userInfoDto.setOpenId(dataJson.getString("openId"));
                    yxUserInfoAppService.update(userInfoDto);
                }
-               cpViewResultInfo.newSuccess(authUrl);
+               cpViewResultInfo.setData(authUrl);
            }else{
-                cpViewResultInfo.newFalse(initJson.getString("errorMsg"));
+                cpViewResultInfo.setData(authUrl);
            }
         }catch (Exception e){
-            cpViewResultInfo.newFalse(e);
             throw new CwException(e.getMessage());
         }
        return cpViewResultInfo;

@@ -25,8 +25,7 @@ public class ChannelController extends AbstractBackendController {
      */
     @PostMapping("/channel/create.json")
     @ResponseBody
-    public CPViewResultInfo create(@RequestBody ChannelDto channelDto)
-    {
+    public CPViewResultInfo create(@RequestBody ChannelDto channelDto){
         CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
         Long cardId = channelAppService.create(channelDto);
         cpViewResultInfo.setData(cardId);

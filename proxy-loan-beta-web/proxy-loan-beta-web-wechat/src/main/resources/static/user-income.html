@@ -117,7 +117,8 @@
     <div class="img"><img src="/assets/images/banner.jpg" alt=""/></div>
     <form id="userForm"><input type="hidden" name="showPageContent" value="credit">
         <div class="main">
-            <div class="pro-info-btn">
+            <div class="pro-infoimg"><img src="/assets/images/info03.jpg"></div>
+            <div class="pro-info-btn" style="margin-top: 150px;">
                 <a class="btn-apply ap-fz16" id="startAuthBtn" href="javascript:void(0);">开始芝麻分认证</a>
                 <!--<a class="btn-apply ap-fz16" onclick="submitVerifyCode()" href="javascript:void(0);">提交验证码</a>-->
             </div>
@@ -129,16 +130,11 @@
     $(function () {
 
         function init() {
-            var result=post(taobaozmurl, "");
-            if(result.success){
-                if(result.data=="true"){
-                    toastr.error("芝麻分认证成功");
-                    $("#startAuthBtn").hide();
-                }else{
-                    window.location.href=result.data;
-                }
+            var result=get(zmfAuthUrl, "");
+            if(result.success) {
+                  window.location.href = result.data;
             }else{
-                toastr.success(result.message==""?result.errorMsg:result.message);
+                toastr.success(result.message);
             }
         }
 

@@ -26,6 +26,7 @@ public class ShiroConfiguration{
      * 3、部分过滤器可指定参数，如perms，roles
      *
      */
+
     @Bean(name="shiroFilter")
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -41,15 +42,16 @@ public class ShiroConfiguration{
         hashedCredentialsMatcher.setHashIterations(HASH_ITERATIONS);
         return hashedCredentialsMatcher;
     }
-    @Bean
-    public FilterRegistrationBean delegatingFilterProxy(){
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-        proxy.setTargetFilterLifecycle(true);
-        proxy.setTargetBeanName("shiroFilter");
-        filterRegistrationBean.setFilter(proxy);
-        return filterRegistrationBean;
-    }
+
+     @Bean
+     public FilterRegistrationBean delegatingFilterProxy(){
+         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+         DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+         proxy.setTargetFilterLifecycle(true);
+         proxy.setTargetBeanName("shiroFilter");
+         filterRegistrationBean.setFilter(proxy);
+         return filterRegistrationBean;
+     }
 
     @Bean
     public SecurityManager securityManager() {

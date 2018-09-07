@@ -60,4 +60,10 @@ public class YxUserInfo extends AggEntity{
 
     @Column(name="trade_no",columnDefinition="varchar(64)  comment '交易号码'")
     private String tradeNo;
+
+    @Column(name="loan_amount",columnDefinition="decimal(12,2)  comment '借款金额'")
+    private BigDecimal loanAmount;
+
+    @Column(name="loan_purpose",columnDefinition="varchar(64)  comment '借款用途'")
+    private String loanPurpose;
 }

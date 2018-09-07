@@ -2,6 +2,8 @@ package com.cw.web.common.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.cw.biz.channel.app.dto.ChannelDto;
+import com.cw.biz.channel.app.service.ChannelAppService;
 import org.apache.poi.hpsf.SummaryInformation;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -11,6 +13,7 @@ import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +34,10 @@ public class ExcelController{
     public static String DEFAULT_DATE_PATTERN="yyyy年MM月dd日";//默认日期格式
 
     public static int DEFAULT_COLOUMN_WIDTH = 17;
+
+    @Autowired
+    private ChannelAppService channelAppService;
+
     /**
      * 导出Excel 97(.xls)格式 ，少量数据
      * @param title 标题行
@@ -318,6 +325,28 @@ public class ExcelController{
        ExcelController.downloadExcelFile(title,headMap,jsonArray,response);
     }
 
+
+   /** 查看推广二维码图片
+     *&lt;功能简述&gt;
+     *&lt;功能详细描述&gt;
+     * ${tags} [参数说明]
+     *
+     * @return ${return_type} [返回类型说明]
+     * @exception throws [异常类型] [异常说明]
+     * @see [类、类#方法、类#成员]
+     */
+    @RequestMapping(value = "generateImage")
+    @ResponseBody
+    public void generateImage(Long channelId,HttpServletResponse response){
+        try {
+            //查询渠道推广链接地址
+            ChannelDto channelDto = channelAppService.findById(channelId);
+            //根据链接地址生成二维码图片
+            //QrCodeUtil.createQrCode(channelDto.getTgUrl(), response.getOutputStream());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 }

@@ -37,16 +37,16 @@ public class ChannelUserController extends AbstractWechatController{
         * @exception throws [异常类型] [异常说明]
         * @see [类、类#方法、类#成员]
         */
-       @PostMapping("/customer/findChannelByCondition.json")
-       @ResponseBody
-       public CPViewResultInfo findChannelByCondition(@RequestBody YxUserInfoDto yxUserInfoDto) {
-           CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
-           ChannelDto channelDto = channelAppService.findByChannelUserId(CPContext.getContext().getSeUserInfo().getId());
-           yxUserInfoDto.setSourceChannel(channelDto.getCode());
-           Page<CustomerDto> userInfoDtos = yxUserInfoAppService.findChannelByCondition(yxUserInfoDto);
-           cpViewResultInfo.setData(userInfoDtos);
-           cpViewResultInfo.setSuccess(true);
-           cpViewResultInfo.setMessage("查询成功");
-           return cpViewResultInfo;
-       }
+//       @PostMapping("/customer/findChannelByCondition.json")
+//       @ResponseBody
+//       public CPViewResultInfo findChannelByCondition(@RequestBody YxUserInfoDto yxUserInfoDto) {
+//           CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
+//           ChannelDto channelDto = channelAppService.findByChannelUserId(CPContext.getContext().getSeUserInfo().getId());
+//           yxUserInfoDto.setSourceChannel(channelDto.getCode());
+//           Page<CustomerDto> userInfoDtos = yxUserInfoAppService.findChannelByCondition(yxUserInfoDto);
+//           cpViewResultInfo.setData(userInfoDtos);
+//           cpViewResultInfo.setSuccess(true);
+//           cpViewResultInfo.setMessage("查询成功");
+//           return cpViewResultInfo;
+//       }
 }

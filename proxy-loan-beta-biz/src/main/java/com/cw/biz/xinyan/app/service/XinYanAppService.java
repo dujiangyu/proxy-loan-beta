@@ -169,8 +169,8 @@ public class XinYanAppService {
      * @Version: 1
      */
     public String buildXinYanOrder(String idCard) throws Exception {
-        XinYanResultDto source=this.xinYanResultDomainService.findByIdCardAndQueryType(idCard, ENUM_XINYAN_TYPE.ZHIMA.code);
-        if(ObjectHelper.isNotEmpty(source))return "true";
+//        XinYanResultDto source=this.xinYanResultDomainService.findByIdCardAndQueryType(idCard, ENUM_XINYAN_TYPE.ZHIMA.code);
+//        if(ObjectHelper.isNotEmpty(source))return "true";
         Map<String,String> param=new HashMap<>();
         param.put("notifyUrl",XYConfig.NOTIFY_URL);
         param.put("txnType","taobao");
