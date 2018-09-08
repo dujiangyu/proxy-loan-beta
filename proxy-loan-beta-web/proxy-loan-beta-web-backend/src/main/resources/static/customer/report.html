@@ -453,186 +453,203 @@
 						console.log(datas.data);
 						var dataObj = eval('(' + datas.data + ')');
 						if(dataObj.code==0) {
-                            $("#name").text(dataObj.data.report.user_basic.user_name);
-                            $("#idCard").text(dataObj.data.report.user_basic.user_idcard);
-                            $("#age").text(dataObj.data.report.user_basic.user_age);
-                            $("#gender").text(dataObj.data.report.user_basic.user_gender);
-                            $("#provice").text(dataObj.data.report.user_basic.user_phone_province);
-                            $("#phone").text(dataObj.data.report.user_basic.user_phone);
-                            $("#isValid").text(dataObj.data.report.user_basic.user_idcard_valid?"有效":"无效");
+						    if(dataObj.data.report.user_basic!=null){
+								$("#name").text(dataObj.data.report.user_basic.user_name);
+								$("#idCard").text(dataObj.data.report.user_basic.user_idcard);
+								$("#age").text(dataObj.data.report.user_basic.user_age);
+								$("#gender").text(dataObj.data.report.user_basic.user_gender);
+								$("#provice").text(dataObj.data.report.user_basic.user_phone_province);
+								$("#phone").text(dataObj.data.report.user_basic.user_phone);
+								$("#isValid").text(dataObj.data.report.user_basic.user_idcard_valid?"有效":"无效");
+							}
                             //灰度分数
-							$("#phone_gray_score").text(dataObj.data.report.user_gray.phone_gray_score);
-							$("#user_phone").text(dataObj.data.report.user_gray.user_phone);
-							$("#has_report").text(dataObj.data.report.user_gray.has_report?"是":"否");
-							$("#recent_active_time").html(datetimeFormat_1(dataObj.data.report.user_gray.recent_active_time));
-							$("#social_liveness").text(dataObj.data.report.user_gray.social_liveness);
-							$("#social_influence").text(dataObj.data.report.user_gray.social_influence);
-
-							$("#cnt_to_all").text(dataObj.data.report.user_gray.contacts_number_statistic.cnt_to_all);
-							$("#cnt_be_all").text(dataObj.data.report.user_gray.contacts_number_statistic.cnt_be_all);
-							$("#cnt_to_black").text(dataObj.data.report.user_gray.contacts_number_statistic.cnt_to_black);
-							$("#cnt_be_black").text(dataObj.data.report.user_gray.contacts_number_statistic.cnt_be_black);
-							$("#cnt_all").text(dataObj.data.report.user_gray.contacts_number_statistic.cnt_all);
-							$("#pct_cnt_to_black").text(dataObj.data.report.user_gray.contacts_number_statistic.pct_cnt_to_black);
+							if(dataObj.data.report.user_gray!=null) {
+                                $("#phone_gray_score").text(dataObj.data.report.user_gray.phone_gray_score);
+                                $("#user_phone").text(dataObj.data.report.user_gray.user_phone);
+                                $("#has_report").text(dataObj.data.report.user_gray.has_report ? "是" : "否");
+                                $("#recent_active_time").html(datetimeFormat_1(dataObj.data.report.user_gray.recent_active_time));
+                                $("#social_liveness").text(dataObj.data.report.user_gray.social_liveness);
+                                $("#social_influence").text(dataObj.data.report.user_gray.social_influence);
+                            }
+							if(dataObj.data.report.user_gray.contacts_number_statistic!=null) {
+                                $("#cnt_to_all").text(dataObj.data.report.user_gray.contacts_number_statistic.cnt_to_all);
+                                $("#cnt_be_all").text(dataObj.data.report.user_gray.contacts_number_statistic.cnt_be_all);
+                                $("#cnt_to_black").text(dataObj.data.report.user_gray.contacts_number_statistic.cnt_to_black);
+                                $("#cnt_be_black").text(dataObj.data.report.user_gray.contacts_number_statistic.cnt_be_black);
+                                $("#cnt_all").text(dataObj.data.report.user_gray.contacts_number_statistic.cnt_all);
+                                $("#pct_cnt_to_black").text(dataObj.data.report.user_gray.contacts_number_statistic.pct_cnt_to_black);
+                            }
 							//联系历史
-							$("#to_recent_query_time").html(datetimeFormat_1(dataObj.data.report.user_gray.contacts_query.to_recent_query_time));
-							$("#be_recent_query_time").html(datetimeFormat_1(dataObj.data.report.user_gray.contacts_query.be_recent_query_time));
-							$("#to_query_cnt_05").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_05);
-							$("#be_query_cnt_05").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_05);
-							$("#query_cnt_05").text(dataObj.data.report.user_gray.contacts_query.query_cnt_05);
-							$("#to_query_cnt_1").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_1);
-							$("#be_query_cnt_1").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_1);
-							$("#query_cnt_1").text(dataObj.data.report.user_gray.contacts_query.query_cnt_1);
-							$("#to_query_cnt_2").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_2);
-							$("#be_query_cnt_2").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_2);
-							$("#query_cnt_2").text(dataObj.data.report.user_gray.contacts_query.query_cnt_2);
-							$("#to_query_cnt_3").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_3);
-							$("#be_query_cnt_3").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_3);
-							$("#query_cnt_3").text(dataObj.data.report.user_gray.contacts_query.query_cnt_3);
-							$("#to_query_cnt_6").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_6);
-							$("#be_query_cnt_6").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_6);
-							$("#query_cnt_6").text(dataObj.data.report.user_gray.contacts_query.query_cnt_6);
-							$("#to_query_cnt_9").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_9);
-							$("#be_query_cnt_9").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_9);
-							$("#query_cnt_9").text(dataObj.data.report.user_gray.contacts_query.query_cnt_9);
-							$("#to_query_cnt_12").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_12);
-							$("#be_query_cnt_12").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_12);
-							$("#query_cnt_12").text(dataObj.data.report.user_gray.contacts_query.query_cnt_12);
-							$("#to_org_cnt_05").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_05);
-							$("#be_org_cnt_05").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_05);
-							$("#org_cnt_05").text(dataObj.data.report.user_gray.contacts_query.org_cnt_05);
-							$("#to_org_cnt_1").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_1);
-							$("#be_org_cnt_1").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_1);
-							$("#org_cnt_1").text(dataObj.data.report.user_gray.contacts_query.org_cnt_1);
-							$("#to_org_cnt_2").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_2);
-							$("#be_org_cnt_2").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_2);
+							if(dataObj.data.report.user_gray.contacts_query!=null) {
+								$("#to_recent_query_time").html(datetimeFormat_1(dataObj.data.report.user_gray.contacts_query.to_recent_query_time));
+								$("#be_recent_query_time").html(datetimeFormat_1(dataObj.data.report.user_gray.contacts_query.be_recent_query_time));
+								$("#to_query_cnt_05").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_05);
+								$("#be_query_cnt_05").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_05);
+								$("#query_cnt_05").text(dataObj.data.report.user_gray.contacts_query.query_cnt_05);
+								$("#to_query_cnt_1").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_1);
+								$("#be_query_cnt_1").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_1);
+								$("#query_cnt_1").text(dataObj.data.report.user_gray.contacts_query.query_cnt_1);
+								$("#to_query_cnt_2").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_2);
+								$("#be_query_cnt_2").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_2);
+								$("#query_cnt_2").text(dataObj.data.report.user_gray.contacts_query.query_cnt_2);
+								$("#to_query_cnt_3").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_3);
+								$("#be_query_cnt_3").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_3);
+								$("#query_cnt_3").text(dataObj.data.report.user_gray.contacts_query.query_cnt_3);
+								$("#to_query_cnt_6").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_6);
+								$("#be_query_cnt_6").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_6);
+								$("#query_cnt_6").text(dataObj.data.report.user_gray.contacts_query.query_cnt_6);
+								$("#to_query_cnt_9").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_9);
+								$("#be_query_cnt_9").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_9);
+								$("#query_cnt_9").text(dataObj.data.report.user_gray.contacts_query.query_cnt_9);
+								$("#to_query_cnt_12").text(dataObj.data.report.user_gray.contacts_query.to_query_cnt_12);
+								$("#be_query_cnt_12").text(dataObj.data.report.user_gray.contacts_query.be_query_cnt_12);
+								$("#query_cnt_12").text(dataObj.data.report.user_gray.contacts_query.query_cnt_12);
+								$("#to_org_cnt_05").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_05);
+								$("#be_org_cnt_05").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_05);
+								$("#org_cnt_05").text(dataObj.data.report.user_gray.contacts_query.org_cnt_05);
+								$("#to_org_cnt_1").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_1);
+								$("#be_org_cnt_1").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_1);
+								$("#org_cnt_1").text(dataObj.data.report.user_gray.contacts_query.org_cnt_1);
+								$("#to_org_cnt_2").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_2);
+								$("#be_org_cnt_2").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_2);
 
 
-							$("#org_cnt_2").text(dataObj.data.report.user_gray.contacts_query.org_cnt_2);
-							$("#to_org_cnt_3").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_3);
-							$("#be_org_cnt_3").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_3);
-							$("#org_cnt_3").text(dataObj.data.report.user_gray.contacts_query.org_cnt_3);
-							$("#to_org_cnt_6").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_6);
-							$("#be_org_cnt_6").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_6);
-							$("#org_cnt_6").text(dataObj.data.report.user_gray.contacts_query.org_cnt_6);
-							$("#to_org_cnt_9").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_9);
-							$("#be_org_cnt_9").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_9);
-							$("#org_cnt_9").text(dataObj.data.report.user_gray.contacts_query.org_cnt_9);
-							$("#to_org_cnt_12").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_12);
-							$("#be_org_cnt_12").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_12);
-							$("#org_cnt_12").text(dataObj.data.report.user_gray.contacts_query.org_cnt_12);
-
+								$("#org_cnt_2").text(dataObj.data.report.user_gray.contacts_query.org_cnt_2);
+								$("#to_org_cnt_3").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_3);
+								$("#be_org_cnt_3").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_3);
+								$("#org_cnt_3").text(dataObj.data.report.user_gray.contacts_query.org_cnt_3);
+								$("#to_org_cnt_6").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_6);
+								$("#be_org_cnt_6").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_6);
+								$("#org_cnt_6").text(dataObj.data.report.user_gray.contacts_query.org_cnt_6);
+								$("#to_org_cnt_9").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_9);
+								$("#be_org_cnt_9").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_9);
+								$("#org_cnt_9").text(dataObj.data.report.user_gray.contacts_query.org_cnt_9);
+								$("#to_org_cnt_12").text(dataObj.data.report.user_gray.contacts_query.to_org_cnt_12);
+								$("#be_org_cnt_12").text(dataObj.data.report.user_gray.contacts_query.be_org_cnt_12);
+								$("#org_cnt_12").text(dataObj.data.report.user_gray.contacts_query.org_cnt_12);
+							}
 							//黑名单信息
-							$("#blacklist_name_with_phone").text(dataObj.data.report.user_blacklist.blacklist_name_with_phone?"是":"否");
-							$("#blacklist_name_with_idcard").text(dataObj.data.report.user_blacklist.blacklist_name_with_idcard?"是":"否");
-							//借条信息
-							$("#total_loan_times").text(dataObj.data.report.iou_statistic.total_loan_times);
-							$("#total_loan_amount").text(dataObj.data.report.iou_statistic.total_loan_amount);
-							$("#recent_iou_status").text(dataObj.data.report.iou_statistic.recent_iou_status);
-							$("#recent_loan_time").text(dataObj.data.report.iou_statistic.recent_loan_time);
-							$("#recent_pay_back_time").text(dataObj.data.report.iou_statistic.recent_pay_back_time);
-							$("#in_repayment_times").text(dataObj.data.report.iou_statistic.in_repayment_times);
-							$("#in_repayment_amount").text(dataObj.data.report.iou_statistic.in_repayment_amount);
-							$("#in_repayment_interest").text(dataObj.data.report.iou_statistic.in_repayment_interest);
-							$("#overdue_payment_times").text(dataObj.data.report.iou_statistic.overdue_payment_times);
-							$("#overdue_payment_amount").text(dataObj.data.report.iou_statistic.overdue_payment_amount);
-							$("#overdue_payment_interest").text(dataObj.data.report.iou_statistic.overdue_payment_interest);
-							$("#overdue_times").text(dataObj.data.report.iou_statistic.overdue_times);
-							$("#overdue_amount").text(dataObj.data.report.iou_statistic.overdue_amount);
-							$("#overdue_interest").text(dataObj.data.report.iou_statistic.overdue_interest);
-							$("#d360_iou_platform_cnt").text(dataObj.data.report.iou_statistic.d360_iou_platform_cnt);
-							$("#d90_iou_platform_cnt").text(dataObj.data.report.iou_statistic.d90_iou_platform_cnt);
-							$("#d30_iou_platform_cnt").text(dataObj.data.report.iou_statistic.d30_iou_platform_cnt);
-							$("#d360_iou_query_times").text(dataObj.data.report.iou_statistic.d360_iou_query_times);
-							$("#d90_iou_query_times").text(dataObj.data.report.iou_statistic.d90_iou_query_times);
-							$("#d30_iou_query_times").text(dataObj.data.report.iou_statistic.d30_iou_query_times);
-
+							if(dataObj.data.report.user_blacklist!=null) {
+                                $("#blacklist_name_with_phone").text(dataObj.data.report.user_blacklist.blacklist_name_with_phone ? "是" : "否");
+                                $("#blacklist_name_with_idcard").text(dataObj.data.report.user_blacklist.blacklist_name_with_idcard ? "是" : "否");
+                            }
+                            //借条信息
+							if(dataObj.data.report.iou_statistic!=null) {
+                                $("#total_loan_times").text(dataObj.data.report.iou_statistic.total_loan_times);
+                                $("#total_loan_amount").text(dataObj.data.report.iou_statistic.total_loan_amount);
+                                $("#recent_iou_status").text(dataObj.data.report.iou_statistic.recent_iou_status);
+                                $("#recent_loan_time").text(dataObj.data.report.iou_statistic.recent_loan_time);
+                                $("#recent_pay_back_time").text(dataObj.data.report.iou_statistic.recent_pay_back_time);
+                                $("#in_repayment_times").text(dataObj.data.report.iou_statistic.in_repayment_times);
+                                $("#in_repayment_amount").text(dataObj.data.report.iou_statistic.in_repayment_amount);
+                                $("#in_repayment_interest").text(dataObj.data.report.iou_statistic.in_repayment_interest);
+                                $("#overdue_payment_times").text(dataObj.data.report.iou_statistic.overdue_payment_times);
+                                $("#overdue_payment_amount").text(dataObj.data.report.iou_statistic.overdue_payment_amount);
+                                $("#overdue_payment_interest").text(dataObj.data.report.iou_statistic.overdue_payment_interest);
+                                $("#overdue_times").text(dataObj.data.report.iou_statistic.overdue_times);
+                                $("#overdue_amount").text(dataObj.data.report.iou_statistic.overdue_amount);
+                                $("#overdue_interest").text(dataObj.data.report.iou_statistic.overdue_interest);
+                                $("#d360_iou_platform_cnt").text(dataObj.data.report.iou_statistic.d360_iou_platform_cnt);
+                                $("#d90_iou_platform_cnt").text(dataObj.data.report.iou_statistic.d90_iou_platform_cnt);
+                                $("#d30_iou_platform_cnt").text(dataObj.data.report.iou_statistic.d30_iou_platform_cnt);
+                                $("#d360_iou_query_times").text(dataObj.data.report.iou_statistic.d360_iou_query_times);
+                                $("#d90_iou_query_times").text(dataObj.data.report.iou_statistic.d90_iou_query_times);
+                                $("#d30_iou_query_times").text(dataObj.data.report.iou_statistic.d30_iou_query_times);
+                            }
 							//手机号码存疑
-							var idcardData = dataObj.data.report.user_phone_suspicion.phone_with_other_idcards;
-							var namesData = dataObj.data.report.user_phone_suspicion.phone_with_other_names;
-							var phoneData = dataObj.data.report.user_phone_suspicion.phone_applied_in_orgs;
-							$("#phone_with_other_idcards").datagrid("loadData",idcardData);
-							$("#phone_with_other_names").datagrid("loadData",namesData);
-							$("#phone_applied_in_orgs").datagrid("loadData",phoneData);
+							if(dataObj.data.report.user_phone_suspicion!=null) {
+								var idcardData = dataObj.data.report.user_phone_suspicion.phone_with_other_idcards;
+								var namesData = dataObj.data.report.user_phone_suspicion.phone_with_other_names;
+								var phoneData = dataObj.data.report.user_phone_suspicion.phone_applied_in_orgs;
+								$("#phone_with_other_idcards").datagrid("loadData", idcardData);
+								$("#phone_with_other_names").datagrid("loadData", namesData);
+								$("#phone_applied_in_orgs").datagrid("loadData", phoneData);
+							}
 
 							//证件号码存疑
-							var idcardidData = dataObj.data.report.user_idcard_suspicion.idcard_with_other_names;
-							var idcardnamesData = dataObj.data.report.user_idcard_suspicion.idcard_with_other_phones;
-							var idcardphoneData = dataObj.data.report.user_idcard_suspicion.idcard_applied_in_orgs;
-							$("#idcard_with_other_names").datagrid("loadData",idcardidData);
-							$("#idcard_with_other_phones").datagrid("loadData",idcardnamesData);
-							$("#idcard_applied_in_orgs").datagrid("loadData",idcardphoneData);
-							//机构查询历史
-							$("#user_searched_history_by_orgs").datagrid("loadData",dataObj.data.report.user_searched_history_by_orgs);
+							if(dataObj.data.report.user_idcard_suspicion!=null) {
 
-							$("#d_7_cnt").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt);
-							$("#d_7_cnt_cash").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_cash);
-							$("#d_7_cnt_cc").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_cc);
-							$("#d_7_cnt_cf").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_cf);
-							$("#d_7_cnt_org").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_org);
+								var idcardidData = dataObj.data.report.user_idcard_suspicion.idcard_with_other_names;
+								var idcardnamesData = dataObj.data.report.user_idcard_suspicion.idcard_with_other_phones;
+								var idcardphoneData = dataObj.data.report.user_idcard_suspicion.idcard_applied_in_orgs;
+								$("#idcard_with_other_names").datagrid("loadData", idcardidData);
+								$("#idcard_with_other_phones").datagrid("loadData", idcardnamesData);
+								$("#idcard_applied_in_orgs").datagrid("loadData", idcardphoneData);
+							}
+							if(dataObj.data.report.user_searched_history_by_day!=null) {
 
-							$("#d_7_cnt_org_cash").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_org_cash);
-							$("#d_7_cnt_org_cc").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_org_cc);
-							$("#d_7_cnt_org_cf").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_org_cf);
-							$("#d_7_pct_cnt_all").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_all);
-							$("#d_7_pct_cnt_cash").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_cash);
+								//机构查询历史
+								$("#user_searched_history_by_orgs").datagrid("loadData", dataObj.data.report.user_searched_history_by_orgs);
 
-							$("#d_7_pct_cnt_cc").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_cc);
-							$("#d_7_pct_cnt_cf").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_cf);
-							$("#d_7_pct_cnt_org_all").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_org_all);
-							$("#d_7_pct_cnt_org_cash").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_org_cash);
-							$("#d_7_pct_cnt_org_cc").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_org_cc);
-							$("#d_7_pct_cnt_org_cf").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_org_cf);
-							//15天查询历史
-							$("#d_15_cnt").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt);
-							$("#d_15_cnt_cash").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_cash);
-							$("#d_15_cnt_cc").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_cc);
-							$("#d_15_cnt_cf").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_cf);
-							$("#d_15_cnt_org").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_org);
+								$("#d_7_cnt").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt);
+								$("#d_7_cnt_cash").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_cash);
+								$("#d_7_cnt_cc").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_cc);
+								$("#d_7_cnt_cf").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_cf);
+								$("#d_7_cnt_org").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_org);
 
-							$("#d_15_cnt_org_cash").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_org_cash);
-							$("#d_15_cnt_org_cc").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_org_cc);
-							$("#d_15_cnt_org_cf").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_org_cf);
-							$("#d_15_pct_cnt_all").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_all);
-							$("#d_15_pct_cnt_cash").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_cash);
+								$("#d_7_cnt_org_cash").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_org_cash);
+								$("#d_7_cnt_org_cc").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_org_cc);
+								$("#d_7_cnt_org_cf").text(dataObj.data.report.user_searched_history_by_day.d_7.cnt_org_cf);
+								$("#d_7_pct_cnt_all").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_all);
+								$("#d_7_pct_cnt_cash").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_cash);
 
-							$("#d_15_pct_cnt_cc").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_cc);
-							$("#d_15_pct_cnt_cf").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_cf);
-							$("#d_15_pct_cnt_org_all").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_org_all);
-							$("#d_15_pct_cnt_org_cash").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_org_cash);
-							$("#d_15_pct_cnt_org_cc").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_org_cc);
-							$("#d_15_pct_cnt_org_cf").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_org_cf);
+								$("#d_7_pct_cnt_cc").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_cc);
+								$("#d_7_pct_cnt_cf").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_cf);
+								$("#d_7_pct_cnt_org_all").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_org_all);
+								$("#d_7_pct_cnt_org_cash").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_org_cash);
+								$("#d_7_pct_cnt_org_cc").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_org_cc);
+								$("#d_7_pct_cnt_org_cf").text(dataObj.data.report.user_searched_history_by_day.d_7.pct_cnt_org_cf);
+								//15天查询历史
+								$("#d_15_cnt").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt);
+								$("#d_15_cnt_cash").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_cash);
+								$("#d_15_cnt_cc").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_cc);
+								$("#d_15_cnt_cf").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_cf);
+								$("#d_15_cnt_org").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_org);
 
-							//30天查询历史
-							$("#d_30_cnt").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt);
-							$("#d_30_cnt_cash").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_cash);
-							$("#d_30_cnt_cc").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_cc);
-							$("#d_30_cnt_cf").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_cf);
-							$("#d_30_cnt_org").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_org);
+								$("#d_15_cnt_org_cash").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_org_cash);
+								$("#d_15_cnt_org_cc").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_org_cc);
+								$("#d_15_cnt_org_cf").text(dataObj.data.report.user_searched_history_by_day.d_15.cnt_org_cf);
+								$("#d_15_pct_cnt_all").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_all);
+								$("#d_15_pct_cnt_cash").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_cash);
 
-							$("#d_30_cnt_org_cash").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_org_cash);
-							$("#d_30_cnt_org_cc").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_org_cc);
-							$("#d_30_cnt_org_cf").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_org_cf);
-							$("#d_30_pct_cnt_all").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_all);
-							$("#d_30_pct_cnt_cash").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_cash);
+								$("#d_15_pct_cnt_cc").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_cc);
+								$("#d_15_pct_cnt_cf").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_cf);
+								$("#d_15_pct_cnt_org_all").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_org_all);
+								$("#d_15_pct_cnt_org_cash").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_org_cash);
+								$("#d_15_pct_cnt_org_cc").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_org_cc);
+								$("#d_15_pct_cnt_org_cf").text(dataObj.data.report.user_searched_history_by_day.d_15.pct_cnt_org_cf);
 
-							$("#d_30_pct_cnt_cc").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_cc);
-							$("#d_30_pct_cnt_cf").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_cf);
-							$("#d_30_pct_cnt_org_all").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_org_all);
-							$("#d_30_pct_cnt_org_cash").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_org_cash);
-							$("#d_30_pct_cnt_org_cc").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_org_cc);
-							$("#d_30_pct_cnt_org_cf").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_org_cf);
+								//30天查询历史
+								$("#d_30_cnt").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt);
+								$("#d_30_cnt_cash").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_cash);
+								$("#d_30_cnt_cc").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_cc);
+								$("#d_30_cnt_cf").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_cf);
+								$("#d_30_cnt_org").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_org);
 
+								$("#d_30_cnt_org_cash").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_org_cash);
+								$("#d_30_cnt_org_cc").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_org_cc);
+								$("#d_30_cnt_org_cf").text(dataObj.data.report.user_searched_history_by_day.d_30.cnt_org_cf);
+								$("#d_30_pct_cnt_all").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_all);
+								$("#d_30_pct_cnt_cash").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_cash);
+
+								$("#d_30_pct_cnt_cc").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_cc);
+								$("#d_30_pct_cnt_cf").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_cf);
+								$("#d_30_pct_cnt_org_all").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_org_all);
+								$("#d_30_pct_cnt_org_cash").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_org_cash);
+								$("#d_30_pct_cnt_org_cc").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_org_cc);
+								$("#d_30_pct_cnt_org_cf").text(dataObj.data.report.user_searched_history_by_day.d_30.pct_cnt_org_cf);
+							}
 							//消费标签信息
-							$("#if_own_cc").text(dataObj.data.report.consumer_label.if_own_cc);
-							$("#if_own_wg_cc").text(dataObj.data.report.consumer_label.if_own_wg_cc);
-							$("#if_own_car").text(dataObj.data.report.consumer_label.if_own_car);
-							$("#if_pay_ins").text(dataObj.data.report.consumer_label.if_pay_ins);
-							$("#if_fin_buy_pre6").text(dataObj.data.report.consumer_label.if_fin_buy_pre6);
-							$("#cst_score_finally").text(dataObj.data.report.consumer_label.cst_score_finally);
-
+							if(dataObj.data.report.consumer_label!=null) {
+								$("#if_own_cc").text(dataObj.data.report.consumer_label.if_own_cc);
+								$("#if_own_wg_cc").text(dataObj.data.report.consumer_label.if_own_wg_cc);
+								$("#if_own_car").text(dataObj.data.report.consumer_label.if_own_car);
+								$("#if_pay_ins").text(dataObj.data.report.consumer_label.if_pay_ins);
+								$("#if_fin_buy_pre6").text(dataObj.data.report.consumer_label.if_fin_buy_pre6);
+								$("#cst_score_finally").text(dataObj.data.report.consumer_label.cst_score_finally);
+							}
                         }else{
-							$.messager.alert('Info', dataObj.msg, 'info');
+							$.messager.alert('温馨提示', dataObj.msg==null?"接口调用超时":dataObj.msg, 'info');
 						}
 					}
 				}

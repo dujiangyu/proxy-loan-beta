@@ -2,6 +2,8 @@ package com.cw.biz.xinyan.app.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.cw.biz.CwException;
+import com.cw.biz.user.app.dto.YxUserInfoDto;
 import com.cw.biz.xinyan.ENUM_XINYAN_PHASE_TYPE;
 import com.cw.biz.xinyan.ENUM_XINYAN_TYPE;
 import com.cw.biz.xinyan.XYConfig;
@@ -123,6 +125,23 @@ public class XinYanAppService {
             }
         }
         return source;
+    }
+    //获取芝麻分信息
+    public String getZmfInfo(YxUserInfoDto yxUserInfoDto) throws Exception {
+        XinYanResultDto source=this.xinYanResultDomainService.findByIdCardAndQueryType(yxUserInfoDto.getCertNo(), ENUM_XINYAN_TYPE.ZHIMA.code);
+        if(ObjectHelper.isNotEmpty(source))return source.getQueryResult();
+        //采集完成则调用查询淘宝用户全部信息接口
+        Map<String,String> params=new HashMap<>();
+        params.put("memberId",XYConfig.MEMBER_ID);
+        params.put("terminalId",XYConfig.TERMINAL_ID);
+        params.put("orderNo",yxUserInfoDto.getTradeNo());
+        String result=xyClient.doRequestWithRsa(XYConfig.USER_TAOBAO_ALL_INFO_URL+yxUserInfoDto.getTradeNo(),params,"get",true);
+        JSONObject jsonResult=JSON.parseObject(result);
+        if(jsonResult.getBoolean("success")){
+            this.xinYanResultDomainService.saveOrUpdate(yxUserInfoDto.getCertNo(),ENUM_XINYAN_TYPE.ZHIMA.code,result);
+        }
+
+        return result;
     }
 
     /**

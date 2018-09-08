@@ -142,18 +142,18 @@
             </div>
         </div>
     </form>
-    <form id="captchaForm">
         <!-- 模态框（Modal） -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
+                    <form id="captchaForm">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             &times;
                         </button>
                         <h4 class="modal-title" id="myModalLabel">
-                            请输入验证码
+                            请输入动态验证码
                         </h4>
                     </div>
                     <div class="modal-body">
@@ -169,10 +169,10 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                         </button>
                     </div>
+                    </form>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
         </div>
-    </form>
 </div>
 <script>
     function saveUserServicePwd() {
@@ -187,6 +187,7 @@
                     //弹出输入框输入验证码
                     $("#myModal").modal();
                 } else {
+                    setTimeout("jumpToNext()",1000);
                     showMessage(dataObj.errorMsg);
                 }
             }else{
@@ -204,26 +205,34 @@
     /**
      * 模态框剧中
      */
-//    $('#myModal').on('shown.bs.modal', function (e) {
-//        // 关键代码，如没将modal设置为 block，则$modala_dialog.height() 为零
-//        $(this).css('display', 'block');
-//        var modalHeight=$(window).height() / 2 - $('#youModel .modal-dialog').height() / 2;
-//        $(this).find('.modal-dialog').css({
-//            'margin-top': modalHeight
-//        });
-//    });
+    $('#myModal').on('shown.bs.modal', function (e) {
+        // 关键代码，如没将modal设置为 block，则$modala_dialog.height() 为零
+        $(this).css('display', 'block');
+        var modalHeight=$(window).height() / 2 - $('#youModel .modal-dialog').height() / 2;
+        $(this).find('.modal-dialog').css({
+            'margin-top': modalHeight
+        });
+    });
     function submitVerifyCode() {
-        var jsonStr = serializeToJson($("#captchaForm"));
+        var value = {};
+        value["captcha"]=$("#captcha").val();
+        var jsonStr = JSON.stringify(value);
         var result = post(submitYzmAuthUrl, jsonStr);
         if (result.success) {
-            if (result.data.state == 1) {
-                showMessage(result.data.errorMsg);
-            }else if(result.data.state == 0){
-                toastr.success('验证成功');
-                setTimeout("jumpToNext()",1000);
+            var dataObj = eval('(' + result.data + ')');
+            if(dataObj.code==0){
+                if (dataObj.state == 1) {
+                    showMessage(dataObj.msg);
+                }else if(dataObj.state == 0){
+                    showMessage('验证成功');
+                    setTimeout("jumpToNext()",1000);
+                }
+            }else{
+                showMessage(dataObj.msg);
             }
+
         } else {
-            showMessage(result.message==null?result.errorMsg:result.message);
+            showMessage(result.message==null?result.msg:result.message);
         }
     }
 </script>

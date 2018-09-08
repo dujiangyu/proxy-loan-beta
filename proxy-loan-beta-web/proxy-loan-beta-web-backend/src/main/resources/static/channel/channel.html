@@ -113,7 +113,8 @@
 		function copyInfo(value, rowData, index) {
 
 			return "<a href='javascript:void(0)' onclick='copyData(\""+rowData.tgUrl+"\",\""+rowData.backLoginUrl
-				+"\",\""+rowData.accountNo+"\",\""+rowData.password+"\")'>复制链接</a>"
+				+"\",\""+rowData.accountNo+"\",\""+rowData.password+"\")'>复制链接</a>&nbsp;&nbsp;"+
+				"<a href='javascript:void(0)' onclick='viewImage(\""+rowData.id+"\")'>查看二维码</a>"
 		}
 		function copyData(h5Url,backgroundUrl,loginAccount,loginPassword) {
 			var strText="推广链接："+h5Url+"\t\r\n";
@@ -129,6 +130,10 @@
 			$.messager.alert('温馨提示', "链接复制成功\n"+strText, 'info');
 
 		}
+		function viewImage(id) {
+			$('#imgdlg').dialog('open').dialog('setTitle','查看二维码');
+			$("#qrCode").attr("src",http+"/common/generateImage?channelId="+id);
+        }
 		function Search(pageNumber,pageSize) {
 			var parameter = $("#searchForm").serializeArray();
 			var values={};

@@ -159,52 +159,55 @@
                             }
 
                             $("#hit").html(queryResult);
+							if(dataObj.data.result_detail.apply_report_detail!=null){
+								$("#query_org_count").text(dataObj.data.result_detail.apply_report_detail.query_org_count);
+								$("#query_finance_count").text(dataObj.data.result_detail.apply_report_detail.query_finance_count);
+								$("#query_cash_count").text(dataObj.data.result_detail.apply_report_detail.query_cash_count);
+								$("#query_sum_count").text(dataObj.data.result_detail.apply_report_detail.query_sum_count);
+								$("#latest_query_time").text(dataObj.data.result_detail.apply_report_detail.latest_query_time);
+								$("#latest_one_month").text(dataObj.data.result_detail.apply_report_detail.latest_one_month);
+								$("#latest_three_month").text(dataObj.data.result_detail.apply_report_detail.latest_three_month);
+								$("#latest_six_month").text(dataObj.data.result_detail.apply_report_detail.latest_six_month);
+								$("#latest_one_month1").text(dataObj.data.result_detail.apply_report_detail.latest_one_month);
+								$("#latest_three_month1").text(dataObj.data.result_detail.apply_report_detail.latest_three_month);
+								$("#latest_six_month1").text(dataObj.data.result_detail.apply_report_detail.latest_six_month);
+							}
+							if(dataObj.data.result_detail.behavior_report_detail!=null) {
+                                $("#loans_count").text(dataObj.data.result_detail.behavior_report_detail.loans_count);
+                                $("#loans_count1").text(dataObj.data.result_detail.behavior_report_detail.loans_count);
+                                $("#loans_settle_count").text(dataObj.data.result_detail.behavior_report_detail.loans_settle_count);
+                                $("#loans_overdue_count").text(dataObj.data.result_detail.behavior_report_detail.loans_overdue_count);
+                                $("#loans_org_count").text(dataObj.data.result_detail.behavior_report_detail.loans_org_count);
+                                $("#consfin_org_count").text(dataObj.data.result_detail.behavior_report_detail.consfin_org_count);
+                                $("#loans_cash_count").text(dataObj.data.result_detail.behavior_report_detail.loans_cash_count);
+                                $("#latest_one_month").text(dataObj.data.result_detail.behavior_report_detail.latest_one_month);
+                                $("#latest_three_month").text(dataObj.data.result_detail.behavior_report_detail.latest_three_month);
+                                $("#latest_six_month").text(dataObj.data.result_detail.behavior_report_detail.latest_six_month);
+                                $("#history_suc_fee").text(dataObj.data.result_detail.behavior_report_detail.history_suc_fee);
+                                $("#history_fail_fee").text(dataObj.data.result_detail.behavior_report_detail.history_fail_fee);
+                                $("#latest_one_month_suc").text(dataObj.data.result_detail.behavior_report_detail.latest_one_month_suc);
+                                $("#latest_one_month_fail").text(dataObj.data.result_detail.behavior_report_detail.latest_one_month_fail);
+                                $("#loans_long_time").text(dataObj.data.result_detail.behavior_report_detail.loans_long_time);
+                                $("#loans_latest_time").text(dataObj.data.result_detail.behavior_report_detail.loans_latest_time);
+                            }
+                            if(dataObj.data.result_detail.current_report_detail!=null) {
+                                $("#loans_credit_limit").text(dataObj.data.result_detail.current_report_detail.loans_credit_limit);
+                                $("#loans_org_count1").text(dataObj.data.result_detail.current_report_detail.loans_org_count);
+                                $("#loans_product_count").text(dataObj.data.result_detail.current_report_detail.loans_product_count);
 
-                            $("#query_org_count").text(dataObj.data.result_detail.apply_report_detail.query_org_count);
-                            $("#query_finance_count").text(dataObj.data.result_detail.apply_report_detail.query_finance_count);
-                            $("#query_cash_count").text(dataObj.data.result_detail.apply_report_detail.query_cash_count);
-                            $("#query_sum_count").text(dataObj.data.result_detail.apply_report_detail.query_sum_count);
-                            $("#latest_query_time").text(dataObj.data.result_detail.apply_report_detail.latest_query_time);
-                            $("#latest_one_month").text(dataObj.data.result_detail.apply_report_detail.latest_one_month);
-                            $("#latest_three_month").text(dataObj.data.result_detail.apply_report_detail.latest_three_month);
-                            $("#latest_six_month").text(dataObj.data.result_detail.apply_report_detail.latest_six_month);
-                            $("#latest_one_month1").text(dataObj.data.result_detail.apply_report_detail.latest_one_month);
-                            $("#latest_three_month1").text(dataObj.data.result_detail.apply_report_detail.latest_three_month);
-                            $("#latest_six_month1").text(dataObj.data.result_detail.apply_report_detail.latest_six_month);
-
-                            $("#loans_count").text(dataObj.data.result_detail.behavior_report_detail.loans_count);
-                            $("#loans_count1").text(dataObj.data.result_detail.behavior_report_detail.loans_count);
-                            $("#loans_settle_count").text(dataObj.data.result_detail.behavior_report_detail.loans_settle_count);
-                            $("#loans_overdue_count").text(dataObj.data.result_detail.behavior_report_detail.loans_overdue_count);
-                            $("#loans_org_count").text(dataObj.data.result_detail.behavior_report_detail.loans_org_count);
-                            $("#consfin_org_count").text(dataObj.data.result_detail.behavior_report_detail.consfin_org_count);
-                            $("#loans_cash_count").text(dataObj.data.result_detail.behavior_report_detail.loans_cash_count);
-                            $("#latest_one_month").text(dataObj.data.result_detail.behavior_report_detail.latest_one_month);
-                            $("#latest_three_month").text(dataObj.data.result_detail.behavior_report_detail.latest_three_month);
-                            $("#latest_six_month").text(dataObj.data.result_detail.behavior_report_detail.latest_six_month);
-                            $("#history_suc_fee").text(dataObj.data.result_detail.behavior_report_detail.history_suc_fee);
-                            $("#history_fail_fee").text(dataObj.data.result_detail.behavior_report_detail.history_fail_fee);
-                            $("#latest_one_month_suc").text(dataObj.data.result_detail.behavior_report_detail.latest_one_month_suc);
-                            $("#latest_one_month_fail").text(dataObj.data.result_detail.behavior_report_detail.latest_one_month_fail);
-                            $("#loans_long_time").text(dataObj.data.result_detail.behavior_report_detail.loans_long_time);
-                            $("#loans_latest_time").text(dataObj.data.result_detail.behavior_report_detail.loans_latest_time);
-
-                            $("#loans_credit_limit").text(dataObj.data.result_detail.current_report_detail.loans_credit_limit);
-                            $("#loans_org_count1").text(dataObj.data.result_detail.current_report_detail.loans_org_count);
-                            $("#loans_product_count").text(dataObj.data.result_detail.current_report_detail.loans_product_count);
-
-                            $("#loans_max_limit").text(dataObj.data.result_detail.current_report_detail.loans_max_limit);
-                            $("#loans_avg_limit").text(dataObj.data.result_detail.current_report_detail.loans_avg_limit);
-                            $("#consfin_credit_limit").text(dataObj.data.result_detail.current_report_detail.consfin_credit_limit);
-                            $("#consfin_org_count1").text(dataObj.data.result_detail.current_report_detail.consfin_org_count);
-                            $("#consfin_product_count").text(dataObj.data.result_detail.current_report_detail.consfin_product_count);
-                            $("#consfin_max_limit").text(dataObj.data.result_detail.current_report_detail.consfin_max_limit);
-                            $("#consfin_avg_limit").text(dataObj.data.result_detail.current_report_detail.consfin_avg_limit);
+                                $("#loans_max_limit").text(dataObj.data.result_detail.current_report_detail.loans_max_limit);
+                                $("#loans_avg_limit").text(dataObj.data.result_detail.current_report_detail.loans_avg_limit);
+                                $("#consfin_credit_limit").text(dataObj.data.result_detail.current_report_detail.consfin_credit_limit);
+                                $("#consfin_org_count1").text(dataObj.data.result_detail.current_report_detail.consfin_org_count);
+                                $("#consfin_product_count").text(dataObj.data.result_detail.current_report_detail.consfin_product_count);
+                                $("#consfin_max_limit").text(dataObj.data.result_detail.current_report_detail.consfin_max_limit);
+                                $("#consfin_avg_limit").text(dataObj.data.result_detail.current_report_detail.consfin_avg_limit);
+                            }
                         }else{
-							$.messager.alert('Info', dataObj.msg, 'info');
+							$.messager.alert('温馨提示', dataObj.msg, 'info');
 						}
 				    }else{
-				       $.messager.alert('Info', datas.message, 'info');
+				       $.messager.alert('温馨提示', datas.message, 'info');
 
 					}
 				}

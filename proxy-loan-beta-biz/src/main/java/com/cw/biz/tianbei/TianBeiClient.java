@@ -223,10 +223,10 @@ public class TianBeiClient {
      * @Version: 1
      */
     public String getTelecomOperatorsReportInit(String name,String phone,String idNo,String servicePwd) throws Exception {
-        TianBeiResultDto tianBeiResultDto=this.tianBeiResultAppService.findByIdcardAndQueryType(idNo, ENUM_TIANBEI_TYPE.TELECOM_OPERATORS_REPORT_RESULT.code);
-        if(ObjectHelper.isNotEmpty(tianBeiResultDto)){
-            return tianBeiResultDto.getQueryResult();
-        }
+//        TianBeiResultDto tianBeiResultDto=this.tianBeiResultAppService.findByIdcardAndQueryType(idNo, ENUM_TIANBEI_TYPE.TELECOM_OPERATORS_REPORT_RESULT.code);
+//        if(ObjectHelper.isNotEmpty(tianBeiResultDto)){
+//            return tianBeiResultDto.getQueryResult();
+//        }
         //初始化
         String initUrl=TELECOM_OPERATORS_REPORT+"init";
         Map<String,Object> initPara=new HashMap<>();
@@ -235,18 +235,18 @@ public class TianBeiClient {
         initPara.put("idNo",idNo);
         initPara.put("servicePwd",servicePwd);
         String initResultStr=doCommonPost(initUrl,initPara,null);
-        JSONObject initJson= JSON.parseObject(initResultStr);
-        if(initJson.getString("code").equalsIgnoreCase("0")){
-            String data=initJson.getString("data");
-            JSONObject dataJson= JSON.parseObject(data);
-            if(dataJson.getString("state").equalsIgnoreCase("0")){
-                return getTelecomOperatorsReport(idNo,initJson.getString("openId"));
-            }else{
-                return initResultStr;
-            }
-        }else{
+//        JSONObject initJson= JSON.parseObject(initResultStr);
+//        if(initJson.getString("code").equalsIgnoreCase("0")){
+//            String data=initJson.getString("data");
+//            JSONObject dataJson= JSON.parseObject(data);
+//            if(dataJson.getString("state").equalsIgnoreCase("0")){
+//                return getTelecomOperatorsReport(idNo,initJson.getString("openId"));
+//            }else{
+//                return initResultStr;
+//            }
+//        }else{
             return initResultStr;
-        }
+        //}
     }
 
     /**

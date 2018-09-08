@@ -160,6 +160,10 @@ public class CustomerController  extends AbstractBackendController {
    public CPViewResultInfo queryTianbeiYys(@RequestBody CustomerAuditDto customerAuditDto) {
        CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
        try {
+           YxUserInfoDto yxUserInfoDto = yxUserInfoAppService.findByPhone(customerAuditDto.getPhone());
+           if(ObjectHelper.isEmpty(yxUserInfoDto.getOpenId())){
+               throw new CwException("客户未授权");
+           }
            ParameterDto parameterDto = new ParameterDto();
            parameterDto.setParameterCode(ParameterEnum.YUNYINGSHANG.getKey());
            String openId = yxUserInfoAppService.findByPhone(customerAuditDto.getPhone()).getOpenId();
@@ -284,10 +288,14 @@ public class CustomerController  extends AbstractBackendController {
      public CPViewResultInfo queryXinyuanZmf(@RequestBody CustomerAuditDto customerAuditDto) {
          CPViewResultInfo cpViewResultInfo = new CPViewResultInfo();
          try {
+             YxUserInfoDto yxUserInfoDto = yxUserInfoAppService.findByPhone(customerAuditDto.getPhone());
+             if(ObjectHelper.isEmpty(yxUserInfoDto.getTradeNo())){
+                 throw new CwException("客户未授权");
+             }
              ParameterDto parameterDto = new ParameterDto();
              parameterDto.setParameterCode(ParameterEnum.ZMF.getKey());
              substractFee(customerAuditDto,parameterDto);
-             String result = "";//xinYanAppService.buildXinYanOrder(customerAuditDto.getPhone(),customerAuditDto.getName(), customerAuditDto.getIdCard());
+             String result = xinYanAppService.getZmfInfo(yxUserInfoDto);
              cpViewResultInfo.setData(result);
              cpViewResultInfo.setSuccess(true);
              cpViewResultInfo.setMessage("查询成功");

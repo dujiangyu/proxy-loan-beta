@@ -17,6 +17,18 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 public class ShiroConfiguration{
     public static final String ALGORITHM_NAME = "SHA-256";
     public static final int HASH_ITERATIONS = 2;
+
+    @Bean
+    public FilterRegistrationBean delegatingFilterProxy(){
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+        proxy.setTargetFilterLifecycle(true);
+        proxy.setTargetBeanName("shiroFilter");
+        filterRegistrationBean.setFilter(proxy);
+        filterRegistrationBean.setOrder(Integer.MAX_VALUE-1);
+        return filterRegistrationBean;
+    }
+
     /**
      * ShiroFilterFactoryBean 处理拦截资源文件问题。
      * 注意：单独一个ShiroFilterFactoryBean配置是或报错的，以为在
@@ -43,15 +55,6 @@ public class ShiroConfiguration{
         return hashedCredentialsMatcher;
     }
 
-     @Bean
-     public FilterRegistrationBean delegatingFilterProxy(){
-         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-         DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-         proxy.setTargetFilterLifecycle(true);
-         proxy.setTargetBeanName("shiroFilter");
-         filterRegistrationBean.setFilter(proxy);
-         return filterRegistrationBean;
-     }
 
     @Bean
     public SecurityManager securityManager() {

@@ -247,14 +247,10 @@
 							//出行分析
 							$("#trip_info").datagrid("loadData",dataObj.data.report.trip_info);
 						}else{
-							$.messager.alert('Info', dataObj.msg, 'info');
+							$.messager.alert('温馨提示', dataObj.msg, 'info');
 						}
 					}else{
-				        if(datas.code==999999){
-				            top.location.href="/login.html";
-						}else{
-							$.messager.alert('Info', datas.message, 'info');
-						}
+				       	$.messager.alert('温馨提示', datas.message, 'info');
 					}
 				}
 			});

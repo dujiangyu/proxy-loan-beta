@@ -177,7 +177,7 @@ public class ThirdOperateDomainService {
             List<Predicate> predicates = Lists.newArrayListWithCapacity(20);
 
             if(!"admin".equals(CPContext.getContext().getSeUserInfo().getUsername())) {
-                predicates.add(cb.equal(root.get("userId"), CPContext.getContext().getSeUserInfo().getId()));
+                predicates.add(cb.equal(root.get("agentId"), CPContext.getContext().getSeUserInfo().getId()));
             }
             predicates.add(cb.equal(root.get("isValid"),Boolean.TRUE));
             if(!StringUtils.isEmpty(thirdOperateDto.getName())) {

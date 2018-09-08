@@ -1,9 +1,8 @@
 // var httpUrl = "http://127.0.0.1:9527";
-var httpUrl = "http://karl-leo.imwork.net:57701/";
-// var httpUrl = "http://www.youxinjk.com/";
+var httpUrl = "http://www.youxinjk.com/";
 var sendSmsUrl = httpUrl + "/common/sendValidateCode.json";
 var loginUrl = httpUrl + "/common/passwordLogin.json";
-var findByIdUrl = httpUrl +"/wechat/customer/findById.json";
+var findByIdUrl = httpUrl +"/wechat/customer/findCustomerById.json";
 var updateUrl = httpUrl +"/wechat/customer/updateUserInfo.json";
 
 var zmfAuthUrl= httpUrl+"/wechat/customer/buildXinYanOrder.json";//芝麻分订单
@@ -78,7 +77,7 @@ function showMessage(message) {
     dialog({
         type: null,
         message: message,
-        delay: 1000,
+        delay: 5000,
         maskOpacity: 0.01
     });
     return false;
@@ -127,7 +126,7 @@ function findById() {
     if(result.success){
         $("#name").val(result.data.name);
         $("#certNo").val(result.data.certNo);
-        $("#bankAccount").val(result.data.bankAccount);
+        $("#bankAccountNo").val(result.data.bankAccountNo);
         $("#loanAmount").val(result.data.loanAmount);
     }else{
         showMessage(result.message);

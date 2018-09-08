@@ -64,10 +64,10 @@
 						if(dataObj.success){
 							$("#zm_score").html(dataObj.data.zm_score);
 						}else{
-							$.messager.alert('Info', dataObj.errorMsg, 'info');
+							$.messager.alert('温馨提示', dataObj.errorMsg, 'info');
 						}
 					}else{
-				        $.messager.alert('Info', datas.message, 'info');
+				        $.messager.alert('温馨提示', datas.message, 'info');
 					}
 				}
 			});

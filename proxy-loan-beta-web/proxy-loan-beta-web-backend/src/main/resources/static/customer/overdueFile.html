@@ -93,8 +93,6 @@
 							}else if(dataObj.data.code==9){
 							    codeDesc="其他异常";
 							}
-							debugger;
-
 							$("#code").html(codeDesc);
 							$("#id_no").html(dataObj.data.id_no);
 							$("#id_name").html(dataObj.data.id_name);
@@ -105,10 +103,9 @@
 								$("#result_details").datagrid("loadData",dataObj.data.result_detail.details);
 							}
 						}else{
-							$.messager.alert('Info', dataObj.errorMsg, 'info');
-						}
+							$.messager.alert('温馨提示', dataObj.errorMsg==null?"接口调用超时":dataObj.errorMsg, 'info');						}
 					}else{
-				        $.messager.alert('Info', datas.message, 'info');
+				        $.messager.alert('温馨提示', datas.message, 'info');
 					}
 				}
 			});
